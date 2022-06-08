@@ -1,0 +1,206 @@
+p {
+  font-size: smaller;
+}
+body {
+  position: relative;
+}
+
+/* START: index.html styling */
+.main-section-form-box {
+  border-radius: 10px;
+}
+.main-image-container {
+  position: relative;
+}
+.no-line-anchor {
+  text-decoration: none;
+}
+.on-the-move-link {
+  cursor: pointer;
+}
+.main-section-tab,
+.main-section-form-choice-tabs a {
+  text-decoration: none;
+  color: black;
+}
+.main-section-tab:hover {
+  color: black;
+  border-bottom: 2px solid black;
+}
+.main-section-form-box-tabs .focus {
+  color: blue;
+  border-bottom: 2px solid blue;
+}
+.main-section-form-choice-tabs a:hover {
+  background-color: rgba(0, 255, 255, 0.158);
+  border-radius: 10px;
+  color: blue;
+}
+.main-section-form-choice-tabs .focus {
+  background-color: rgba(0, 255, 255, 0.158);
+  border-radius: 10px;
+  color: blue;
+}
+
+.main-img-overlay-box {
+  font-weight: 200;
+  width: 200px;
+  color: white;
+  position: absolute;
+  top: 5%;
+  left: 30%;
+  display: none;
+}
+.main-img-overlay-box p {
+  display: none;
+}
+.multi-port-shuttle-number {
+  margin-bottom: -10px;
+}
+#signInPopup {
+  display: none;
+  position: absolute;
+  background-color: white;
+  top: 2%;
+  right: 10%;
+  width: 20rem;
+  box-shadow: 10px 10px 10px grey;
+  animation-name: signInPopup;
+  animation-duration: 0.3s;
+}
+@keyframes signInPopup {
+  from {
+    width: 12rem;
+  }
+  to {
+    width: 20rem;
+  }
+}
+#signInPopup a {
+  text-decoration: none;
+}
+#signInPopup div:hover {
+  background-color: #0d6dfd28;
+  cursor: pointer;
+}
+.uitk-icon-medium {
+  height: 20px;
+  color: blue;
+}
+/* END: index.html styling */
+/* START: flights.html styling */
+#overlay-bitcoin-symbol {
+  width: 15px;
+  height: 20px;
+  margin-bottom: 10px;
+  margin-right: -8px;
+}
+#bitcoin-symbol {
+  width: 15px;
+  height: 20px;
+  margin-top: 2px;
+}
+#dollar-icon {
+  width: 15px;
+  height: auto;
+  margin-right: 5px;
+}
+.select-flight-details-wrapper {
+  border: none;
+  background-color: white;
+}
+.listview-flight-details:hover {
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.flight-selected {
+  border: 1px solid black;
+  border-radius: 10px;
+}
+/* Start: Flight details overlay styling */
+#flight-detail-overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 2;
+  box-shadow: -3px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  animation-name: slideIn;
+  animation-duration: 1s;
+}
+@keyframes slideIn {
+  from {
+    right: -500px;
+  }
+  to {
+    right: 0;
+  }
+}
+.overlay-close {
+  position: relative;
+  right: 0px;
+  top: 0px;
+  width: 30px;
+  height: 30px;
+  opacity: 0.3;
+  border-radius: 50px;
+}
+.overlay-close:hover {
+  opacity: 1;
+  cursor: pointer;
+  background-color: lightblue;
+  background-image: radial-gradient(
+    rgba(173, 214, 230, 0.4),
+    rgba(173, 214, 230, 0.6),
+    white
+  );
+}
+.overlay-close:before,
+.overlay-close:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 30px;
+  width: 2px;
+  background-color: blue;
+}
+.overlay-close:before {
+  transform: rotate(45deg);
+}
+.overlay-close:after {
+  transform: rotate(-45deg);
+}
+.search-result-filters {
+  display: none;
+}
+/* End: Flight details overlay styling */
+/* END: flights.html styling */
+/* START: flights_admin.html styling */
+.admin-flight-tr:hover {
+  cursor: pointer;
+}
+/* END: flights_admin.html styling */
+@media screen and (min-width: 539px) {
+  .main-img-overlay-box {
+    display: block;
+  }
+  .search-result-filters {
+    display: none;
+  }
+}
+@media screen and (min-width: 940px) {
+  .main-img-overlay-box p {
+    display: block;
+  }
+  .search-result-filters {
+    display: block;
+  }
+  #flight-detail-overlay {
+    width: 40%;
+  }
+}
