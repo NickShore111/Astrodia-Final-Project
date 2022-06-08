@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:insert="fragments/header :: header" />
+    <title>Astrodia SignUp</title>
 </head>
 <body>
+<div class="main container-fluid p-1">
+    <div class="border-bottom d-flex p-2 justify-content-center">
+        <div class="d-flex">
+            <img
+                    src="../static/images/spaceship.png"
+                    alt=""
+                    width="35"
+                    height="30"
+                    class="mt-1"
+            />
+            <h3>Astrodia</h3>
+        </div>
+    </div>
+    <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
+        <h2 class="my-4">Create an account</h2>
+        <div class="form-floating mb-3">
+            <input
+                    type="email"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="name@example.com"
+            />
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input
+                    type="email"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="First"
+            />
+            <label for="floatingInput">First name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input
+                    type="email"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="Last"
+            />
+            <label for="floatingInput">Last name</label>
+        </div>
+        <div class="form-floating">
+            <input
+                    type="password"
+                    class="form-control"
+                    id="floatingPassword"
+                    placeholder="Password"
+            />
+            <label for="floatingPassword">Password</label>
+        </div>
+        <div class="container d-flex justify-content-center pt-4">
+            <button class="btn btn-primary col-8" disabled>Continue</button>
+        </div>
+        <div class="container d-flex mt-3 justify-content-center">
+            <p>Already have an account? <a href="#">Sign in</a></p>
+        </div>
+        <div th:replace="fragments/footer :: footer"></div>
+
+</div>
+
+<div th:insert="fragments/footer :: scripts" />
+<script type="module" th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

@@ -13,7 +13,7 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("signin")
+    @GetMapping("/signup")
     public String displayCreateAnAccountForm() {
         return "signup";
     }

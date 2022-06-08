@@ -8,7 +8,7 @@
 <div class="main container-fluid p-1">
 <!-- Start: Navbar element -->
     <div th:replace="fragments/nav :: nav" />
-<!-- End: nav-bar element -->
+
 <!-- Start: Main user interface form and search field section -->
 <section
         class="container-lg main-section-form-box border border-2 my-5"
@@ -80,19 +80,11 @@
         </div>
     </div>
 </section>
-<footer>
-    <div class="container border-2 border-top p-3 my-3">
-        <div class="row">
-            <p class="fw-bold m-0 text-center">Be inspired and discover more with Astrodia<br>
-                <a class="no-line-anchor fw-normal" href="#main-entrypoint-component">Explore a galaxy of infinite possibility</a></p>
-        </div>
-    </div>
-</footer>
+
+<div th:replace="fragments/footer :: footer"></div>
 </div>
-<!-- include javascript in the footer -->
-<script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js/}"></script>
-<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.13.0/jquery-ui.min.js/}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
+
+<div th:insert="fragments/footer :: scripts" />
 <script type="module" th:src="@{/js/main.js}"></script>
 
 </body>

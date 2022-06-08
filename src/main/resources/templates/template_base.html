@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:insert="fragments/header :: header" />
+  <title> Title </title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+  <!-- Start: Navbar element -->
+  <div th:replace="fragments/nav :: nav" />
+
+
+
+  <div th:replace="fragments/footer :: footer"></div>
+</div>
+
+<div th:insert="fragments/footer :: scripts" />
+<script type="module" th:src="@{/js/main.js}"></script>
+
+</body>
+</html>
