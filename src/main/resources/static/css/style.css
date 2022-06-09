@@ -87,6 +87,9 @@ body {
   height: 20px;
   color: blue;
 }
+#add_flight:hover {
+  cursor: pointer;
+}
 /* END: index.html styling */
 /* START: flights.html styling */
 #overlay-bitcoin-symbol {

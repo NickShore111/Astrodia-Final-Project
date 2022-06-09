@@ -11,7 +11,7 @@ const loadDatepickerDepature = (departId) => {
 };
 const loadDatepickerReturnAndArrival = () => {
   var dateFormat = "mm/dd/yy",
-    from = $("#fs-departDate")
+    from = $("#departDate")
       .datepicker({
         defaultDate: "+2d",
         minDate: 0,
@@ -21,7 +21,7 @@ const loadDatepickerReturnAndArrival = () => {
       .on("change", function () {
         to.datepicker("option", "minDate", getDate(this));
       }),
-    to = $("#fs-returnDate")
+    to = $("#returnDate")
       .datepicker({
         defaultDate: "+1w",
         minDate: +1,
@@ -90,7 +90,7 @@ for (const choiceTab of choiceTabs) {
       loadDatepickerReturnAndArrival();
     } else if (document.getElementById("one-way").classList.contains("focus")) {
       inputFeildsContainer.innerHTML = onewayInputHTML;
-      loadDatepickerDepature("#fs-departDate");
+      loadDatepickerDepature("#departDate");
     } else {
       inputFeildsContainer.innerHTML = multiportInputHTML;
       const form = document.getElementById("multiPortForm");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,7 +9,7 @@
     <div class="container-lg">
         <a class="navbar-brand" href="#">
             <img
-                    th:src="@{/assets/images/spaceship.png}"
+                    th:src="@{/assets/spaceship.png}"
                     alt="Astrodia shuttle orbiting planet logo"
                     width="30"
                     height="24"
@@ -28,20 +28,32 @@
         >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="#">Flights</a>
-                <a class="nav-link" href="#">Things to do</a>
-                <a class="nav-link" href="#">Stays</a>
-                <a class="nav-link" href="#">Ports</a>
-                <a class="nav-link" href="#">Reviews</a>
-            </div>
-        </div>
-        <a class="nav-link active" aria-current="page" href="#" id="signInNavLink">Sign In</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        More travel
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-shuttle-space me-2"></i>Flights</a></li>
+                        <li><a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-hotel me-2"></i>Stays</a></li>
+                        <li><a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-satellite me-2"></i>Ports</a></li>
+                        <li><a class="dropdown-item" href="#">Reviews</a></li>
+
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+        <a class="nav-link active" aria-current="page" href="#" id="signInNavLink">
+            <i class="fa-solid fa-user-astronaut me-1"></i>Sign In</a>
         <div class="py-3 px-3 border rounded-2 text-center" id="signInPopup">
             <a href="" class="col-12 mb-2 btn btn-primary fw-bold">Sign In</a>
             <div class="container col-12 p-2 rounded-2">
-                <a class="fw-bold" href="/signup">Sign up, it's free</a>
+                <a class="fw-bold" th:href="@{astrodia/signup}">Sign up, it's free</a>
             </div>
         </div>
     </div>

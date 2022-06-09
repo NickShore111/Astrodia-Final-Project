@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:insert="fragments/header :: header" />
+    <div th:replace="fragments/header :: header" />
     <title>Astrodia Space Travel</title>
 </head>
 <body>
@@ -21,7 +21,6 @@
                 class="main-section-form-box-tabs d-flex justify-content-center flex-wrap mt-3"
         >
             <a class="mx-4 main-section-tab focus" id="flights-tab" href="#"><h6>Flights</h6></a>
-            <a class="mx-4 main-section-tab" id="thingsToDo-tab" href="#"><h6>Things to do</h6></a>
             <a class="mx-4 main-section-tab" id="stays-tab" href="#"><h6>Stays</h6></a>
             <a class="mx-4 main-section-tab" id="ports-tab" href="#"><h6>Ports</h6></a>
             <a class="mx-4 main-section-tab" id="reviews-tab" href="#"><h6>Reviews</h6></a>
@@ -49,7 +48,7 @@
 <!-- End: Main page user interface form and search field section-->
 <!-- Start: Main image and additional content -->
 <div class="container-lg main-image" style="position: relative;">
-    <img class="img-fluid rounded" th:src="@{/assets/images/earth-space-station.jpg}" alt="Space station orbiting Earth">
+    <img class="img-fluid rounded" th:src="@{/assets/earth-space-station.jpg}" alt="Space station orbiting Earth">
     <div class="main-img-overlay-box justify-content-center text-center">
         <h4> Experience travel on an entirely new level...</h4>
         <p>Share in the experience of a lifetime</p>
