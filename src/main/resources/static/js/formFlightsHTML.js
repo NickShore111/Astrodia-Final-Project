@@ -1,5 +1,5 @@
 export const roundtripInputHTML = `
-    <form th:action="@{/astrodia/flights/roundtrip}" class="d-flex-inline" method="GET">
+    <form id="roundTripForm" th:action="@{/astrodia/flights/roundtrip}" class="d-flex-inline" method="GET">
     <div class="row g-2 justify-content-center" id="search-inputs">
           <div class="col-lg-3">
                 <div class="form-floating">
@@ -43,11 +43,10 @@ export const roundtripInputHTML = `
               </div>
           </div>
     </div>
-</form>
-`;
+</form>`;
 
 export const onewayInputHTML = `
-  <form th:action="@{/astrodia/flights/oneway}" class="d-flex-inline" method="GET">
+  <form id="oneWayForm" th:action="@{/astrodia/flights/oneway}" class="d-flex-inline" method="GET">
     <div class="row g-2 justify-content-center" id="search-inputs">
         <div class="col-lg-3">
           <div class="form-floating">
@@ -82,19 +81,19 @@ export const onewayInputHTML = `
           </div>
         </div>
     </div>
-</form>
-`;
+</form>`;
 
 export const multiportInputHTML = `
-<form th:action="@{/astrodia/flights/multiport}" class="d-flex-inline" method="GET">
+<form id="multiPortForm" th:action="@{/astrodia/flights/multiport}" class="d-flex-inline" method="GET">
 <div class="row g-2 justify-content-center my-1" id="search-inputs">
     <div class="row p-0 multi-port-shuttle-count">
       <div class="col offset-1"><h6>Shuttle 1</h6></div>
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="departurePort">
-          <option selected>Select port</option>
+        <select class="form-select" id="departurePort"
+        name="departurePort_1">
+          <option value="" selected>Select port</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
@@ -104,8 +103,9 @@ export const multiportInputHTML = `
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="arrivalPort">
-          <option selected>Select port</option>
+        <select class="form-select" id="arrivalPort"
+        name="arrivalPort_1">
+          <option value="" selected>Select port</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
@@ -124,15 +124,15 @@ export const multiportInputHTML = `
       </div>
     </div>
   </div>
-
   <div class="row g-2 justify-content-center my-1" id="search-inputs">
     <div class="row p-0 multi-port-shuttle-count">
       <div class="col offset-1"><h6>Shuttle 2</h6></div>
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="departurePort">
-          <option selected>Select port</option>
+        <select class="form-select" id="departurePort"
+        name="departurePort_2">
+          <option value="" selected>Select port</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
@@ -142,8 +142,9 @@ export const multiportInputHTML = `
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="arrivalPort">
-          <option selected>Select port</option>
+        <select class="form-select" id="arrivalPort"
+        name="arrivalPort_2">
+          <option value="" selected>Select port</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
@@ -164,7 +165,6 @@ export const multiportInputHTML = `
   </div>
   <div class="row">
     <div class="container d-flex">
-
       <svg class="uitk-icon-medium mb-1 offset-9"
       aria-hidden="true" viewBox="0 0 24 24" fill="#0d6efd" id="add_flight"
       xmlns="http://www.w3.org/2000/svg"
@@ -174,9 +174,6 @@ export const multiportInputHTML = `
         </svg>
       </svg>
       <p class="fw-bold text-primary" id="add_flight">Add another flight</p>
-
     </div>
-
   </div>
- </form>
-`;
+ </form>`;

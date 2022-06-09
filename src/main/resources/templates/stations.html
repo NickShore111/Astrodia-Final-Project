@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="fragments/header :: header"/>
+    <title> Astrodia Stations </title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+    <!-- Start: Navbar element -->
+    <div th:replace="fragments/nav :: nav"></div>
+
+    <div th:replace="fragments/base :: container(stations)"></div>
+
+
+    <div th:replace="fragments/footer :: links"></div>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<div th:replace="fragments/footer :: scripts"></div>
+<!--<script type="module" th:src="@{/js/main.js}"></script>-->
+</body>
+</html>

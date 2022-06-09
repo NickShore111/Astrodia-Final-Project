@@ -18,6 +18,6 @@ public class HomeController {
         return "signup";
     }
 
-    @GetMapping("/stays")
-    public String staysPage() { return "stays"; }
+    @GetMapping("/stations")
+    public String staysPage() { return "stations"; }
 }

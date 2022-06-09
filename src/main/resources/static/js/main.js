@@ -84,7 +84,7 @@ for (const choiceTab of choiceTabs) {
   choiceTab.addEventListener("click", () => {
     addFocus(choiceTab);
     removeFocus(choiceTab, choiceTabs);
-    // Populate innerHTML from import and reload Jquery datepicker
+    // Populate innerHTML using formFlightsHTML.js imports and reload Jquery datepicker object
     if (document.getElementById("roundtrip").classList.contains("focus")) {
       inputFeildsContainer.innerHTML = roundtripInputHTML;
       loadDatepickerReturnAndArrival();
@@ -97,9 +97,9 @@ for (const choiceTab of choiceTabs) {
       let datepickers = document
         .querySelectorAll(".datepicker")
         .forEach((datepicker) => loadDatepickerDepature("#" + datepicker.id));
-      // change shuttle2 leaving from to shuttle 1 going to on change
-      document.getElementById("goingTo1").addEventListener("change", () => {
-        form.leavingFrom2.value = form.goingTo1.value;
+      // change shuttle2 departing from to shuttle 1 going to on change
+      form.arrivalPort_1.addEventListener("change", () => {
+        form.departurePort_2.value = form.arrivalPort_1.value;
       });
     }
   });
@@ -114,5 +114,4 @@ $(window).click(function () {
 });
 
 // End: main-section-form-choice-tabs onclick select background element
-
 // END:  index.html vanilla Javascript

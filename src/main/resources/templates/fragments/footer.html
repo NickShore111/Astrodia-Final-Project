@@ -5,11 +5,29 @@
   <title>Title</title>
 </head>
 <body>
-<div th:fragment="scripts">
-  <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js/}"></script>
-  <script type="text/javascript" th:src="@{/webjars/jquery-ui/1.13.0/jquery-ui.min.js/}"></script>
-  <script type="text/javascript" th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
-</div>
+<section th:fragment="links" class="container added-content-and-links my-4">
+  <h2 class="mb-3">Here to help launch you into your next adventure</h2>
+  <div class="row gy-3">
+    <div class="col-sm-4">
+      <div class="border border-2 rounded p-2 pb-0 on-the-move-link">
+        <h5>Change or cancel a trip</h5>
+        <p>Make updates to your itinerary or cancel a booking</p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="border border-2 rounded p-2 pb-0 on-the-move-link">
+        <h5>Use a credit or coupon</h5>
+        <p>Apply a coupon code or credit to a new trip</p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="border border-2 rounded p-2 pb-0 on-the-move-link">
+        <h5>Track your refund</h5>
+        <p>Check the status of a refund currently in progress</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer th:fragment="footer">
   <div class="container border-2 border-top p-3 my-3">
@@ -19,5 +37,12 @@
     </div>
   </div>
 </footer>
+
+<div th:fragment="scripts">
+  <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js/}"></script>
+  <script type="text/javascript" th:src="@{/webjars/jquery-ui/1.13.0/jquery-ui.min.js/}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
+</div>
+
 </body>
 </html>

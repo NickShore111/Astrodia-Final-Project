@@ -36,13 +36,17 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item my-2" href="#">
-                                <i class="fa-solid fa-shuttle-space me-2"></i>Flights</a></li>
+                                <i style="transform: rotate(-45deg);" class="fa-solid fa-shuttle-space me-2"></i>Flights</a></li>
                         <li><a class="dropdown-item my-2" href="#">
                                 <i class="fa-solid fa-hotel me-2"></i>Stays</a></li>
                         <li><a class="dropdown-item my-2" href="#">
-                                <i class="fa-solid fa-satellite me-2"></i>Ports</a></li>
+                            <img th:src="@{/assets/space-station-icon.png}"
+                                    alt="station icon"
+                                    class="me-2"
+                            />Stations</a></li>
                         <li><a class="dropdown-item my-2" href="#">Reviews</a></li>
                         <li><hr class="dropdown-divider"></li>
+
                         <li><a class="dropdown-item my-2" href="#">Something else here</a></li>
                     </ul>
                 </li>
