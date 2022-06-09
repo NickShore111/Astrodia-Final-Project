@@ -4,7 +4,9 @@ p {
 body {
   position: relative;
 }
-
+.dropdown-menu {
+box-shadow: 8px 8px 8px grey;
+}
 /* START: index.html styling */
 .main-section-form-box {
   border-radius: 10px;

@@ -14,7 +14,10 @@ public class HomeController {
     }
 
     @GetMapping("/signup")
-    public String displayCreateAnAccountForm() {
+    public String createUserForm() {
         return "signup";
     }
+
+    @GetMapping("/stays")
+    public String staysPage() { return "stays"; }
 }
