@@ -14,7 +14,7 @@
                 class="main-section-form-box-tabs d-flex justify-content-center flex-wrap mt-3"
         >
             <a class="mx-4 main-section-tab focus" id="flights-tab" th:href="@{/astrodia}"><h6>Flights</h6></a>
-            <a class="mx-4 main-section-tab" id="stays-tab" th:href="@{/astrodia/stations}"><h6>Stations</h6></a>
+            <a class="mx-4 main-section-tab" id="stays-tab" href="#"><h6>Stations</h6></a>
             <a class="mx-4 main-section-tab" id="ports-tab" href="#"><h6>Ports</h6></a>
             <a class="mx-4 main-section-tab" id="reviews-tab" href="#"><h6>Reviews</h6></a>
         </div>
@@ -32,9 +32,13 @@
 
 <div th:fragment="flights">
     <div class="d-flex flex-wrap main-section-form-choice-tabs my-4 offset-1">
-        <a class="mx-4 p-2 pb-1 focus" id="roundtrip" href="#"><h6>Roundtrip</h6></a>
-        <a class="mx-4 p-2 pb-1" id="one-way" href="#"><h6> One-way</h6></a>
-        <a class="mx-4 p-2 pb-1" id="multi-port" href="#"><h6> Multi-port</h6></a>
+        <h6 class="mx-4 p-2 pb-1 d-inline focus" id="roundtrip">Roundtrip</h6>
+        <h6 class="mx-4 p-2 pb-1 d-inline" id="one-way">One-way</h6>
+        <h6 class="mx-4 p-2 pb-1 d-inline" id="multi-port">Multi-port</h6>
+
+        <!--        <a class="mx-4 p-2 pb-1 focus" id="roundtrip" href="#"><h6>Roundtrip</h6></a>-->
+<!--        <a class="mx-4 p-2 pb-1" id="one-way" href="#"><h6> One-way</h6></a>-->
+<!--        <a class="mx-4 p-2 pb-1" id="multi-port" href="#"><h6> Multi-port</h6></a>-->
     </div>
     <div class="input-fields-container"></div>
 </div>

@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("astrodia")
 public class HomeController {
 
-    @GetMapping("")
+    @GetMapping("test")
+    public String index() {return "index";}
+
+    @GetMapping()
     public String mainPage() {
         return "home";
     }

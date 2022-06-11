@@ -14,18 +14,30 @@
 <body>
 
 <div class="container">
-    <h1>
         <!-- include image from static resources -->
-        <img th:src="@{/assets/images/spaceship.png}" alt="memorynotfound logo"/>
         Adding Static Resources (css, JavaScript, Images) to Thymeleaf
-    </h1>
+        <div class="row">
+            <div class="container" id="testing">
+                <div class="container d-flex">
+                    <svg class="uitk-icon-medium mb-1 offset-9"
+                         aria-hidden="true" viewBox="0 0 24 24" fill="#0d6efd" id="add_flight"
+                         xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg>
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                        </svg>
+                    </svg>
+                    <p class="fw-bold text-primary" id="add_flight">Add another flight</p>
+                </div>
+            </div>
+        </div>
 </div>
 
 <!-- include javascript in the footer -->
 <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/jquery-ui/1.13.0/jquery-ui.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/index.js}"></script>
+<!--<script type="text/javascript" th:src="@{/js/index.js}"></script>-->
 
 </body>
 </html>

@@ -177,3 +177,42 @@ export const multiportInputHTML = `
     </div>
   </div>
  </form>`;
+
+export const addFlightToMultiportHTML = `
+    <div class="row p-0 multi-port-shuttle-count">
+      <div class="col offset-1"><h6 id="shuttleNum"></h6></div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-floating">
+        <select class="form-select" id="departurePort"
+        name="departurePort_2">
+          <option value="" selected>Select port</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <label for="floatingSelect">Departing from</label>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-floating">
+        <select class="form-select" id="arrivalPort"
+        name="arrivalPort_2">
+          <option value="" selected>Select port</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <label for="floatingSelect">Going to</label>
+      </div>
+    </div>
+    <div class="col-lg-4 d-flex justify-content-center" id="date-input-container">
+      <div class="col-8 mx-1">
+        <input
+          class="form-control form-select-lg mb-3 col datepicker"
+          type="text"
+          placeholder="Departure date"
+          id="fs-departDate2"
+        />
+      </div>
+    </div>`;

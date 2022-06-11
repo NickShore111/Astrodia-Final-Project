@@ -11,17 +11,13 @@ box-shadow: 8px 8px 8px grey;
 .main-section-form-box {
   border-radius: 10px;
 }
-.main-image-container {
-  position: relative;
-}
 .no-line-anchor {
   text-decoration: none;
 }
-.on-the-move-link {
+.help-link {
   cursor: pointer;
 }
-.main-section-tab,
-.main-section-form-choice-tabs a {
+.main-section-tab {
   text-decoration: none;
   color: black;
 }
@@ -33,28 +29,16 @@ box-shadow: 8px 8px 8px grey;
   color: blue;
   border-bottom: 2px solid blue;
 }
-.main-section-form-choice-tabs a:hover {
+.main-section-form-choice-tabs h6:hover {
   background-color: rgba(0, 255, 255, 0.158);
   border-radius: 10px;
   color: blue;
+  cursor: pointer;
 }
 .main-section-form-choice-tabs .focus {
   background-color: rgba(0, 255, 255, 0.158);
   border-radius: 10px;
   color: blue;
-}
-
-.main-img-overlay-box {
-  font-weight: 200;
-  width: 200px;
-  color: white;
-  position: absolute;
-  top: 5%;
-  left: 30%;
-  display: none;
-}
-.main-img-overlay-box p {
-  display: none;
 }
 .multi-port-shuttle-number {
   margin-bottom: -10px;
@@ -185,6 +169,15 @@ box-shadow: 8px 8px 8px grey;
 }
 /* End: Flight details overlay styling */
 /* END: flights.html styling */
+/* Start: stations.html styling */
+#moon-base {
+width:100%;
+}
+.explore-container img {
+border: none;
+border-radius:10px;
+}
+
 /* START: flights_admin.html styling */
 .admin-flight-tr:hover {
   cursor: pointer;

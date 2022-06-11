@@ -24,23 +24,29 @@
                         <div class="container justify-content-center text-center" style="width: 300px; color:white; position:absolute; top:5%; left:5%;">
                             <h1>Explore Earth's very own Moon</h1>
                             <p style="color: white;">Discover the many mysteries of Luna...</p>
-                            <button class="btn btn-primary mx-auto">Explore</button>
+                            <a href="#moon-content" class="btn btn-primary mx-auto">Explore</a>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div id="mars-img-container" class="container p-0" style="position:relative">
-                        <img class="img-fluid rounded d-block w-100" style="width:100%" th:src="@{/assets/mars-4k-crop.jpg}" alt="Mars surface map">
+                        <img class="img-fluid rounded d-block w-100" style="width:100%" th:src="@{/assets/mars-4k.jpg}" alt="Mars surface map">
                         <div class="container justify-content-center text-center" style="width: 300px; color:white; position:absolute; top:5%; left:5%;">
-                            <h1>Dig your toes into the red sands Mars</h1>
+                            <h1>Dig your toes in the red sands of Mars</h1>
                             <p style="color: white;">Explore the depths of Valles Marineris...</p>
-                            <button class="btn btn-primary mx-auto">Explore</button>
+                            <a href="#mars-content" class="btn btn-primary mx-auto">Explore</a>
                         </div>
                     </div>
                 </div>
-<!--                <div class="carousel-item">-->
-<!--                    <img src="..." class="d-block w-100" alt="...">-->
-<!--                </div>-->
+                <div class="carousel-item">
+                    <div id="earth-orbit-img-container" class="container p-0" style="position:relative">
+                    <img class="img-fluid rounded d-block w-100" style="width:100%" th:src="@{/assets/earth-space-station.jpg}" alt="Space station orbiting Earth">
+                    <div class="main-img-overlay-box justify-content-center text-center">
+                        <h4>Experience travel on an entirely new level...</h4>
+                        <p>Share in the experience of a lifetime</p>
+                        <a href="#station-content" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -53,33 +59,75 @@
         </div>
     </div>
 
-
     <div th:replace="fragments/footer :: links"></div>
-    <div class="container p-0">
-        <div class="row d-flex">
-<!--            <div class="col">-->
-                <img class="rounded-start p-0" th:src="@{/assets/moon-base.jpg}" alt="Moon base">
-<!--            </div>-->
-            <div class="col border rounded-end align-self-center">
-                <h3>Experience a quiet cold embrace</h3> <p>The type you've never experienced before </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                moon event
-            </div>
-            <div class="col">
-                moon stay
-            </div>
-            <div class="col">
-                moon explore
-            </div>
-        </div>
 
+    <div class="container p-0" id="moon-content">
+        <div class="row gx-0">
+            <div class="col-sm col-12">
+                <img id="moon-base" class="img-fluid rounded-start" th:src="@{/assets/moon-base.jpg}" alt="Moon base">
+            </div>
+            <div class="col-sm col-12 border border-2 rounded-end d-flex align-items-center ps-3">
+                <span>
+                    <h4>Experience the quiet cold embrace of space!</h4>All from the comfort of Earth's orbit!
+                </span>
+            </div>
+        </div>
+        <div class="row gx-2 my-4 px-2">
+            <div class="col-sm col-12 explore-container ">
+                <div class="row">
+                <img class="img-fluid rounded p-0" th:src="@{/assets/moon-cave.jpg}" alt="Moon cavern">
+                </div>
+                EXPLORE<h6>Discover unique caverns</h6>
+                </div>
+            <div class="col-sm col-12 explore-container mx-5">
+                <div class="row">
+                    <img class="img-fluid rounded p-0" th:src="@{/assets/moon-lander.jpg}" alt="Moon cavern">
+                </div>
+                LEARN<h6>Visit historical treasures</h6>
+            </div>
+            <div class="col-sm col-12 explore-container">
+                <div class="row">
+                <img class="img-fluid rounded p-0" th:src="@{/assets/space-truck.png}" alt="Moon cruiser">
+                </div>
+                CRUISE<h6>Travel in style</h6>
+            </div>
+        </div>
+    </div>
+    <div class="container p-0" id="mars-content">
+        <div class="row gx-0">
+            <div class="col-sm col-12 border border-2 rounded-start d-flex justify-content-end align-items-center pe-4">
+                <span>
+                    <h4>Visit the many rovers of Mars!</h4>Don't forget to bring your sunblock!
+                </span>
+            </div>
+            <div class="col-sm col-12">
+                <img id="mars-base" class="img-fluid rounded-end" th:src="@{/assets/mars-colony2.jpg}" alt="Moon base">
+            </div>
+        </div>
+        <div class="row gx-2 my-4 px-2">
+            <div class="col-sm col-12 explore-container">
+                <div class="row">
+                    <img class="img-fluid rounded p-0" th:src="@{/assets/mars-truck.jpg}" alt="Mars recreational vehicle">
+                </div>
+                RELAX<h6>See the sites in comfort and style</h6>
+            </div>
+            <div class="col-sm col-12 explore-container  mx-5">
+                <div class="row">
+                    <img class="img-fluid rounded p-0" th:src="@{/assets/starships-on-mars.jpg}" alt="Starship field on Mars">
+                </div>
+                BE AMAZED<h6>Sunrises will never be the same</h6>
+            </div>
+            <div class="col-sm col-12 explore-container">
+                <div class="row">
+                    <img class="img-fluid rounded p-0" th:src="@{/assets/couple-on-mars.jpg}" alt="Couple views start under Mars sky">
+                </div>
+                EXPERIENCE<h6>Witness the sunset like never before</h6>
+            </div>
+        </div>
     </div>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
-<!--<script type="module" th:src="@{/js/main.js}"></script>-->
+<script type="module" th:src="@{/js/main.js}"></script>
 </body>
 </html>

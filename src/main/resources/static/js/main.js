@@ -2,6 +2,7 @@ import {
   roundtripInputHTML,
   multiportInputHTML,
   onewayInputHTML,
+  addFlightToMultiportHTML,
 } from "./formFlightsHTML.js";
 
 const loadDatepickerDepature = (departId) => {
@@ -77,14 +78,15 @@ for (const formTab of formTabs) {
 
 // Start: main-section-form-choice-tabs onclick focus element and populate input fields
 const choiceTabs = document.querySelectorAll(
-  ".main-section-form-choice-tabs a"
+  ".main-section-form-choice-tabs h6"
 );
 
 for (const choiceTab of choiceTabs) {
   choiceTab.addEventListener("click", () => {
     addFocus(choiceTab);
     removeFocus(choiceTab, choiceTabs);
-    // Populate innerHTML using formFlightsHTML.js imports and reload Jquery datepicker object
+// Populate innerHTML from formFlightsHTML.js imports
+// and reload Jquery datepicker object after selecting travel choice
     if (document.getElementById("roundtrip").classList.contains("focus")) {
       inputFeildsContainer.innerHTML = roundtripInputHTML;
       loadDatepickerReturnAndArrival();
@@ -92,26 +94,48 @@ for (const choiceTab of choiceTabs) {
       inputFeildsContainer.innerHTML = onewayInputHTML;
       loadDatepickerDepature("#departDate");
     } else {
+    // selecting multi-port adds event listeners
       inputFeildsContainer.innerHTML = multiportInputHTML;
-      const form = document.getElementById("multiPortForm");
+      const multiPortform = document.getElementById("multiPortForm");
       let datepickers = document
         .querySelectorAll(".datepicker")
         .forEach((datepicker) => loadDatepickerDepature("#" + datepicker.id));
-      // change shuttle2 departing from to shuttle 1 going to on change
-      form.arrivalPort_1.addEventListener("change", () => {
-        form.departurePort_2.value = form.arrivalPort_1.value;
+      // changes shuttle2 departing from to shuttle 1 going to on change
+      multiPortform.arrivalPort_1.addEventListener("change", () => {
+        multiPortform.departurePort_2.value = form.arrivalPort_1.value;
       });
+      // create adding and removing flights functionality
+      multiPortAddFlightBtn();
     }
   });
+
+  function multiPortAddFlightBtn() {
+  const addAnotherFlight = document.querySelectorAll("#add_flight");
+  let shuttleCount = document.querySelectorAll("#search-inputs").length;
+        for (const btn of addAnotherFlight) {
+            btn.addEventListener("click", () => {
+                console.log(shuttleCount);
+                console.log(multiPortForm.lastElementChild);
+                var newFieldInputs = document.createElement("div");
+                newFieldInputs.className = "row g-2 justify-content-center my-1";
+                newFieldInputs.id = "search-inputs";
+                newFieldInputs.innerHTML = addFlightToMultiportHTML;
+
+                multiPortForm.insertBefore(newFieldInputs, multiPortForm.children[shuttleCount]);
+                console.log(multiPortForm.children[shuttleCount-1]);
+
+            })
+        }
+  }
 }
+// clear signin popup window with click outside element
 document.getElementById("signInNavLink").addEventListener("click", (event) => {
   document.getElementById("signInPopup").style.display = "block";
   event.stopPropagation();
 });
-
 $(window).click(function () {
   document.getElementById("signInPopup").style.display = "none";
 });
 
-// End: main-section-form-choice-tabs onclick select background element
+// End: main-section-form-choice-tabs onclick select element
 // END:  index.html vanilla Javascript
