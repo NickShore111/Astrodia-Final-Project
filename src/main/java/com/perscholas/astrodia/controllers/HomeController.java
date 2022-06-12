@@ -23,4 +23,7 @@ public class HomeController {
 
     @GetMapping("/stations")
     public String staysPage() { return "stations"; }
+
+    @GetMapping("/signin")
+    public String signInUserForm() { return "signin"; }
 }

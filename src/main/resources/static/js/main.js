@@ -105,25 +105,29 @@ for (const choiceTab of choiceTabs) {
         multiPortform.departurePort_2.value = form.arrivalPort_1.value;
       });
       // create adding and removing flights functionality
-      multiPortAddFlightBtn();
+      multiPortAddFlightBtnEvent();
     }
   });
 
-  function multiPortAddFlightBtn() {
-  const addAnotherFlight = document.querySelectorAll("#add_flight");
-  let shuttleCount = document.querySelectorAll("#search-inputs").length;
+  function multiPortAddFlightBtnEvent() {
+  const addAnotherFlight = document.querySelectorAll("#add-flight-btn");
         for (const btn of addAnotherFlight) {
             btn.addEventListener("click", () => {
+                let shuttleCount = document.querySelectorAll("#search-inputs").length;
                 console.log(shuttleCount);
-                console.log(multiPortForm.lastElementChild);
+                const addFlightBtnRow = document.getElementById("add-flight-btn-row");
+
+                // Create the input fields with container.id = search-inputs
                 var newFieldInputs = document.createElement("div");
                 newFieldInputs.className = "row g-2 justify-content-center my-1";
                 newFieldInputs.id = "search-inputs";
-                newFieldInputs.innerHTML = addFlightToMultiportHTML;
+                newFieldInputs.innerHTML = `
+                    <div class="row p-0 multi-port-shuttle-count">
+                       <div class="col offset-1"><h6 id="shuttleNum">Shuttle ${shuttleCount+1}</h6></div>
+                    </div> ${addFlightToMultiportHTML}`;
 
-                multiPortForm.insertBefore(newFieldInputs, multiPortForm.children[shuttleCount]);
-                console.log(multiPortForm.children[shuttleCount-1]);
 
+                multiPortForm.insertBefore(newFieldInputs, addFlightBtnRow);
             })
         }
   }

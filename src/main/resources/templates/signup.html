@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header" />
+    <link th:replace="fragments/header :: header"></link>
     <title>Astrodia SignUp</title>
 </head>
 <body>
 <div class="main container-fluid p-1">
-    <div class="border-bottom d-flex p-2 justify-content-center">
-        <div class="d-flex">
-            <img
-                    th:src="@{/assets/spaceship.png}"
-                    alt="Astrodia shuttle orbiting planet logo"
-                    width="35"
-                    height="30"
-                    class="mt-1"
-            />
-            <h3>Astrodia</h3>
-        </div>
-    </div>
+<div th:replace="fragments/nav :: go-back-header"></div>
     <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
         <h2 class="my-4">Create an account</h2>
         <form id="signUpForm" th:action="@{/astrodia/signup}" autocomplete="off" method="POST">
@@ -62,7 +51,7 @@
             </div>
         </form>
         <div class="container d-flex mt-3 justify-content-center">
-            <p>Already have an account? <a href="#">Sign in</a></p>
+            <p>Already have an account? <a th:href="@{signin}">Sign in</a></p>
         </div>
         <div th:replace="fragments/footer :: footer"></div>
 

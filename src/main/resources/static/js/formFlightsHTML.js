@@ -163,25 +163,22 @@ export const multiportInputHTML = `
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="add-flight-btn-row">
     <div class="container d-flex">
       <svg class="uitk-icon-medium mb-1 offset-9"
-      aria-hidden="true" viewBox="0 0 24 24" fill="#0d6efd" id="add_flight"
+      aria-hidden="true" viewBox="0 0 24 24" fill="#0d6efd" id="add-flight-btn"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink">
         <svg>
           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
         </svg>
       </svg>
-      <p class="fw-bold text-primary" id="add_flight">Add another flight</p>
+      <p class="fw-bold text-primary" id="add-flight-btn">Add another flight</p>
     </div>
   </div>
  </form>`;
 
 export const addFlightToMultiportHTML = `
-    <div class="row p-0 multi-port-shuttle-count">
-      <div class="col offset-1"><h6 id="shuttleNum"></h6></div>
-    </div>
     <div class="col-lg-3">
       <div class="form-floating">
         <select class="form-select" id="departurePort"

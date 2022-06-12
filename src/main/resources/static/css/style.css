@@ -29,6 +29,7 @@ box-shadow: 8px 8px 8px grey;
   color: blue;
   border-bottom: 2px solid blue;
 }
+#add-flight-btn:hover,
 .main-section-form-choice-tabs h6:hover {
   background-color: rgba(0, 255, 255, 0.158);
   border-radius: 10px;
@@ -65,6 +66,7 @@ box-shadow: 8px 8px 8px grey;
 #signInPopup a {
   text-decoration: none;
 }
+#loginFormHeader-arrow_back:hover,
 #signInPopup div:hover {
   background-color: #0d6dfd28;
   cursor: pointer;
@@ -72,9 +74,6 @@ box-shadow: 8px 8px 8px grey;
 .uitk-icon-medium {
   height: 20px;
   color: blue;
-}
-#add_flight:hover {
-  cursor: pointer;
 }
 /* END: index.html styling */
 /* START: flights.html styling */
@@ -169,6 +168,10 @@ box-shadow: 8px 8px 8px grey;
 }
 /* End: Flight details overlay styling */
 /* END: flights.html styling */
+/* START: signin.html styling */
+#loginFormHeader-arrow_back:hover {
+}
+
 /* Start: stations.html styling */
 #moon-base {
 width:100%;

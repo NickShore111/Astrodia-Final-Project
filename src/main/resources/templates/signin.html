@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link th:replace="fragments/header :: header"></link>
+  <title>Astrodia SignIn</title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+  <div th:replace="fragments/nav :: go-back-header"></div>
+  <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
+    <h2 class="my-4">Sign in</h2>
+    <form id="signUpForm" th:action="@{/astrodia/signin}" autocomplete="off" method="POST">
+      <div class="form-floating mb-3">
+        <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="name@example.com"
+        />
+        <label for="email">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+        />
+        <label for="password">Password</label>
+      </div>
+      <div class="container d-flex justify-content-center pt-4">
+        <button class="btn btn-primary col-8" id="submitBtn" disabled>Sign in</button>
+      </div>
+    </form>
+    <div class="container mt-3 d-inline-flex flex-column align-items-center">
+      <a class="m-4" href="#">Forgot password?</a>
+      <p>Don't have an account? <a th:href="@{signup}">Create one</a></p>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+
+  </div>
+
+  <div th:replace="fragments/footer :: scripts" />
+  <script type="module" th:src="@{/js/signin.js}"></script>
+
+</body>
+</html>
