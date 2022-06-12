@@ -1,6 +1,6 @@
 export const roundtripInputHTML = `
-    <form id="roundTripForm" th:action="@{/astrodia/flights/roundtrip}" class="d-flex-inline" method="GET">
-    <div class="row g-2 justify-content-center" id="search-inputs">
+    <form id="roundtripForm" th:action="@{/astrodia/flights/roundtrip}" class="d-flex-inline" method="GET">
+    <div class="row g-2 justify-content-center" id="roundtrip-search-inputs">
           <div class="col-lg-3">
                 <div class="form-floating">
                   <select class="form-select" id="departurePort">
@@ -46,8 +46,8 @@ export const roundtripInputHTML = `
 </form>`;
 
 export const onewayInputHTML = `
-  <form id="oneWayForm" th:action="@{/astrodia/flights/oneway}" class="d-flex-inline" method="GET">
-    <div class="row g-2 justify-content-center" id="search-inputs">
+  <form id="onewayForm" th:action="@{/astrodia/flights/oneway}" class="d-flex-inline" method="GET">
+    <div class="row g-2 justify-content-center" id="oneway-search-inputs">
         <div class="col-lg-3">
           <div class="form-floating">
             <select class="form-select" id="departurePort">
@@ -84,14 +84,14 @@ export const onewayInputHTML = `
 </form>`;
 
 export const multiportInputHTML = `
-<form id="multiPortForm" th:action="@{/astrodia/flights/multiport}" class="d-flex-inline" method="GET">
-<div class="row g-2 justify-content-center my-1" id="search-inputs">
-    <div class="row p-0 multi-port-shuttle-count">
-      <div class="col offset-1"><h6>Shuttle 1</h6></div>
+<form id="multiportForm" th:action="@{/astrodia/flights/multiport}" class="d-flex-inline" method="GET">
+<div class="row g-2 justify-content-center my-1 search-inputs" id="multiport-shuttle1">
+    <div class="row p-0">
+      <div class="col offset-1" id="shuttle-number"><h6>Shuttle 1</h6></div>
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="departurePort"
+        <select class="form-select" id="departurePort_1"
         name="departurePort_1">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
@@ -103,7 +103,7 @@ export const multiportInputHTML = `
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="arrivalPort"
+        <select class="form-select" id="arrivalPort_1"
         name="arrivalPort_1">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
@@ -124,13 +124,13 @@ export const multiportInputHTML = `
       </div>
     </div>
   </div>
-  <div class="row g-2 justify-content-center my-1" id="search-inputs">
+  <div class="row g-2 justify-content-center my-1 search-inputs" id="multiport-shuttle2">
     <div class="row p-0 multi-port-shuttle-count">
       <div class="col offset-1"><h6>Shuttle 2</h6></div>
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="departurePort"
+        <select class="form-select" id="departurePort_2"
         name="departurePort_2">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
@@ -142,7 +142,7 @@ export const multiportInputHTML = `
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="arrivalPort"
+        <select class="form-select" id="arrivalPort_2"
         name="arrivalPort_2">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
@@ -163,17 +163,13 @@ export const multiportInputHTML = `
       </div>
     </div>
   </div>
-  <div class="row" id="add-flight-btn-row">
-    <div class="container d-flex">
-      <svg class="uitk-icon-medium mb-1 offset-9"
-      aria-hidden="true" viewBox="0 0 24 24" fill="#0d6efd" id="add-flight-btn"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink">
-        <svg>
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-        </svg>
-      </svg>
-      <p class="fw-bold text-primary" id="add-flight-btn">Add another flight</p>
+  <div class="row justify-content-end" id="add-flight-btn-row">
+  <div class="col-9"></div>
+    <div class="col text-nowrap">
+        <span class="p-2" id="add-flight-btn">
+          <i class="fa-solid fa-plus"></i>
+          <p style="display:inline;" class="fw-bold text-primary">Add another flight</p>
+        </span>
     </div>
   </div>
  </form>`;
@@ -181,7 +177,7 @@ export const multiportInputHTML = `
 export const addFlightToMultiportHTML = `
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="departurePort"
+        <select class="form-select" id="departurePort_"
         name="departurePort_2">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
@@ -193,7 +189,7 @@ export const addFlightToMultiportHTML = `
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="arrivalPort"
+        <select class="form-select" id="arrivalPort_"
         name="arrivalPort_2">
           <option value="" selected>Select port</option>
           <option value="1">One</option>

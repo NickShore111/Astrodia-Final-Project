@@ -71,7 +71,7 @@
         <div class="py-3 px-3 border rounded-2 text-center" id="signInPopup">
             <a class="col-12 mb-2 btn btn-primary fw-bold" th:href="@{/astrodia/signin}" >Sign In</a>
             <div class="container col-12 p-2 rounded-2">
-                <a class="fw-bold" th:href="@{/signup}">Sign up, it's free</a>
+                <a class="fw-bold" th:href="@{/astrodia/signup}">Sign up, it's free</a>
             </div>
         </div>
     </div>
@@ -81,6 +81,7 @@
     <div style="padding: 10px; border:none; border-radius: 50%; position: absolute; top:10px; left: 20px;"
          id="loginFormHeader-arrow_back"
          type="button"
+         onclick="history.back()"
          data-bs-toggle="tooltip"
          data-bs-placement="bottom"
          title="Go back"

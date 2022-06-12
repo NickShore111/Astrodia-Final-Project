@@ -75,6 +75,7 @@ for (const formTab of formTabs) {
   });
 }
 // End: main-section-form-box-tabs onclick underline element
+// Start: load form for Flights, Stays, Reviews
 
 // Start: main-section-form-choice-tabs onclick focus element and populate input fields
 const choiceTabs = document.querySelectorAll(
@@ -96,40 +97,57 @@ for (const choiceTab of choiceTabs) {
     } else {
     // selecting multi-port adds event listeners
       inputFeildsContainer.innerHTML = multiportInputHTML;
-      const multiPortform = document.getElementById("multiPortForm");
+      const multiportForm = document.getElementById("multiportForm");
+
       let datepickers = document
         .querySelectorAll(".datepicker")
         .forEach((datepicker) => loadDatepickerDepature("#" + datepicker.id));
-      // changes shuttle2 departing from to shuttle 1 going to on change
-      multiPortform.arrivalPort_1.addEventListener("change", () => {
-        multiPortform.departurePort_2.value = form.arrivalPort_1.value;
-      });
+
+      addNextShuttleDepartureAutofillChangeEvent(multiportForm.arrivalPort_1);
       // create adding and removing flights functionality
       multiPortAddFlightBtnEvent();
     }
   });
 
+
+  function addNextShuttleDepartureAutofillChangeEvent(input_arrival) {
+    const multiportForm = document.getElementById("multiportForm");
+        let lastIndex = Number.parseInt(input_arrival.name.length-1);
+        let shuttleNum = input_arrival.name[lastIndex];
+
+        let nextShuttleNum = Number.parseInt(shuttleNum) + 1;
+        let targetDepartureId = "departurePort_" + nextShuttleNum;
+        var targetDepartureNode = document.getElementById(targetDepartureId);
+        input_arrival.addEventListener("change", () => {
+        targetDepartureNode.value = input_arrival.value;
+  });
+  }
+
   function multiPortAddFlightBtnEvent() {
-  const addAnotherFlight = document.querySelectorAll("#add-flight-btn");
-        for (const btn of addAnotherFlight) {
-            btn.addEventListener("click", () => {
-                let shuttleCount = document.querySelectorAll("#search-inputs").length;
-                console.log(shuttleCount);
-                const addFlightBtnRow = document.getElementById("add-flight-btn-row");
+    document.querySelector("#add-flight-btn").addEventListener("click", () => {
+        var shuttleCount = document.querySelectorAll(".search-inputs").length;
+        const addFlightBtnRow = document.getElementById("add-flight-btn-row");
 
-                // Create the input fields with container.id = search-inputs
-                var newFieldInputs = document.createElement("div");
-                newFieldInputs.className = "row g-2 justify-content-center my-1";
-                newFieldInputs.id = "search-inputs";
-                newFieldInputs.innerHTML = `
-                    <div class="row p-0 multi-port-shuttle-count">
-                       <div class="col offset-1"><h6 id="shuttleNum">Shuttle ${shuttleCount+1}</h6></div>
-                    </div> ${addFlightToMultiportHTML}`;
+        // Create the input fields with container.id = search-inputs
+        var newFieldInputs = document.createElement("div");
+        newFieldInputs.className = "row g-2 justify-content-center my-1 search-inputs";
+        newFieldInputs.id = "multiport-shuttle" + shuttleCount + 1;
+        newFieldInputs.innerHTML = `
+            <div class="row p-0">
+               <div class="col offset-1"><h6 id="shuttle-number">Shuttle ${shuttleCount+1}</h6></div>
+            </div> ${addFlightToMultiportHTML}`;
 
+        // create Remove field element
+        var removeFieldsBtn = document.createElement("div");
+        removeFieldsBtn.className = "row offset-9 p-2 d-inline fw-bold text-primary";
+        removeFieldsBtn.id = "remove-multiport-inputs";
+        removeFieldsBtn.innerHTML = "Remove";
+        // insert new input fields
+        multiportForm.insertBefore(newFieldInputs, addFlightBtnRow);
+        // insert remove fields element
+        multiportForm.insertBefore(removeFieldsBtn, newFieldInputs);
 
-                multiPortForm.insertBefore(newFieldInputs, addFlightBtnRow);
-            })
-        }
+    })
   }
 }
 // clear signin popup window with click outside element

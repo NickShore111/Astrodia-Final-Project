@@ -29,6 +29,7 @@ box-shadow: 8px 8px 8px grey;
   color: blue;
   border-bottom: 2px solid blue;
 }
+#remove-multiport-inputs:hover,
 #add-flight-btn:hover,
 .main-section-form-choice-tabs h6:hover {
   background-color: rgba(0, 255, 255, 0.158);
