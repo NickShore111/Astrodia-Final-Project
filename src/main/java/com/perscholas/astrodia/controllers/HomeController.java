@@ -2,6 +2,7 @@ package com.perscholas.astrodia.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -26,4 +27,10 @@ public class HomeController {
 
     @GetMapping("/signin")
     public String signInUserForm() { return "signin"; }
+
+    @PostMapping("/signup")
+    public String signInUser() {
+
+        return "redirect:astrodia";
+    }
 }

@@ -6,8 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Getter
-@Setter
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ import java.sql.Timestamp;
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String alphaNumId;
     @NonNull
     private Timestamp departing;

@@ -7,8 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ import java.util.Set;
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @NonNull
     private String name;
     @NonNull

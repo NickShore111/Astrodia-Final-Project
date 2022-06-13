@@ -7,8 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ import java.util.List;
 public class Spaceliner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @NonNull
     private String name;
     @NonNull
