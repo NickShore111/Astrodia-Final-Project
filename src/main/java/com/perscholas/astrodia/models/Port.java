@@ -16,12 +16,13 @@ import java.util.Set;
 @Table(name = "ports")
 public class Port {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Integer id;
+    @NonNull
+    private String name;
     @NonNull
     private String location;
     @NonNull
-    private String name;
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id", nullable = false)
@@ -29,4 +30,8 @@ public class Port {
     @JsonBackReference
     @OneToMany(mappedBy = "portId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Pad> pads;
+
+    public void addPad(Pad p) {
+        this.pads.add(p);
+    }
 }

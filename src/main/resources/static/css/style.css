@@ -68,7 +68,7 @@ box-shadow: 8px 8px 8px grey;
   text-decoration: none;
 }
 #loginFormHeader-arrow_back:hover,
-#signInPopup div:hover {
+#signUpBtn:hover {
   background-color: #0d6dfd28;
   cursor: pointer;
 }

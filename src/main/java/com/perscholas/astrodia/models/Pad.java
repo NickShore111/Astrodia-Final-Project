@@ -14,11 +14,9 @@ import java.util.List;
 @Entity
 @Table(name = "pads")
 public class Pad {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Id @NonNull
+    private String id;
     @NonNull
-    private String code;
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shuttle_port_id", nullable = false)
@@ -29,5 +27,12 @@ public class Pad {
     @JsonBackReference
     @OneToMany(mappedBy = "arrivalPad", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Flight> arrivingFlights;
+
+    public void addDepartureFlight(Flight f) {
+        this.departingFlights.add(f);
+    }
+    public void addArrivalFlight(Flight f) {
+        this.arrivingFlights.add(f);
+    }
 
 }

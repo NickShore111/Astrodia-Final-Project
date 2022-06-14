@@ -6,22 +6,24 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "spaceliners")
 public class Spaceliner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Id @NonNull
+    private String id;
     @NonNull
     private String name;
-    @NonNull
-    private String code;
     @JsonBackReference
     @OneToMany(mappedBy = "spacelinerId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Shuttle> shuttles;
+    private Set<Shuttle> shuttles;
+
+    public void addShuttle(Shuttle shuttle) {
+        this.shuttles.add(shuttle);
+    }
 }

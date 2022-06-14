@@ -12,4 +12,6 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
     List<Region> findAll();
 
     Optional<Region> findByName(String name);
+
+    Optional<Region> findById(String id);
 }

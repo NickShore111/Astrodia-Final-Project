@@ -14,14 +14,16 @@ import java.util.Set;
 @Entity
 @Table(name = "regions")
 public class Region {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
+    @Id @NonNull
+    private String id;
     @NonNull
     private String name;
-    @NonNull
-    private String code;
     @JsonBackReference
     @OneToMany(mappedBy = "regionId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Port> ports;
+
+    public void addPort(Port p) {
+        this.ports.add(p);
+    }
 }

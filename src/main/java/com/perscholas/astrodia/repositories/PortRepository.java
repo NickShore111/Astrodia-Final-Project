@@ -10,8 +10,8 @@ import java.util.Optional;
 @Repository
 public interface PortRepository extends JpaRepository<Port, Integer> {
     List<Port> findAll();
-
+    Optional<Port> findById(Integer id);
+    Optional<Port> findByName(String name);
     Optional<Port> findByLocation(String location);
 
-    Optional<Port> findByName(String name);
 }

@@ -15,20 +15,22 @@ import java.util.List;
 @Entity
 @Table(name = "shuttles")
 public class Shuttle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @NonNull
-    private String code;
+    @Id @NonNull
+    private String id;
     @NonNull
     private String name;
     @NonNull
-    private Integer passenger_capacity;
+    private Integer passengerCapacity;
     @JsonBackReference
-    @OneToMany(mappedBy = "shuttleId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "shuttle", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Flight> flights;
+    @NonNull
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "spaceLinerId", nullable = false)
     private Spaceliner spacelinerId;
+
+    public void addFlight(Flight flight) {
+        this.flights.add(flight);
+    }
 }

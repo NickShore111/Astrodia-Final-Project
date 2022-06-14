@@ -11,5 +11,7 @@ import java.util.Optional;
 public interface ShuttleRepository extends JpaRepository<Shuttle, Integer> {
     List<Shuttle> findAll();
 
+    Optional<Shuttle> findById(String id);
+
     Optional<Shuttle> findByName(String name);
 }

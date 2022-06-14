@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface PadRepository extends JpaRepository<Pad, Integer> {
     List<Pad> findAll();
 
-    Optional<Pad> findByCode(String code);
+    Optional<Pad> findById(String id);
 }

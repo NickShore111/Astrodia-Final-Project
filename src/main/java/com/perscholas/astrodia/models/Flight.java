@@ -2,6 +2,8 @@ package com.perscholas.astrodia.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -22,21 +24,26 @@ public class Flight {
     @NonNull
     private Timestamp arriving;
     private Integer seatsAvailable;
+    @NumberFormat(style= NumberFormat.Style.CURRENCY)
+    private Double pricePerSeat;
     @Column(updatable = false)
     private Timestamp createdAt;
     private Timestamp updatedAt;
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "launchPadId", nullable = false)
+    @NonNull
     private Pad launchPad;
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrivalPadId", nullable = false)
+    @NonNull
     private Pad arrivalPad;
     @JsonManagedReference
+    @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shuttleId", nullable = false)
-    private Shuttle shuttleId;
+    private Shuttle shuttle;
 
     @PrePersist
     protected void onCreate() {
