@@ -2,7 +2,6 @@ package com.perscholas.astrodia.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String alphaNumId;
+    private String flightCode;
     @NonNull
     private Timestamp departing;
     @NonNull

@@ -20,7 +20,7 @@ public class Spaceliner {
     @NonNull
     private String name;
     @JsonBackReference
-    @OneToMany(mappedBy = "spacelinerId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "spaceliner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Shuttle> shuttles;
 
     public void addShuttle(Shuttle shuttle) {

@@ -27,8 +27,8 @@ public class Shuttle {
     @NonNull
     @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "spaceLinerId", nullable = false)
-    private Spaceliner spacelinerId;
+    @JoinColumn(name = "spacelinerId", nullable = false)
+    private Spaceliner spaceliner;
 
     public void addFlight(Flight flight) {
         this.flights.add(flight);

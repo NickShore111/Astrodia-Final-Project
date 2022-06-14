@@ -25,10 +25,10 @@ public class Port {
     @NonNull
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "region_id", nullable = false)
+    @JoinColumn(name = "regionId", nullable = false)
     private Region regionId;
     @JsonBackReference
-    @OneToMany(mappedBy = "portId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Pad> pads;
 
     public void addPad(Pad p) {

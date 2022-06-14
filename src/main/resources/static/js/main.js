@@ -5,14 +5,15 @@ import {
   addFlightToMultiportHTML,
 } from "./formFlightsHTML.js";
 
-const loadDatepickerDepature = (departId) => {
+const loadDatepicker = (datepickerSelector) => {
   $(function () {
-    $(departId).datepicker();
+    $(datepickerSelector).datepicker();
   });
 };
+// Load datepickers for RoundTrip
 const loadDatepickerReturnAndArrival = () => {
   var dateFormat = "mm/dd/yy",
-    from = $("#departDate")
+    from = $("#departureDate")
       .datepicker({
         defaultDate: "+2d",
         minDate: 0,
@@ -22,7 +23,7 @@ const loadDatepickerReturnAndArrival = () => {
       .on("change", function () {
         to.datepicker("option", "minDate", getDate(this));
       }),
-    to = $("#returnDate")
+    to = $("#arrivalDate")
       .datepicker({
         defaultDate: "+1w",
         minDate: +1,
@@ -42,10 +43,7 @@ const loadDatepickerReturnAndArrival = () => {
     return date;
   }
 };
-// Initial load datepicker object
-$(document).ready(function () {
-  loadDatepickerReturnAndArrival();
-});
+
 // ==============================================================
 // START: index.html vanilla Javascript
 const addFocus = function (element) {
@@ -64,6 +62,8 @@ const inputFeildsContainer = document.querySelector(".input-fields-container");
 
 window.onload = () => {
   inputFeildsContainer.innerHTML = roundtripInputHTML;
+  loadDatepickerReturnAndArrival();
+
 };
 // Start: main-section-form-box-tabs onlick focus element
 const formTabs = document.getElementsByClassName("main-section-tab");
@@ -93,7 +93,7 @@ for (const choiceTab of choiceTabs) {
       loadDatepickerReturnAndArrival();
     } else if (document.getElementById("one-way").classList.contains("focus")) {
       inputFeildsContainer.innerHTML = onewayInputHTML;
-      loadDatepickerDepature("#departDate");
+      loadDatepicker(".departureDate");
     } else {
     // selecting multi-port adds event listeners
       inputFeildsContainer.innerHTML = multiportInputHTML;
@@ -101,40 +101,39 @@ for (const choiceTab of choiceTabs) {
 
       let datepickers = document
         .querySelectorAll(".datepicker")
-        .forEach((datepicker) => loadDatepickerDepature("#" + datepicker.id));
+        .forEach((datepicker) => loadDatepicker("#" + datepicker.id));
 
-      addNextShuttleDepartureAutofillChangeEvent(multiportForm.arrivalPort_1);
+      addNextShuttleDepartureAutofillChangeEvent("arrivalPort_1");
       // create adding and removing flights functionality
       multiPortAddFlightBtnEvent();
     }
   });
 
 
-  function addNextShuttleDepartureAutofillChangeEvent(input_arrival) {
+  function addNextShuttleDepartureAutofillChangeEvent(targetElementId) {
     const multiportForm = document.getElementById("multiportForm");
-        let lastIndex = Number.parseInt(input_arrival.name.length-1);
-        let shuttleNum = input_arrival.name[lastIndex];
+    let shuttleNum = targetElementId[targetElementId.length - 1];
+    let nextShuttleNum = Number.parseInt(shuttleNum) + 1;
+    let targetDepartureId = "departurePort_" + nextShuttleNum;
 
-        let nextShuttleNum = Number.parseInt(shuttleNum) + 1;
-        let targetDepartureId = "departurePort_" + nextShuttleNum;
-        var targetDepartureNode = document.getElementById(targetDepartureId);
-        input_arrival.addEventListener("change", () => {
-        targetDepartureNode.value = input_arrival.value;
-  });
+    document.getElementById(targetElementId).addEventListener("change", () => {
+        let targetDepartureNode = document.getElementById(targetDepartureId);
+        targetDepartureNode.value = document.getElementById(targetElementId).value;
+    });
   }
 
   function multiPortAddFlightBtnEvent() {
     document.querySelector("#add-flight-btn").addEventListener("click", () => {
-        var shuttleCount = document.querySelectorAll(".search-inputs").length;
+        var shuttleCount = Number.parseInt(document.querySelectorAll(".search-inputs").length);
         const addFlightBtnRow = document.getElementById("add-flight-btn-row");
-
+        let newShuttleCount = shuttleCount + 1;
         // Create the input fields with container.id = search-inputs
         var newFieldInputs = document.createElement("div");
         newFieldInputs.className = "row g-2 justify-content-center my-1 search-inputs";
-        newFieldInputs.id = "multiport-shuttle" + shuttleCount + 1;
+        newFieldInputs.id = "multiport-shuttle" + newShuttleCount;
         newFieldInputs.innerHTML = `
             <div class="row p-0">
-               <div class="col offset-1"><h6 id="shuttle-number">Shuttle ${shuttleCount+1}</h6></div>
+               <div class="col offset-1"><h6 id="shuttle-number">Shuttle ${newShuttleCount}</h6></div>
             </div> ${addFlightToMultiportHTML}`;
 
         // create Remove field element
@@ -144,9 +143,22 @@ for (const choiceTab of choiceTabs) {
         removeFieldsBtn.innerHTML = "Remove";
         // insert new input fields
         multiportForm.insertBefore(newFieldInputs, addFlightBtnRow);
+        // update name and id for new newFieldInputs
+        let newDeparture = document.getElementById("newDeparturePort");
+        let newArrival = document.getElementById("newArrivalPort");
+        let newDatepicker = document.getElementById("newDepartureDatepicker");
+        newDeparture.id = "departurePort_" + newShuttleCount;
+        newDeparture.name = "departurePort_" + newShuttleCount;
+        newArrival.id = "arrivalPort_" + newShuttleCount;
+        newArrival.name= "arrivalPort_" + newShuttleCount;
+        newDatepicker.id = "departureDate_" + newShuttleCount;
+
         // insert remove fields element
         multiportForm.insertBefore(removeFieldsBtn, newFieldInputs);
+        let targetElementId = "arrivalPort_" + shuttleCount;
 
+
+        addNextShuttleDepartureAutofillChangeEvent(targetElementId);
     })
   }
 }

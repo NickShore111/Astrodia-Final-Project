@@ -19,8 +19,8 @@ public class Pad {
     @NonNull
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "shuttle_port_id", nullable = false)
-    private Port portId;
+    @JoinColumn(name = "portId", nullable = false)
+    private Port port;
     @JsonBackReference
     @OneToMany(mappedBy = "launchPad", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Flight> departingFlights;

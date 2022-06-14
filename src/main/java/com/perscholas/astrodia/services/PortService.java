@@ -16,7 +16,7 @@ public class PortService {
         this.portRepository = portRepository;
     }
 
-    List<Port> findAll() { return portRepository.findAll(); }
+    public List<Port> findAll() { return portRepository.findAll(); }
 
     public void saveOrUpdate(Port liner) {
         portRepository.save(liner);

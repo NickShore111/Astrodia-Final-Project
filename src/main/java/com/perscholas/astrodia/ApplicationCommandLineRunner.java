@@ -11,10 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 @Component @Slf4j
@@ -63,11 +61,9 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             new Shuttle("BM", "Blue Moon", 12, BLO)
     ));
 
-
     private List<Region> regions = new ArrayList<Region>(Arrays.asList(
             NA, AS, EO, MO, MA
     ));
-
 
     List<Port> ports = new ArrayList<Port>(Arrays.asList(
             stb, jfk, tane, axiom, lgw, dcb, mpb, mvs

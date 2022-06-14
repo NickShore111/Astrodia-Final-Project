@@ -26,17 +26,17 @@ export const roundtripInputHTML = `
               <div class="col-lg-4 d-flex justify-content-center" id="date-input-container">
                 <div class="col-5 mx-1">
                   <input
-                    class="form-control form-select-lg mb-3 col"
+                    class="form-control form-select-lg mb-3 col datepicker"
                     type="text"
+                    id="departureDate"
                     placeholder="Departure date"
-                    id="departDate"
                   />
                 </div>
                 <div class="col-5 mx-1">
                   <input
-                    class="form-control form-select-lg mb-3 col"
+                    class="form-control form-select-lg mb-3 col datepicker"
                     type="text"
-                    id="returnDate"
+                    id="arrivalDate"
                     placeholder="Return date"
                   />
                 </div>
@@ -50,7 +50,7 @@ export const onewayInputHTML = `
     <div class="row g-2 justify-content-center" id="oneway-search-inputs">
         <div class="col-lg-3">
           <div class="form-floating">
-            <select class="form-select" id="departurePort">
+            <select class="form-select" id="departurePort_1">
               <option selected>Select port</option>
               <option value="1">One</option>
               <option value="2">Two</option>
@@ -61,7 +61,7 @@ export const onewayInputHTML = `
         </div>
         <div class="col-lg-3">
           <div class="form-floating">
-            <select class="form-select" id="arrivalPort">
+            <select class="form-select" id="arrivalPort_1">
               <option selected>Select port</option>
               <option value="1">One</option>
               <option value="2">Two</option>
@@ -73,10 +73,10 @@ export const onewayInputHTML = `
         <div class="col-lg-4 d-flex justify-content-center" id="date-input-container">
           <div class="col-8 mx-1">
             <input
-              class="form-control form-select-lg mb-3 col"
+              class="form-control form-select-lg mb-3 col departureDate"
               type="text"
               placeholder="Departure date"
-              id="departDate"
+              id="departureDate_1"
             />
           </div>
         </div>
@@ -119,7 +119,7 @@ export const multiportInputHTML = `
           class="form-control form-select-lg mb-3 col datepicker"
           type="text"
           placeholder="Departure date"
-          id="fs-departDate1"
+          id="departureDate_1"
         />
       </div>
     </div>
@@ -158,7 +158,7 @@ export const multiportInputHTML = `
           class="form-control form-select-lg mb-3 col datepicker"
           type="text"
           placeholder="Departure date"
-          id="fs-departDate2"
+          id="departureDate_2"
         />
       </div>
     </div>
@@ -177,8 +177,8 @@ export const multiportInputHTML = `
 export const addFlightToMultiportHTML = `
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="departurePort_"
-        name="departurePort_2">
+        <select class="form-select" id="newDeparturePort"
+        name="newDeparturePort">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
           <option value="2">Two</option>
@@ -189,8 +189,8 @@ export const addFlightToMultiportHTML = `
     </div>
     <div class="col-lg-3">
       <div class="form-floating">
-        <select class="form-select" id="arrivalPort_"
-        name="arrivalPort_2">
+        <select class="form-select" id="newArrivalPort"
+        name="newArrivalPort">
           <option value="" selected>Select port</option>
           <option value="1">One</option>
           <option value="2">Two</option>
@@ -205,7 +205,7 @@ export const addFlightToMultiportHTML = `
           class="form-control form-select-lg mb-3 col datepicker"
           type="text"
           placeholder="Departure date"
-          id="fs-departDate2"
+          id="newDepartureDatepicker"
         />
       </div>
     </div>`;

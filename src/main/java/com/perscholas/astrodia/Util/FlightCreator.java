@@ -4,10 +4,11 @@ import com.perscholas.astrodia.models.Flight;
 import com.perscholas.astrodia.models.Pad;
 import com.perscholas.astrodia.models.Shuttle;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public class FlightCreator {
@@ -20,6 +21,12 @@ public class FlightCreator {
     public FlightCreator(List<Shuttle> shuttles, List<Pad> pads) {
         this.shuttles = shuttles;
         this.pads = pads;
+    }
+
+    private String createFlightCode(Calendar cal, String shuttleSpacelinerId, String launchPadId, String arrivalPadId) {
+
+        int day = cal.get(Calendar.DAY_OF_YEAR);
+        return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
     }
 
     private Flight createNewFlight() {
@@ -37,13 +44,24 @@ public class FlightCreator {
         int launchPadIdx = rand.nextInt(pads.size());
         int arrivalPadIdx = this.getArrivalPadIdx(launchPadIdx);
 
-        return new Flight(
-                futureDeparture,
-                this.getFutureArrival(futureDeparture),
-                pads.get(launchPadIdx),
-                pads.get(arrivalPadIdx),
-                shuttles.get(randomShuttleIdx));
+        Timestamp futureArrival = this.getFutureArrival(futureDeparture);
+        Pad launchPad = pads.get(launchPadIdx);
+        Pad arrivalPad = pads.get(arrivalPadIdx);
+        Shuttle shuttle = shuttles.get(randomShuttleIdx);
+        String flightCode = this.createFlightCode(cal, shuttle.getSpaceliner().getId(), launchPad.getId(), arrivalPad.getId());
+
+        Flight newFlight = new Flight();
+        newFlight.setFlightCode(flightCode);
+        newFlight.setDeparting(futureDeparture);
+        newFlight.setArriving(futureArrival);
+        newFlight.setLaunchPad(launchPad);
+        newFlight.setArrivalPad(arrivalPad);
+        newFlight.setShuttle(shuttle);
+        newFlight.setSeatsAvailable(shuttle.getPassengerCapacity());
+
+        return newFlight;
     }
+
     private Timestamp getFutureArrival(Timestamp timestamp) {
         // add 30 random days to arrival timestamp with min of 3 difference
         int randFuture = rand.nextInt(27) + 3;
