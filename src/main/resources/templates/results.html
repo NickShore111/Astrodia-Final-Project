@@ -11,13 +11,43 @@
 <div th:text="${result.departureDate}"></div>
 <div th:text="${result.arrivalDate}"></div>
 
-<p th:each="flight : @{flights}">
-    <span th:text="${flight.flightCode}"></span>
-    <span th:text="${flight.arrivingDate}"></span>
-    <span th:text="${flight.departingDate}"></span>
+<div th:each="flight : ${flights}">
+    <p th:text="${flight.flightCode}"></p>
+    <p th:text="${flight.arrivingDate}"></p>
+    <p th:text="${flight.departingDate}"></p>
+    <p th:text="${flight.shuttle.name}"></p>
+    <p th:text="${flight.launchPad}"></p>
+        <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
+                <img
+                        th:src="@{/assets/logo/SpaceX_logo.png}"
+                        alt="SpaceX logo"
+                        style="height: 10px"
+                />
+
+              SpaceX Liners
+        </span>
+        <span th:if="${#strings.startsWith(flight.flightCode, 'BLO')}">
+                <img
+                        th:src="@{/assets/logo/Blue_Origin_logo.png}"
+                        alt="BlueOrigin logo"
+                        style="height: 10px"
+                />
+
+              Blue Origin
+        </span>
+    <span th:if="${#strings.startsWith(flight.flightCode, 'VGN')}">
+                <img
+                        th:src="@{/assets/logo/Virgin_Galactic_logo.jpg}"
+                        alt="Virgin Galactic logo"
+                        style="height: 40px"
+                />
+
+              Virgin Galactic
+        </span>
+    </span>
+</div>
 
 
-</p>
 
 </body>
 </html>

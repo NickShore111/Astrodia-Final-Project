@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <div th:insert="fragments/header :: header" />
-  <title> Title </title>
+  <link th:replace="fragments/header :: header" />
+  <title>Astrodia Space Travel</title>
 </head>
 <body>
 <div class="main container-fluid p-1">
   <!-- Start: Navbar element -->
-  <div th:replace="fragments/nav :: nav" />
+  <div th:replace="fragments/nav :: nav"></div>
+  <div th:replace="fragments/base :: container(flights)"></div>
+  <!-- Start: Main image and additional content -->
 
-
+  <div th:replace="fragments/footer :: links"></div>
 
   <div th:replace="fragments/footer :: footer"></div>
 </div>
 
-<div th:insert="fragments/footer :: scripts" />
+<div th:replace="fragments/footer :: scripts"></div>
 <script type="module" th:src="@{/js/main.js}"></script>
 
 </body>

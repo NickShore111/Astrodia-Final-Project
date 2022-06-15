@@ -4,6 +4,7 @@ package com.perscholas.astrodia.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,24 +13,27 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@FieldDefaults(level=AccessLevel.PRIVATE)
 @Entity
 @Table(name = "ports")
 public class Port {
     @Id
     @NonNull
-    private Integer id;
+    Integer id;
     @NonNull
-    private String name;
+    String name;
     @NonNull
-    private String location;
+    String code;
+    @NonNull
+    String location;
     @NonNull
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "regionId", nullable = false)
-    private Region regionId;
+    @JoinColumn(name = "region", nullable = false)
+    Region region;
     @JsonBackReference
     @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Pad> pads;
+    Set<Pad> pads;
 
     public void addPad(Pad p) {
         this.pads.add(p);

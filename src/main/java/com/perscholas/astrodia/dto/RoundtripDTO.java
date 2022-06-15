@@ -14,8 +14,8 @@ import java.util.Date;
 public class RoundtripDTO {
     String departurePort;
     String arrivalPort;
-    @DateTimeFormat(pattern="mm/dd/yyyy")
+//    @DateTimeFormat(pattern="mm/dd/yyyy")
     Date departureDate;
-    @DateTimeFormat(pattern="mm/dd/yyyy")
+//    @DateTimeFormat(pattern="mm/dd/yyyy")
     Date arrivalDate;
 }

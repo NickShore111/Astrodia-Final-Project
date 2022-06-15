@@ -4,6 +4,7 @@ package com.perscholas.astrodia.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,23 +13,24 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@FieldDefaults(level=AccessLevel.PRIVATE)
 @Entity
 @Table(name = "shuttles")
 public class Shuttle {
     @Id @NonNull
-    private String id;
+    String id;
     @NonNull
-    private String name;
+    String name;
     @NonNull
-    private Integer passengerCapacity;
+    Integer passengerCapacity;
     @JsonBackReference
     @OneToMany(mappedBy = "shuttle", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Flight> flights;
+    List<Flight> flights;
     @NonNull
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "spacelinerId", nullable = false)
-    private Spaceliner spaceliner;
+    Spaceliner spaceliner;
 
     public void addFlight(Flight flight) {
         this.flights.add(flight);

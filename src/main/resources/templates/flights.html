@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link th:replace="fragments/header :: header" />
+  <title>Shuttle Flights</title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+  <div th:replace="fragments/nav :: nav"></div>
+  <!-- Start: Main image and additional content -->
+  <div class="container-lg">
+    <div class="row">
+      Search flight form placeholder with search details prefilled
+    </div>
+    <!-- Start: Sidebar for narrowing selection -->
+    <div class="row">
+      <div class="search-result-filters col-2 p-2 border rounded-start">
+        <h4>Filter by</h4>
+        <h5>Shuttleliner</h5>
+            <div class="form-check">
+              <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="limitSpaceX"
+                      checked
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                SpaceX
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="limitBlueOrigin"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                BlueOrigin
+              </label>
+            </div>
+      </div>
+      <!-- End: Sidebar for narrowing selection -->
+      <!-- Start: Search results flight list  -->
+      <div class="container flight-search-results-container col border rounded-end">
+        <div class="row listview-flight-details p-2 my-1"
+             th:each="flight : ${flights}">
+          <div class="col-12 col-sm-5">
+            <th:block th:inline="text">
+              [[${#calendars.format({flight.departing},'hh:mm a')}]] -
+              [[${#calendars.format({flight.arriving},'hh:mm a')}]]
+            </th:block>
+            <h5 class="mb-0" th:text="${flight.flightCode}"></h5>
+              <p class="mb-0" th:inline="text">
+                [[${flight.launchPad.port.name}]] ([[${flight.launchPad.port.code}]]) to
+                [[${flight.arrivalPad.port.name}]] ([[${flight.arrivalPad.port.code}]])
+              </p>
+              <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
+                <img
+                        th:src="@{/assets/logo/SpaceX_logo.png}"
+                        alt="SpaceX logo"
+                        style="height: 10px"
+                />
+
+              SpaceX Liners
+                </span>
+              <span th:if="${#strings.startsWith(flight.flightCode, 'BLO')}">
+                <img
+                        th:src="@{/assets/logo/Blue_Origin_logo.png}"
+                        alt="BlueOrigin logo"
+                        style="height: 10px"
+                />
+
+              Blue Origin
+                </span>
+              <span th:if="${#strings.startsWith(flight.flightCode, 'VGN')}">
+                <img
+                        th:src="@{/assets/logo/Virgin_Galactic_logo.jpg}"
+                        alt="Virgin Galactic logo"
+                        style="height: 40px"
+                />
+
+              Virgin Galactic
+                </span>
+            </p>
+          </div>
+          <div class="col-6 col-sm-5 text-center">
+            <p>60d 40m(1 stop)<br /><th:block th:inline="text">
+              [[${flight.launchPad.port.location}]] -
+              [[${flight.launchPad.port.region.name}]]<br>
+              TO<br>[[${flight.arrivalPad.port.location}]] -
+              [[${flight.arrivalPad.port.region.name}]]<br>
+            </p>
+          </div>
+          <div class="col">
+            <small style="color: red" class="mb-0">2 left</small>
+            <h5 class="fw-bold">$40000</h5>
+            <span class="d-flex"
+            ><img id="bitcoin-symbol" th:src="@{/assets/Btc-sans.png}" />
+                  <h5 class="fw-bold">2300</h5>
+                </span>
+          </div>
+        </div>
+      </div>
+      <!-- End: Search results flight list -->
+
+      <div th:replace="fragments/footer :: links"></div>
+      <div th:replace="fragments/footer :: footer"></div>
+
+      <div th:replace="fragments/footer :: scripts"></div>
+      <script type="module" th:src="@{/js/flights.js}"></script>
+      <script type="module" th:src="@{/js/nav.js}"></script>
+
+    </div>
+  </div>
+</div>
+    <!-- Start: Flight selection detail overlay side panal -->
+    <div class="container" id="flight-detail-overlay">
+      <div class="row p-3 border-bottom">
+        <div class="overlay-close" id="overlay-close"></div>
+      </div>
+      <div class="row p-3 border-1 border-bottom border-dark">
+        <h4>12:27pm - 3:02pm (Nonstop)</h4>
+        <p><img
+                th:src="@{/assets/logo/SpaceX_logo.png}"
+                alt="SpaceX logo"
+                style="height: 10px"
+        />
+          SpaceX</p>
+        <br />
+        <p><span class="fw-bold">12:34pm-3:02pm</span><br />3h 24m(Nonstop)</p>
+      </div>
+      <div class="row p-3">
+        <h5 class="m-0">Selected fare to Moon Base</h5>
+        <p>Your selection applies to this flight only</p>
+      </div>
+      <div class="p-3 col-lg-12 col-xxl-8 border border-2 rounded m-2">
+        <h4 class="fw-bold my-0">
+          $18208 dollar<br>OR<br>
+          <span>
+                <img id="overlay-bitcoin-symbol" th:src="@{/assets/Btc-sans.png}" />
+                .033031 bitcoin</span>
+        </h4>
+        <p>$23432 roundtrip for 1 traveler</p>
+        <p class="fs-6 m-0">
+          <img id="dollar-icon" th:src="@{/assets/dollar-icon.png}" />Seat
+          choice
+        </p>
+        <p class="fs-6 m-0">
+          <img
+                  id="dollar-icon"
+                  th:src="@{/assets/dollar-icon.png}"
+          />Cancellation
+        </p>
+        <p class="fs-6">
+          <img id="dollar-icon" th:src="@{/assets/dollar-icon.png}" />Changes
+        </p>
+        <div class="row border mx-2 mb-2"></div>
+        <div class="row m-0">
+          <div class="col-8">
+            <p>Carry-on:<br>1st checked bag:<br>2nd checked bag:</p>
+          </div>
+          <div class="col-4">
+            <p>$400 to $450<br>$200 to $250<br>$300 to $450</p>
+          </div>
+          <button class="btn btn-primary">Select</button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

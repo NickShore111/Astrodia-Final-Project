@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -46,9 +48,20 @@ public class HomeController {
     @GetMapping("/roundtrip")
     public String roundtripFlightSearch(Model model, @ModelAttribute("roundtripDTO") RoundtripDTO roundtripDTO) {
         model.addAttribute("result", roundtripDTO);
-        List<Flight> flights = flightService.findFlightsByDeparture(roundtripDTO.getDepartureDate());
+        Date departureDate = roundtripDTO.getDepartureDate();
+        DateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy");
+        String formatDateStr = dFormat.format(departureDate);
+        List<Flight> flights = flightService.findFlightsByDeparture(formatDateStr);
+//        log.info("DateFormat: " + formatDateStr);
+//        log.info("FLIGHTS: " + flights.toString());
         model.addAttribute("flights", flights);
-        return "results";
+        log.info(flights.toString());
+        return "flights";
+    }
+
+    @GetMapping("/results")
+    public String flightSearchResults() {
+        return "flights";
     }
     @GetMapping("/signup")
     public String createUserForm() {

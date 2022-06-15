@@ -61,9 +61,8 @@ const removeFocus = function (element, elements) {
 const inputFeildsContainer = document.querySelector(".input-fields-container");
 
 window.onload = () => {
-//  inputFeildsContainer.innerHTML = roundtripInputHTML;
+  //  inputFeildsContainer.innerHTML = roundtripInputHTML;
   loadDatepickerReturnAndArrival();
-
 };
 // Start: main-section-form-box-tabs onlick focus element
 const formTabs = document.getElementsByClassName("main-section-tab");
@@ -162,14 +161,6 @@ for (const choiceTab of choiceTabs) {
     })
   }
 }
-// clear signin popup window with click outside element
-document.getElementById("signInNavLink").addEventListener("click", (event) => {
-  document.getElementById("signInPopup").style.display = "block";
-  event.stopPropagation();
-});
-$(window).click(function () {
-  document.getElementById("signInPopup").style.display = "none";
-});
 // End: main-section-form-choice-tabs onclick select element
 // Start: submit form action button
 const searchBtn = document.getElementById("searchBtn");

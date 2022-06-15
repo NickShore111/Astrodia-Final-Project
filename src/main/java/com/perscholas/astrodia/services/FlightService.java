@@ -23,7 +23,7 @@ public class FlightService {
         flightRepository.save(flight);
     }
 
-    public List<Flight> findFlightsByDeparture(Date date) {
+    public List<Flight> findFlightsByDeparture(String date) {
         return flightRepository.findFlightsByDeparture(date);
     }
 }

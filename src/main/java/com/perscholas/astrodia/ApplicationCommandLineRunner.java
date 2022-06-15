@@ -29,20 +29,20 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     Spaceliner VGN = new Spaceliner("VGN", "Virgin Galactic");
     Spaceliner BLO =  new Spaceliner("BLO", "Blue Origin");
 
-    Region NA = new Region("NA", "North America");
-    Region AS = new Region("AS", "Asia");
-    Region EO = new Region("EO", "Earth Orbit");
-    Region MO = new Region("MO", "Moon");
-    Region MA = new Region("MA", "Mars");
+    Region NorthAmerica = new Region("NA", "North America");
+    Region Asia = new Region("Asia", "Asia");
+    Region EarthOrbit = new Region("EarthOrbit", "Earth Orbit");
+    Region Moon = new Region("Moon", "Moon");
+    Region Mars = new Region("Mars", "Mars");
 
-    Port stb = new Port(1,  "Starbase", "Boca Chica,TX",NA);
-    Port jfk = new Port(2, "J.F.K. Space Center", "Cape Canaveral,FL", NA);
-    Port tane = new Port(3,"Tanegashima Space Center","Tanegashima Island, JP",  AS);
-    Port axiom = new Port(4,"Axiom Staton", "Geostionanary Earth Orbit", EO);
-    Port lgw = new Port(5, "Lunar Gateway", "Low Earth Orbit",EO);
-    Port dcb = new Port(6,"Deep Crater Base","Peary Crater",  MO);
-    Port mpb = new Port(7, "Malapert Peak Base", "Malapert Mountain",MA);
-    Port mvs = new Port(8, "M.V. Spaceport", "Mawrth Vallis",MA);
+    Port STB = new Port(1,  "Starbase", "STB", "Boca Chica,TX", NorthAmerica);
+    Port JFK = new Port(2, "J.F.K. Space Center", "JFK", "Cape Canaveral,FL", NorthAmerica);
+    Port TSP = new Port(3,"Tanegashima Space Center", "TSP", "Tanegashima Island, JP",  Asia);
+    Port AEO = new Port(4,"Axiom Station", "AEO", "Geostionanary Earth Orbit", EarthOrbit);
+    Port LGW = new Port(5, "Lunar Gateway", "LGW", "Low Earth Orbit",EarthOrbit);
+    Port DCB = new Port(6,"Deep Crater Base", "DCB", "Peary Crater",  Moon);
+    Port MPB = new Port(7, "Malapert Peak Base", "MPB", "Malapert Mountain",Mars);
+    Port MVS = new Port(8, "M.V. Spaceport", "MVS", "Mawrth Vallis",Mars);
 
     private List<Spaceliner> spaceliners = new ArrayList<Spaceliner>(Arrays.asList(
             SPX, VGN, BLO
@@ -52,7 +52,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             new Shuttle( "DR", "Dragon", 8, SPX),
             new Shuttle("RD", "Red Dragon", 12, SPX),
             new Shuttle("DX","Dragon XL", 16, SPX),
-            new Shuttle("VU", "VSS Unity", 6, VGN),
+            new Shuttle("VU", "VSS Unity", 12, VGN),
             new Shuttle("VM", "VSS Imagine", 12, VGN),
             new Shuttle("VN","VSS Inspire", 14, VGN),
             new Shuttle("NS", "New Shepard", 6, BLO),
@@ -62,30 +62,30 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     ));
 
     private List<Region> regions = new ArrayList<Region>(Arrays.asList(
-            NA, AS, EO, MO, MA
+            NorthAmerica, Asia, EarthOrbit, Moon, Mars
     ));
 
     List<Port> ports = new ArrayList<Port>(Arrays.asList(
-            stb, jfk, tane, axiom, lgw, dcb, mpb, mvs
+            STB, JFK, TSP, AEO, LGW, DCB, MPB, MVS
     ));
 
     private List<Pad> pads = new ArrayList<Pad>(Arrays.asList(
-            new Pad("X1", stb),
-            new Pad("X2", stb),
-            new Pad("C1", jfk),
-            new Pad("C2", jfk),
-            new Pad("T1", tane),
-            new Pad("T2", tane),
-            new Pad("G1", axiom),
-            new Pad("G2", axiom),
-            new Pad("L1", lgw),
-            new Pad("L2", lgw),
-            new Pad("P1", dcb),
-            new Pad("P2", dcb),
-            new Pad("M1", mpb),
-            new Pad("M2", mpb),
-            new Pad("V1", mvs),
-            new Pad("V2", mvs)
+            new Pad("X1", STB),
+            new Pad("X2", STB),
+            new Pad("C1", JFK),
+            new Pad("C2", JFK),
+            new Pad("T1", TSP),
+            new Pad("T2", TSP),
+            new Pad("G1", AEO),
+            new Pad("G2", AEO),
+            new Pad("L1", LGW),
+            new Pad("L2", LGW),
+            new Pad("P1", DCB),
+            new Pad("P2", DCB),
+            new Pad("M1", MPB),
+            new Pad("M2", MPB),
+            new Pad("V1", MVS),
+            new Pad("V2", MVS)
     ));
 
     @Autowired
@@ -111,8 +111,8 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        FlightCreator flightCreator = new FlightCreator(shuttles, pads, 14);
-        List<Flight> flights = flightCreator.getListOfFlights(100);
+        FlightCreator flightCreator = new FlightCreator(shuttles, pads, 7);
+        List<Flight> flights = flightCreator.getListOfFlights(20);
 
         for (Region r : regions) {
             regionService.saveOrUpdate(r);
