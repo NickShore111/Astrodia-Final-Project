@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Date;
 
 @Service
 public class FlightService {
@@ -20,5 +21,9 @@ public class FlightService {
 
     public void saveOrUpdate(Flight flight) {
         flightRepository.save(flight);
+    }
+
+    public List<Flight> findFlightsByDeparture(Date date) {
+        return flightRepository.findFlightsByDeparture(date);
     }
 }

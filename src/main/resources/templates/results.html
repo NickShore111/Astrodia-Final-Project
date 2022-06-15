@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> results for search </h1>
+<div th:text="${result.departurePort}"></div>
+<div th:text="${result.arrivalPort}"></div>
+<div th:text="${result.departureDate}"></div>
+<div th:text="${result.arrivalDate}"></div>
+
+<p th:each="flight : @{flights}">
+    <span th:text="${flight.flightCode}"></span>
+    <span th:text="${flight.arrivingDate}"></span>
+    <span th:text="${flight.departingDate}"></span>
+
+
+</p>
+
+</body>
+</html>

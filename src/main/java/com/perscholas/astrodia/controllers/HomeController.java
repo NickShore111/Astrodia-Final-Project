@@ -1,5 +1,7 @@
 package com.perscholas.astrodia.controllers;
 
+import com.perscholas.astrodia.dto.RoundtripDTO;
+import com.perscholas.astrodia.models.Flight;
 import com.perscholas.astrodia.services.FlightService;
 import com.perscholas.astrodia.services.PortService;
 import com.perscholas.astrodia.services.RegionService;
@@ -9,9 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 @Controller @Slf4j
 @RequestMapping("astrodia")
@@ -32,11 +37,19 @@ public class HomeController {
     public String index() {return "index";}
 
     @GetMapping("")
-    public String mainPage(Model model) {
-//        model.addAttribute("ports", portService.findAll());
+    public String mainPage(@ModelAttribute("roundtripDTO") RoundtripDTO roundtripDTO, BindingResult result, Model model){
+        model.addAttribute("ports", portService.findAll());
+        model.addAttribute("roundtripSearch", roundtripDTO);
         return "home";
     }
 
+    @GetMapping("/roundtrip")
+    public String roundtripFlightSearch(Model model, @ModelAttribute("roundtripDTO") RoundtripDTO roundtripDTO) {
+        model.addAttribute("result", roundtripDTO);
+        List<Flight> flights = flightService.findFlightsByDeparture(roundtripDTO.getDepartureDate());
+        model.addAttribute("flights", flights);
+        return "results";
+    }
     @GetMapping("/signup")
     public String createUserForm() {
         return "signup";

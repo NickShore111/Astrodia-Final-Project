@@ -111,8 +111,8 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        FlightCreator flightCreator = new FlightCreator(shuttles, pads);
-        List<Flight> flights = flightCreator.getListOfFlights(10);
+        FlightCreator flightCreator = new FlightCreator(shuttles, pads, 14);
+        List<Flight> flights = flightCreator.getListOfFlights(100);
 
         for (Region r : regions) {
             regionService.saveOrUpdate(r);

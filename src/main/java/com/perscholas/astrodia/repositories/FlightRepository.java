@@ -4,6 +4,7 @@ import com.perscholas.astrodia.models.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
@@ -15,4 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             + " JOIN regions ON regions.id = shuttle_ports.region_id"
             + " WHERE regions.name = ?1", nativeQuery = true)
     List<Flight> findFlightsByRegionDeparture(String region);
+
+    @Query(value = "SELECT * FROM flights WHERE DATE(flights.departing) = ?1", nativeQuery = true)
+    List<Flight> findFlightsByDeparture(Date date);
 }

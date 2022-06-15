@@ -61,7 +61,7 @@ const removeFocus = function (element, elements) {
 const inputFeildsContainer = document.querySelector(".input-fields-container");
 
 window.onload = () => {
-  inputFeildsContainer.innerHTML = roundtripInputHTML;
+//  inputFeildsContainer.innerHTML = roundtripInputHTML;
   loadDatepickerReturnAndArrival();
 
 };
@@ -89,7 +89,7 @@ for (const choiceTab of choiceTabs) {
 // Populate innerHTML from formFlightsHTML.js imports
 // and reload Jquery datepicker object after selecting travel choice
     if (document.getElementById("roundtrip").classList.contains("focus")) {
-      inputFeildsContainer.innerHTML = roundtripInputHTML;
+//      inputFeildsContainer.innerHTML = roundtripInputHTML;
       loadDatepickerReturnAndArrival();
     } else if (document.getElementById("one-way").classList.contains("focus")) {
       inputFeildsContainer.innerHTML = onewayInputHTML;
@@ -170,6 +170,12 @@ document.getElementById("signInNavLink").addEventListener("click", (event) => {
 $(window).click(function () {
   document.getElementById("signInPopup").style.display = "none";
 });
-
 // End: main-section-form-choice-tabs onclick select element
+// Start: submit form action button
+const searchBtn = document.getElementById("searchBtn");
+searchBtn.onclick = () => {console.log("button clicked")};
+searchBtn.addEventListener("click", (event) => {
+    const searchForm = document.getElementById("searchForm");
+    console.log(searchForm);
+})
 // END:  index.html vanilla Javascript

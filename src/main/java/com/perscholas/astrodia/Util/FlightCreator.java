@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 public class FlightCreator {
@@ -16,22 +14,33 @@ public class FlightCreator {
     private final List<Pad> pads;
     private final Random rand = new Random();
     private final Calendar cal = Calendar.getInstance();
+    private int departureWindow = 30;
+
     private List<Flight> flightsList = new ArrayList<>();
 
     public FlightCreator(List<Shuttle> shuttles, List<Pad> pads) {
         this.shuttles = shuttles;
         this.pads = pads;
     }
+    public FlightCreator(List<Shuttle> shuttles, List<Pad> pads, int departureWindow) {
+        this.shuttles = shuttles;
+        this.pads = pads;
+        this.departureWindow = departureWindow;
+    }
 
-    private String createFlightCode(Calendar cal, String shuttleSpacelinerId, String launchPadId, String arrivalPadId) {
 
+    private String createFlightCode(
+            Calendar cal,
+            String shuttleSpacelinerId,
+            String launchPadId,
+            String arrivalPadId) {
         int day = cal.get(Calendar.DAY_OF_YEAR);
         return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
     }
 
     private Flight createNewFlight() {
         // add 30 random days to launch timestamp
-        int randFuture = rand.nextInt(31);
+        int randFuture = rand.nextInt(departureWindow);
         // create new timestamp object with current time
         Timestamp timestamp = new Timestamp(new Date().getTime());
         // set calendar object to now
@@ -63,8 +72,8 @@ public class FlightCreator {
     }
 
     private Timestamp getFutureArrival(Timestamp timestamp) {
-        // add 30 random days to arrival timestamp with min of 3 difference
-        int randFuture = rand.nextInt(27) + 3;
+        // add 30 random days to arrival timestamp with min of 1 difference
+        int randFuture = rand.nextInt(27) + 1;
         // set calendar object to now
         cal.setTimeInMillis(timestamp.getTime());
         // add 30 days to cal object

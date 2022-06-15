@@ -6,6 +6,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -43,6 +44,10 @@ public class Flight {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shuttleId", nullable = false)
     private Shuttle shuttle;
+    @Transient
+    Date departingDate;
+    @Transient
+    Date arrivingDate;
 
     @PrePersist
     protected void onCreate() {
@@ -54,5 +59,12 @@ public class Flight {
     protected void onUpdate() {
         long now = System.currentTimeMillis();
         this.updatedAt = new Timestamp(now);
+    }
+
+    public Date getDepartingDate() {
+        return new Date(this.departing.getTime());
+    }
+    public Date getArrivingDate() {
+        return new Date(this.arriving.getTime());
     }
 }
