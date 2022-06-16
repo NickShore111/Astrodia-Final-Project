@@ -13,7 +13,6 @@ public class FlightCreator {
     private final List<Shuttle> shuttles;
     private final List<Pad> pads;
     private final Random rand = new Random();
-    private final Calendar cal = Calendar.getInstance();
     private int departureWindow = 30;
 
     private List<Flight> flightsList = new ArrayList<>();
@@ -28,36 +27,48 @@ public class FlightCreator {
         this.departureWindow = departureWindow;
     }
 
-
+    public List<Flight> getListOfFlights(int numberOfFlights) {
+        for (int i = 0; i < numberOfFlights; i++) {
+            Flight f = this.createNewFlight();
+            flightsList.add(f);
+        }
+        return flightsList;
+    }
     private String createFlightCode(
-            Calendar cal,
             String shuttleSpacelinerId,
             String launchPadId,
             String arrivalPadId) {
+        Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_YEAR);
         return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
     }
 
     private Flight createNewFlight() {
-        // add 30 random days to launch timestamp
-        int randFuture = rand.nextInt(departureWindow);
+        // add random days, minute, hour to departure timestamp
+        int randDay = rand.nextInt(departureWindow);
+        int randMinute = rand.nextInt(60);
+        int randHour = rand.nextInt(24);
         // create new timestamp object with current time
         Timestamp timestamp = new Timestamp(new Date().getTime());
+        // create cal object instance
+        Calendar cal = Calendar.getInstance();
         // set calendar object to now
         cal.setTimeInMillis(timestamp.getTime());
-        // add 30 days to cal object
-        cal.add(Calendar.DAY_OF_MONTH, randFuture);
+        // add random values to cal object
+        cal.add(Calendar.DAY_OF_MONTH, randDay);
+        cal.add(Calendar.MINUTE, randMinute);
+        cal.add(Calendar.HOUR, randHour);
         // set timestamp object to new timestamp using future cal object
         Timestamp futureDeparture = new Timestamp(cal.getTime().getTime());
         int randomShuttleIdx = rand.nextInt(shuttles.size());
         int launchPadIdx = rand.nextInt(pads.size());
         int arrivalPadIdx = this.getArrivalPadIdx(launchPadIdx);
-
-        Timestamp futureArrival = this.getFutureArrival(futureDeparture);
         Pad launchPad = pads.get(launchPadIdx);
         Pad arrivalPad = pads.get(arrivalPadIdx);
+        // get future arrival time relative to location traveling to
+        Timestamp futureArrival = this.getFutureArrival(futureDeparture, launchPad, arrivalPad);
         Shuttle shuttle = shuttles.get(randomShuttleIdx);
-        String flightCode = this.createFlightCode(cal, shuttle.getSpaceliner().getId(), launchPad.getId(), arrivalPad.getId());
+        String flightCode = this.createFlightCode(shuttle.getSpaceliner().getId(), launchPad.getId(), arrivalPad.getId());
 
         Flight newFlight = new Flight();
         newFlight.setFlightCode(flightCode);
@@ -71,28 +82,51 @@ public class FlightCreator {
         return newFlight;
     }
 
-    private Timestamp getFutureArrival(Timestamp timestamp) {
-        // add 30 random days to arrival timestamp with min of 1 difference
-        int randFuture = rand.nextInt(27) + 1;
+    private Timestamp getFutureArrival(Timestamp departureTimestamp, Pad launchPad, Pad arrivalPad) {
+        String fromRegion = launchPad.getPort().getRegion().getId();
+        String toRegion = arrivalPad.getPort().getRegion().getId();
+        int randHour = 0;
+        // Earth surface <to> Earth Orbit
+        if (fromRegion.equals("ES") && toRegion.equals("EO") ||
+                fromRegion.equals("EO") && toRegion.equals("ES")) {
+            randHour = rand.nextInt(66) + 6; // 6 hours to 3 days
+        } // Earth surface <to> Moon
+        if (fromRegion.equals("ES") && toRegion.equals("MO") ||
+                fromRegion.equals("MO") && toRegion.equals("ES")) {
+            randHour = rand.nextInt(12) + 66; // 3 days on average, 12 hour window
+        } // Earth surface <to> Mars
+        if (fromRegion.equals("ES") && toRegion.equals("MA") ||
+                fromRegion.equals("MA") && toRegion.equals("ES")) {
+            randHour = rand.nextInt(593) + 93; // from 93 hours to 686 hours(farthest approach)
+        }// Earth orbit <to> Moon
+        if (fromRegion.equals("EO") && toRegion.equals("MO") ||
+                fromRegion.equals("MO") && toRegion.equals("EO")) {
+            randHour = rand.nextInt(24) + 24; // 1 to 2 days
+        }// Earth orbit <to> Mars
+        if (fromRegion.equals("EO") && toRegion.equals("MA") ||
+                fromRegion.equals("MA") && toRegion.equals("EO")) {
+            randHour = rand.nextInt(545) + 87; // 6hours - 48hours shorter travel
+        }// Moon <to> Mars
+        if (fromRegion.equals("MO") && toRegion.equals("MA") ||
+                fromRegion.equals("MA") && toRegion.equals("MO")) {
+            randHour = rand.nextInt(545) + 80; //
+        }
+        int randMinute = rand.nextInt(60);
+        Calendar cal = Calendar.getInstance();
         // set calendar object to now
-        cal.setTimeInMillis(timestamp.getTime());
-        // add 30 days to cal object
-        cal.add(Calendar.DAY_OF_MONTH, randFuture);
+        cal.setTimeInMillis(departureTimestamp.getTime());
+        // add random time to cal object
+        cal.add(Calendar.MINUTE, randMinute);
+        cal.add(Calendar.HOUR, randHour);
         // set timestamp object to new timestamp using future cal object
         return new Timestamp(cal.getTime().getTime());
     }
 
-    public List<Flight> getListOfFlights(int numberOfFlights) {
-        for (int i = 0; i < numberOfFlights; i++) {
-            Flight f = this.createNewFlight();
-             flightsList.add(f);
-        }
-        return flightsList;
-    }
-    // Avoid launch pad and arrival pad being at the same Port
     private int getArrivalPadIdx(int launchPadIdx) {
         int randomIdx = rand.nextInt(pads.size());
-        while ((Math.abs(randomIdx - launchPadIdx) <=2)) {
+        // avoid creating flights travelling to and from same region
+        while (pads.get(randomIdx).getPort().getRegion() ==
+                pads.get(launchPadIdx).getPort().getRegion()) {
             randomIdx = rand.nextInt(pads.size());
         }
         return randomIdx;

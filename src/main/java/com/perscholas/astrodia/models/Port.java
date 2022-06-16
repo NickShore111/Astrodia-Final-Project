@@ -19,11 +19,9 @@ import java.util.Set;
 public class Port {
     @Id
     @NonNull
-    Integer id;
+    String code;
     @NonNull
     String name;
-    @NonNull
-    String code;
     @NonNull
     String location;
     @NonNull

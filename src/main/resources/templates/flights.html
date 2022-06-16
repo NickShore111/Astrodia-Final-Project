@@ -46,7 +46,7 @@
       <div class="container flight-search-results-container col border rounded-end">
         <div class="row listview-flight-details p-2 my-1"
              th:each="flight : ${flights}">
-          <div class="col-12 col-sm-5">
+          <div class="col-12 col-sm-5" id="departure-arrival-time">
             <th:block th:inline="text">
               [[${#calendars.format({flight.departing},'hh:mm a')}]] -
               [[${#calendars.format({flight.arriving},'hh:mm a')}]]
@@ -57,7 +57,7 @@
                 [[${flight.arrivalPad.port.name}]] ([[${flight.arrivalPad.port.code}]])
               </p>
               <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
-                <img
+                <img    id="flight-spaceliner-logo"
                         th:src="@{/assets/logo/SpaceX_logo.png}"
                         alt="SpaceX logo"
                         style="height: 10px"
@@ -94,7 +94,7 @@
             </p>
           </div>
           <div class="col">
-            <small style="color: red" class="mb-0">2 left</small>
+            <small style="color: red" class="mb-0" th:inline="text">[[${flight.seatsAvailable}]] left</small>
             <h5 class="fw-bold">$40000</h5>
             <span class="d-flex"
             ><img id="bitcoin-symbol" th:src="@{/assets/Btc-sans.png}" />
@@ -121,13 +121,10 @@
         <div class="overlay-close" id="overlay-close"></div>
       </div>
       <div class="row p-3 border-1 border-bottom border-dark">
-        <h4>12:27pm - 3:02pm (Nonstop)</h4>
-        <p><img
-                th:src="@{/assets/logo/SpaceX_logo.png}"
-                alt="SpaceX logo"
-                style="height: 10px"
-        />
-          SpaceX</p>
+        <h4 id="overlay-departure-arrival-time"></h4>
+        <p><img id="overlay-flight-spaceliner-logo"/>
+
+          </p>
         <br />
         <p><span class="fw-bold">12:34pm-3:02pm</span><br />3h 24m(Nonstop)</p>
       </div>

@@ -29,20 +29,18 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     Spaceliner VGN = new Spaceliner("VGN", "Virgin Galactic");
     Spaceliner BLO =  new Spaceliner("BLO", "Blue Origin");
 
-    Region NorthAmerica = new Region("NA", "North America");
-    Region Asia = new Region("Asia", "Asia");
-    Region EarthOrbit = new Region("EarthOrbit", "Earth Orbit");
-    Region Moon = new Region("Moon", "Moon");
-    Region Mars = new Region("Mars", "Mars");
+    Region EarthSurface = new Region("ES", "Earth Surface");
+    Region EarthOrbit = new Region("EO", "Earth Orbit");
+    Region Moon = new Region("MO", "Moon");
+    Region Mars = new Region("MA", "Mars");
 
-    Port STB = new Port(1,  "Starbase", "STB", "Boca Chica,TX", NorthAmerica);
-    Port JFK = new Port(2, "J.F.K. Space Center", "JFK", "Cape Canaveral,FL", NorthAmerica);
-    Port TSP = new Port(3,"Tanegashima Space Center", "TSP", "Tanegashima Island, JP",  Asia);
-    Port AEO = new Port(4,"Axiom Station", "AEO", "Geostionanary Earth Orbit", EarthOrbit);
-    Port LGW = new Port(5, "Lunar Gateway", "LGW", "Low Earth Orbit",EarthOrbit);
-    Port DCB = new Port(6,"Deep Crater Base", "DCB", "Peary Crater",  Moon);
-    Port MPB = new Port(7, "Malapert Peak Base", "MPB", "Malapert Mountain",Mars);
-    Port MVS = new Port(8, "M.V. Spaceport", "MVS", "Mawrth Vallis",Mars);
+    Port STB = new Port("STB", "Starbase", "Boca Chica,TX", EarthSurface);
+    Port TSP = new Port("TSP","Tanegashima Space Center", "Tanegashima Island, JP",  EarthSurface);
+    Port AEO = new Port("AEO", "Axiom Station", "Lower Orbit", EarthOrbit);
+    Port GGU = new Port("GGU", "Gargantua-1 Station", "Upper Orbit", EarthOrbit);
+    Port DCB = new Port("DCB","Deep Crater Base", "Peary Crater",  Moon);
+    Port MPB = new Port("MPB", "Malapert Peak Base", "Malapert Mountain",Mars);
+    Port MVS = new Port("MVS", "M.V. Spaceport", "Mawrth Vallis",Mars);
 
     private List<Spaceliner> spaceliners = new ArrayList<Spaceliner>(Arrays.asList(
             SPX, VGN, BLO
@@ -62,24 +60,22 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     ));
 
     private List<Region> regions = new ArrayList<Region>(Arrays.asList(
-            NorthAmerica, Asia, EarthOrbit, Moon, Mars
+            EarthSurface, EarthOrbit, Moon, Mars
     ));
 
     List<Port> ports = new ArrayList<Port>(Arrays.asList(
-            STB, JFK, TSP, AEO, LGW, DCB, MPB, MVS
+            STB, GGU, TSP, AEO, DCB, MPB, MVS
     ));
 
     private List<Pad> pads = new ArrayList<Pad>(Arrays.asList(
             new Pad("X1", STB),
             new Pad("X2", STB),
-            new Pad("C1", JFK),
-            new Pad("C2", JFK),
             new Pad("T1", TSP),
             new Pad("T2", TSP),
             new Pad("G1", AEO),
             new Pad("G2", AEO),
-            new Pad("L1", LGW),
-            new Pad("L2", LGW),
+            new Pad("J1", GGU),
+            new Pad("J2", GGU),
             new Pad("P1", DCB),
             new Pad("P2", DCB),
             new Pad("M1", MPB),

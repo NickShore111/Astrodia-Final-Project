@@ -3,11 +3,12 @@ const flights = document.getElementsByClassName("listview-flight-details");
 
 for (const flight of flights) {
   flight.addEventListener("click", () => {
-    on();
+
     if (!flight.classList.contains("flight-selected")) {
       flight.className = flight.className.concat(" flight-selected");
-      // TODO: run method createFlightInlay using flight details
-      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      generateOverlay();
+      showOverlay();
+
       for (const otherFlight of flights) {
         if (!otherFlight.isSameNode(flight)) {
           otherFlight.classList.remove("flight-selected");
@@ -16,11 +17,25 @@ for (const flight of flights) {
     }
   });
 }
+function generateOverlay() {
+const flight = document.querySelector(".flight-selected");
+const logo = document.querySelector("#flight-spaceliner-logo");
+const overlayLogoParent = document.querySelector("#overlay-flight-spaceliner-logo");
 
+document.querySelector("#overlay-departure-arrival-time")
+    .innerHTML = document.querySelector("#departure-arrival-time").innerHTML;
+    console.log(document.querySelector("#departure-arrival-time").innerHTML);
+var img = document.createElement("img");
+    img.src = logo.src;
+    img.alt = logo.alt;
+    img.style = logo.style;
+
+overlayLogoParent.appendChild(img);
+}
 var overlayX = document.getElementById("overlay-close");
 overlayX.addEventListener("click", off);
 
-function on() {
+function showOverlay() {
   document.getElementById("flight-detail-overlay").style.display = "block";
 }
 
