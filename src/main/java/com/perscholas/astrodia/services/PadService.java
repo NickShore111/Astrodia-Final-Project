@@ -16,7 +16,7 @@ public class PadService {
         this.padRepository = padRepository;
     }
 
-    List<Pad> findAll() { return padRepository.findAll(); }
+    public List<Pad> findAll() { return padRepository.findAll(); }
 
     public void saveOrUpdate(Pad liner) {
         padRepository.save(liner);

@@ -16,7 +16,7 @@ public class RegionService {
         this.regionRepository = regionRepository;
     }
 
-    List<Region> findAll() { return regionRepository.findAll(); }
+    public List<Region> findAll() { return regionRepository.findAll(); }
 
     public void saveOrUpdate(Region r) {
         regionRepository.save(r);

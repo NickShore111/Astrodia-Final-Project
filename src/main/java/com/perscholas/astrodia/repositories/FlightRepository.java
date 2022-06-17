@@ -19,4 +19,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     @Query(value = "SELECT * FROM flights WHERE DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?1", nativeQuery = true)
     List<Flight> findFlightsByDeparture(String date);
+
+    @Query(value = "SELECT * FROM flights f ORDER BY f.departing;", nativeQuery = true)
+    List<Flight> allFlightsOrderedByDeparting();
 }

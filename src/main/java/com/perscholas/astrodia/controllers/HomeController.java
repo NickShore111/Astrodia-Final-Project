@@ -5,6 +5,7 @@ import com.perscholas.astrodia.models.Flight;
 import com.perscholas.astrodia.services.FlightService;
 import com.perscholas.astrodia.services.PortService;
 import com.perscholas.astrodia.services.RegionService;
+import com.perscholas.astrodia.services.SpacelinerService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -27,16 +29,30 @@ public class HomeController {
     FlightService flightService;
     RegionService regionService;
     PortService portService;
+    SpacelinerService spacelinerService;
 
     @Autowired
-    public HomeController(FlightService flightService, RegionService regionService, PortService portService) {
+    public HomeController(FlightService flightService, RegionService regionService, PortService portService, SpacelinerService spacelinerService) {
         this.flightService = flightService;
         this.regionService = regionService;
         this.portService = portService;
+        this.spacelinerService = spacelinerService;
 
     }
     @GetMapping("test")
     public String index() {return "index";}
+
+    @GetMapping("/admin/flights")
+    public ModelAndView adminViewAllFlights() {
+        //        model.addAttribute("flights", flightService.findAll());
+
+        ModelAndView view = new ModelAndView("admin-flights");
+        view.addObject("flights", flightService.allFlightsOrderedByDeparting());
+        view.addObject("regions", regionService.findAll());
+        view.addObject("ports", portService.findAll());
+        view.addObject("spaceliners", spacelinerService.findAll());
+        return view;
+    }
 
     @GetMapping("")
     public String mainPage(@ModelAttribute("roundtripDTO") RoundtripDTO roundtripDTO, BindingResult result, Model model){

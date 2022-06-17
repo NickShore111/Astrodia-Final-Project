@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="fragments/header :: header" />
+    <title>Admin Flights</title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+    <!-- Start: Navbar element -->
+    <div th:replace="fragments/nav :: nav"></div>
+    <!-- Start: Main image and additional content -->
+
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-2">
+                <h4>Filter by</h4>
+                <h5>Departure Date</h5>
+                <input
+                        class="form-control form-select-sm mb-3 col datepicker"
+                        type="text"
+                        placeholder="MM/DD/YYYY"
+                        id="departureDate"
+                />
+                <h5>Arriving Date</h5>
+                <input
+                        class="form-control form-select-sm mb-3 col datepicker"
+                        type="text"
+                        placeholder="MM/DD/YYYY"
+                        id="arrivalDate"
+                />
+                <h5>Spaceliner</h5>
+                <div th:each="spaceliner : ${spaceliners}" class="form-check spaceliners">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            th:id="${spaceliner.id}"
+                    />
+                    <label th:text="${spaceliner.name}" class="form-check-label" th:for="${spaceliner.id}">
+                    </label>
+                </div>
+
+                <h5>Region</h5>
+                <div th:each="region : ${regions}" class="form-check">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            th:id="${region.id}"
+                    />
+                    <label th:text="${region.name}" class="form-check-label" th:for="${region.id}">
+                    </label>
+                </div>
+                <h5>Port</h5>
+                <div  th:each="port : ${ports}" class="form-check">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            th:id="${port.id}"
+                    />
+                    <label th:text="${port.name}" class="form-check-label" th:for="${port.id}">
+                    </label>
+                </div>
+            </div>
+        <div class="col border-start">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Flight Code</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Departing</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Arriving</th>
+                        <th scope="col">Shuttle</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each="flight : ${flights}">
+                        <tr
+                            class="admin-flight-tr"
+                            data-bs-toggle="modal"
+                            data-bs-target="#flightModal"
+                            th:id="${flight.flightCode}"
+                        >
+                            <th scope="row" th:text="${flight.flightCode}"></th>
+                            <td th:text="${flight.launchPad.port.id}">MoonBase</td>
+                            <td th:text="${#calendars.format({flight.departing},'MMM dd, YYYY hh:mm a')}"></td>
+                            <td th:text="${flight.arrivalPad.port.id}"></td>
+                            <td th:text="${#calendars.format({flight.arriving},'MMM dd, YYYY hh:mm a')}"></td>
+                            <td th:text="${flight.shuttle.name}"></td>
+                            <td><a href="#">Delete</a></td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: scripts"></div>
+    <script type="text/javascript" th:src="@{/js/nav.js}"></script>
+    <script type="text/javascript" th:src="@{/js/admin-flights.js}"></script>
+</html>

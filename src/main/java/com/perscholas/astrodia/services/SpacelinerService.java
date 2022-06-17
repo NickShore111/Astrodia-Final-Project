@@ -17,7 +17,7 @@ public class SpacelinerService {
         this.spacelinerRepository = spacelinerRepository;
     }
 
-    List<Spaceliner> findAll() { return spacelinerRepository.findAll(); }
+    public List<Spaceliner> findAll() { return spacelinerRepository.findAll(); }
 
     public void saveOrUpdate(Spaceliner liner) {
         spacelinerRepository.save(liner);

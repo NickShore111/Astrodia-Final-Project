@@ -17,7 +17,9 @@ public class FlightService {
         this.flightRepository = flightRepository;
     }
 
-    public List<Flight> findAll() { return flightRepository.findAll(); }
+    public List<Flight> findAll() {
+        return flightRepository.findAll();
+    }
 
     public void saveOrUpdate(Flight flight) {
         flightRepository.save(flight);
@@ -25,5 +27,9 @@ public class FlightService {
 
     public List<Flight> findFlightsByDeparture(String date) {
         return flightRepository.findFlightsByDeparture(date);
+    }
+
+    public List<Flight> allFlightsOrderedByDeparting() {
+        return flightRepository.allFlightsOrderedByDeparting();
     }
 }

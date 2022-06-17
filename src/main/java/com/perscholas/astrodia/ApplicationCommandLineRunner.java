@@ -42,11 +42,11 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     Port MPB = new Port("MPB", "Malapert Peak Base", "Malapert Mountain",Mars);
     Port MVS = new Port("MVS", "M.V. Spaceport", "Mawrth Vallis",Mars);
 
-    private List<Spaceliner> spaceliners = new ArrayList<Spaceliner>(Arrays.asList(
+    List<Spaceliner> spaceliners = new ArrayList<Spaceliner>(Arrays.asList(
             SPX, VGN, BLO
     ));
 
-    private List<Shuttle> shuttles = new ArrayList<Shuttle>(Arrays.asList(
+    List<Shuttle> shuttles = new ArrayList<Shuttle>(Arrays.asList(
             new Shuttle( "DR", "Dragon", 8, SPX),
             new Shuttle("RD", "Red Dragon", 12, SPX),
             new Shuttle("DX","Dragon XL", 16, SPX),
@@ -59,7 +59,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             new Shuttle("BM", "Blue Moon", 12, BLO)
     ));
 
-    private List<Region> regions = new ArrayList<Region>(Arrays.asList(
+    List<Region> regions = new ArrayList<Region>(Arrays.asList(
             EarthSurface, EarthOrbit, Moon, Mars
     ));
 
@@ -67,7 +67,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             STB, GGU, TSP, AEO, DCB, MPB, MVS
     ));
 
-    private List<Pad> pads = new ArrayList<Pad>(Arrays.asList(
+    List<Pad> pads = new ArrayList<Pad>(Arrays.asList(
             new Pad("X1", STB),
             new Pad("X2", STB),
             new Pad("T1", TSP),
@@ -85,7 +85,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     ));
 
     @Autowired
-    public ApplicationCommandLineRunner(
+    ApplicationCommandLineRunner(
             FlightService flightService,
             PadService padService,
             PortService portService,
@@ -108,7 +108,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         FlightCreator flightCreator = new FlightCreator(shuttles, pads, 7);
-        List<Flight> flights = flightCreator.getListOfFlights(20);
+        List<Flight> flights = flightCreator.getListOfFlights(50);
 
         for (Region r : regions) {
             regionService.saveOrUpdate(r);

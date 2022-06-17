@@ -16,7 +16,7 @@ public class ShuttleService {
         this.shuttleRepository = shuttleRepository;
     }
 
-    List<Shuttle> findAll() { return shuttleRepository.findAll(); }
+    public List<Shuttle> findAll() { return shuttleRepository.findAll(); }
 
     public void saveOrUpdate(Shuttle s) {
         shuttleRepository.save(s);

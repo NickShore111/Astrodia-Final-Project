@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light bg-light border-bottom p-3">
+<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light border-bottom p-3">
     <div class="container-lg">
         <a class="navbar-brand" th:href="@{/astrodia}">
             <img
@@ -55,7 +55,7 @@
                         Admin Portal
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Flights</a></li>
+                        <li><a class="dropdown-item" th:href="@{/astrodia/admin/flights}">Flights</a></li>
                         <li><a class="dropdown-item" href="#">Space Liners</a></li>
                         <li><a class="dropdown-item" href="#">Regions</a></li>
                         <li><a class="dropdown-item" href="#">Shuttles</a></li>

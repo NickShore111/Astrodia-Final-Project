@@ -7,6 +7,9 @@ body {
 .dropdown-menu {
 box-shadow: 8px 8px 8px grey;
 }
+input:hover {
+cursor: pointer;
+}
 /* START: index.html styling */
 .main-section-form-box {
   border-radius: 10px;
@@ -187,6 +190,7 @@ border-radius:10px;
   cursor: pointer;
 }
 /* END: flights_admin.html styling */
+
 @media screen and (min-width: 539px) {
   .main-img-overlay-box {
     display: block;

@@ -35,11 +35,11 @@ public class FlightCreator {
         return flightsList;
     }
     private String createFlightCode(
+            Calendar departure,
             String shuttleSpacelinerId,
             String launchPadId,
             String arrivalPadId) {
-        Calendar cal = Calendar.getInstance();
-        int day = cal.get(Calendar.DAY_OF_YEAR);
+        int day = departure.get(Calendar.DAY_OF_YEAR);
         return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
     }
 
@@ -68,7 +68,7 @@ public class FlightCreator {
         // get future arrival time relative to location traveling to
         Timestamp futureArrival = this.getFutureArrival(futureDeparture, launchPad, arrivalPad);
         Shuttle shuttle = shuttles.get(randomShuttleIdx);
-        String flightCode = this.createFlightCode(shuttle.getSpaceliner().getId(), launchPad.getId(), arrivalPad.getId());
+        String flightCode = this.createFlightCode(cal, shuttle.getSpaceliner().getId(), launchPad.getId(), arrivalPad.getId());
 
         Flight newFlight = new Flight();
         newFlight.setFlightCode(flightCode);
