@@ -20,6 +20,14 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     @Query(value = "SELECT * FROM flights WHERE DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?1", nativeQuery = true)
     List<Flight> findFlightsByDeparture(String date);
 
-    @Query(value = "SELECT * FROM flights f ORDER BY f.departing;", nativeQuery = true)
-    List<Flight> allFlightsOrderedByDeparting();
+    List<Flight> findByOrderByDeparting();
+//    TODO: NEED TO CORRECT QUERIES FOR ROUNDTRIP TRAVEL
+    @Query(value = "SELECT * FROM flights f WHERE f.launchPort = ?1 AND f.arrivalPort = ?2 AND DATE_FORMAT(DATE(f.departing), '%m/%d/%Y') = ?3", nativeQuery = true)
+    List<Flight> findFlightsByPortsAndDepartureDate(String fromPort, String toPort, String departureDate);
+
+    @Query(value = "SELECT * FROM flights f WHERE f.launchPort = ?1 AND f.arrivalPort = ?2 AND DATE_FORMAT(DATE(f.arriving), '%m/%d/%Y') = ?3", nativeQuery = true)
+    List<Flight> findFlightsByPortsAndArrivalDate(String fromPort, String toPort, String arrivalDate);
+
+//    @Query(value = "SELECT * FROM flights f WHERE ")
+//    List<Flight> findFlightsBySelection(String spaceliner, String region, String port, String departing, String arriving);
 }

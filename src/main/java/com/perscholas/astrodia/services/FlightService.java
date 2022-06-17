@@ -5,6 +5,7 @@ import com.perscholas.astrodia.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
@@ -29,7 +30,19 @@ public class FlightService {
         return flightRepository.findFlightsByDeparture(date);
     }
 
-    public List<Flight> allFlightsOrderedByDeparting() {
-        return flightRepository.allFlightsOrderedByDeparting();
+    public List<Flight> findByOrderBy() { return flightRepository.findByOrderByDeparting(); }
+
+    public List<Flight> findFlightsBySelection(String spaceliner, String region, String port, String departing, String arriving) {
+        List<Flight> flights = new ArrayList<Flight>();
+        return flights;
     }
+
+    public List<Flight> findFlightsByPortsAndDepartureDate(String departurePort, String arrivalPort, String departureDate) {
+        return flightRepository.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, departureDate);
+    }
+
+    public List<Flight> findFLightsByPortsAndArrivalDate(String departurePort, String arrivalPort, String arrivalDate) {
+        return flightRepository.findFlightsByPortsAndArrivalDate(departurePort, arrivalPort, arrivalDate);
+    }
+
 }

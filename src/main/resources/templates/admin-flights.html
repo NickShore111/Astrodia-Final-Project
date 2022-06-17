@@ -29,11 +29,11 @@
                         id="arrivalDate"
                 />
                 <h5>Spaceliner</h5>
-                <div th:each="spaceliner : ${spaceliners}" class="form-check spaceliners">
+                <div th:each="spaceliner : ${spaceliners}" class="form-check spacelinerSelection">
                     <input
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            th:value="${spaceliner.id}"
                             th:id="${spaceliner.id}"
                     />
                     <label th:text="${spaceliner.name}" class="form-check-label" th:for="${spaceliner.id}">
@@ -41,22 +41,22 @@
                 </div>
 
                 <h5>Region</h5>
-                <div th:each="region : ${regions}" class="form-check">
+                <div th:each="region : ${regions}" class="form-check regionSelection">
                     <input
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            th:value="${region.id}"
                             th:id="${region.id}"
                     />
                     <label th:text="${region.name}" class="form-check-label" th:for="${region.id}">
                     </label>
                 </div>
                 <h5>Port</h5>
-                <div  th:each="port : ${ports}" class="form-check">
+                <div  th:each="port : ${ports}" class="form-check portSelection">
                     <input
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            th:value="${port.id}"
                             th:id="${port.id}"
                     />
                     <label th:text="${port.name}" class="form-check-label" th:for="${port.id}">

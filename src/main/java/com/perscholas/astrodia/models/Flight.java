@@ -47,14 +47,6 @@ public class Flight {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shuttleId", nullable = false)
     Shuttle shuttle;
-    @Transient
-    Date departingDate;
-    @Transient
-    Date arrivingDate;
-    @Transient
-    Time departingTime;
-    @Transient
-    Time arrivingTime;
 
     @PrePersist
     protected void onCreate() {
@@ -83,16 +75,5 @@ public class Flight {
                 ", shuttle=" + shuttle +
                 '}';
     }
-    public void getArrivingTime() {
-        this.arrivingTime = new Time(this.arriving.getTime());
-    }
-    public void getDepartingTime() {
-        this.departingTime = new Time(this.departing.getTime());
-    }
-    public void getArrivingDate() {
-        this.arrivingDate = new Date(this.arriving.getTime());
-    }
-    public void getDepartingDate() {
-        this.departingDate = new Date(this.departing.getTime());
-    }
+
 }

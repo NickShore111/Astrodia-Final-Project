@@ -47,7 +47,7 @@ public class HomeController {
         //        model.addAttribute("flights", flightService.findAll());
 
         ModelAndView view = new ModelAndView("admin-flights");
-        view.addObject("flights", flightService.allFlightsOrderedByDeparting());
+        view.addObject("flights", flightService.findByOrderBy());
         view.addObject("regions", regionService.findAll());
         view.addObject("ports", portService.findAll());
         view.addObject("spaceliners", spacelinerService.findAll());
@@ -62,17 +62,20 @@ public class HomeController {
     }
 
     @GetMapping("/roundtrip")
-    public String roundtripFlightSearch(Model model, @ModelAttribute("roundtripDTO") RoundtripDTO roundtripDTO) {
+    public String roundtripFlightSearch(Model model, @ModelAttribute("roundtripDTO") BindingResult result, RoundtripDTO roundtripDTO) {
         model.addAttribute("result", roundtripDTO);
-        Date departureDate = roundtripDTO.getDepartureDate();
         DateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy");
-        String formatDateStr = dFormat.format(departureDate);
-        List<Flight> flights = flightService.findFlightsByDeparture(formatDateStr);
-//        log.info("DateFormat: " + formatDateStr);
-//        log.info("FLIGHTS: " + flights.toString());
-        model.addAttribute("flights", flights);
-        log.info(flights.toString());
-        return "flights";
+        String departurePort = roundtripDTO.getDeparturePort();
+        String arrivalPort = roundtripDTO.getArrivalPort();
+        Date departureDate = roundtripDTO.getDepartureDate();
+        Date arrivalDate = roundtripDTO.getArrivalDate();
+
+        String formatDeparture = dFormat.format(departureDate);
+        String formatArrival = dFormat.format(arrivalDate);
+        model.addAttribute("departureFlights", flightService.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, formatDeparture));
+        model.addAttribute("arrivalFlights", flightService.findFLightsByPortsAndArrivalDate(departurePort, arrivalPort, formatArrival));
+
+        return "roundtripFlights";
     }
 
     @GetMapping("/results")
