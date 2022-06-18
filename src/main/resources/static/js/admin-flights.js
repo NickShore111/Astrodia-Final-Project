@@ -2,39 +2,71 @@ $(function () {
     $(".datepicker").datepicker();
   });
 // trigger after document content has loaded
-document.addEventListener("DOMContentLoaded", function(){
-    const url = "http://localhost:8080/astrodia/api/flights";
-    const formCheckInputs = document.querySelectorAll(".form-check-input");
+const url = "http://localhost:8080/astrodia/api/flights";
+const formCheckInputs = document.querySelectorAll(".form-check-input");
 
-    var spacelinerParams = [];
-    var regionParams = [];
-    var portParams = [];
+var spacelinerParams = [];
+var shuttleParams = [];
 
-    // build parameters lists
-    for (input of formCheckInputs) {
-        input.addEventListener("change", (event) => {
-        var URLParams = new URLSearchParams();
+var departureRegionParams = [];
+var departurePortParams = [];
 
-            if (event.target.parentElement.classList.contains("spacelinerSelection")) {
+var arrivalRegionParams = [];
+var arrivalPortParams = [];
+
+// build parameters lists
+for (input of formCheckInputs) {
+    input.addEventListener("change", (event) => {
+    var URLParams = new URLSearchParams();
+        let checkBoxClassList = event.target.parentElement.classList;
+        switch(checkBoxClassList[checkBoxClassList.length - 1]) {
+            case "spacelinerSelection":
                 setParamsList(spacelinerParams, event);
-            } else if (event.target.parentElement.classList.contains("regionSelection")) {
-                setParamsList(regionParams, event);
-            } else (
-                setParamsList(portParams, event)
-            );
+                break;
+            case "shuttleSelection":
+                setParamsList(shuttleParams, event);
+                break;
+            case "departureRegionSelection":
+                setParamsList(departureRegionParams, event);
+                break;
+            case "departurePortSelection":
+                setParamsList(departurePortParams, event);
+                break;
+            case "arrivalRegionSelection":
+                setParamsList(arrivalRegionParams, event);
+                break;
+            case "arrivalPortSelection":
+                setParamsList(arrivalPortParams, event);
+                break;
+        }
 
-            buildURLParams('spaceliner', spacelinerParams);
-            buildURLParams('region', regionParams);
-            buildURLParams('port', portParams);
+        buildURLParams('spaceliner', spacelinerParams);
+        buildURLParams('shuttle', shuttleParams);
+        buildURLParams('departureRegion', departureRegionParams);
+        buildURLParams('departurePort', departurePortParams);
+        buildURLParams('arrivalRegion', arrivalRegionParams);
+        buildURLParams('arrivalPort', arrivalPortParams);
 
-            const new_url = new URL(`${url}?${URLParams}`);
-            console.log(new_url.href);
+        const new_url = new URL(`${url}?${URLParams}`);
+        console.log(new_url.href);
 
-            fetch(new_url);
+        fetchSelectionResults(new_url);
+
 function buildURLParams(key, paramsList) {
     for (param of paramsList) {
         URLParams.append(key, param);
     }
+}
+//            const new_url = new URL(`${url}?${params}`);
+//            console.log(new_url.href);
+//            fetch("http://localhost:8080/astrodia/api/flights")
+//                .then(response => response.text()).then(data => console.log(data));
+})
+}
+async function fetchSelectionResults(url) {
+    const response = await fetch(url)
+        .then(response => response.text()).then(data => console.log(data));
+//    return
 }
 function setParamsList(paramsList, event) {
     if (event.target.checked) {
@@ -51,14 +83,6 @@ function remove(element, array) {
         }
     }
 }
-
-//            const new_url = new URL(`${url}?${params}`);
-//            console.log(new_url.href);
-//             fetch("http://localhost:8080/astrodia/api/flights")
-//                    .then(response => response.text()).then(data => console.log(data));
-        })
-    }
-});
 
 
 

@@ -13,22 +13,8 @@
     <div class="container-fluid">
         <div class="row ">
             <div class="col-2">
-                <h4>Filter by</h4>
-                <h5>Departure Date</h5>
-                <input
-                        class="form-control form-select-sm mb-3 col datepicker"
-                        type="text"
-                        placeholder="MM/DD/YYYY"
-                        id="departureDate"
-                />
-                <h5>Arriving Date</h5>
-                <input
-                        class="form-control form-select-sm mb-3 col datepicker"
-                        type="text"
-                        placeholder="MM/DD/YYYY"
-                        id="arrivalDate"
-                />
-                <h5>Spaceliner</h5>
+                <h5 class="border-3 border-bottom">Filter flights</h5>
+                <h6>Spaceliner</h6>
                 <div th:each="spaceliner : ${spaceliners}" class="form-check spacelinerSelection">
                     <input
                             class="form-check-input"
@@ -40,8 +26,28 @@
                     </label>
                 </div>
 
-                <h5>Region</h5>
-                <div th:each="region : ${regions}" class="form-check regionSelection">
+                <h6>Shuttle</h6>
+                <div th:each="shuttle : ${shuttles}" class="form-check shuttleSelection">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            th:value="${shuttle.id}"
+                            th:id="${shuttle.id}"
+                    />
+                    <label th:text="${shuttle.name}" class="form-check-label" th:for="${shuttle.id}">
+                    </label>
+                </div>
+                <h5 class="border-top">Departure</h5>
+                <h6>Date</h6>
+                <input
+                        class="form-control form-select-sm mb-3 col datepicker"
+                        type="text"
+                        placeholder="MM/DD/YYYY"
+                        id="departureDate"
+                />
+
+                <h6>Region</h6>
+                <div th:each="region : ${regions}" class="form-check departureRegionSelection">
                     <input
                             class="form-check-input"
                             type="checkbox"
@@ -51,8 +57,39 @@
                     <label th:text="${region.name}" class="form-check-label" th:for="${region.id}">
                     </label>
                 </div>
-                <h5>Port</h5>
-                <div  th:each="port : ${ports}" class="form-check portSelection">
+                <h6>Port</h6>
+                <div  th:each="port : ${ports}" class="form-check departurePortSelection">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            th:value="${port.id}"
+                            th:id="${port.id}"
+                    />
+                    <label th:text="${port.name}" class="form-check-label" th:for="${port.id}">
+                    </label>
+                </div>
+                <h5 class="border-top">Arrival</h5>
+                <h6>Date</h6>
+                <input
+                        class="form-control form-select-sm mb-3 col datepicker"
+                        type="text"
+                        placeholder="MM/DD/YYYY"
+                        id="arrivalDate"
+                />
+
+                <h6>Region</h6>
+                <div th:each="region : ${regions}" class="form-check arrivalRegionSelection">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            th:value="${region.id}"
+                            th:id="${region.id}"
+                    />
+                    <label th:text="${region.name}" class="form-check-label" th:for="${region.id}">
+                    </label>
+                </div>
+                <h6>Port</h6>
+                <div  th:each="port : ${ports}" class="form-check arrivalPortSelection">
                     <input
                             class="form-check-input"
                             type="checkbox"

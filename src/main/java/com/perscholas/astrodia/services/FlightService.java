@@ -2,6 +2,7 @@ package com.perscholas.astrodia.services;
 
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.repositories.FlightRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service @Slf4j
 public class FlightService {
 
     @PersistenceContext
@@ -21,11 +23,16 @@ public class FlightService {
     @Autowired
     SpacelinerService spacelinerService;
 
-    public List<Flight> findFlightsBySelection(String[] spacelinerList, String[] regionList, String[] portList, String departing, String arriving) {
-//        Optional<Spaceliner> liner = spacelinerService.findById(spacelinerList[0]);
-//        if (liner.isPresent()) {
-//            sl = liner.get();
-//        }
+    public List<Flight> findFlightsBySelectionCriteria(
+            String[] spacelinerList,
+            String[] shuttleList,
+            String departing,
+            String[] departureRegionList,
+            String[] departurePortList,
+            String arriving,
+            String[] arrivalRegionList,
+            String[] arrivalPortList
+    ) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Flight> c = cb.createQuery(Flight.class);
         Root<Flight> flight = c.from(Flight.class);
@@ -49,39 +56,102 @@ public class FlightService {
         Join<Port, Region> arrivalRegion =
                 arrivalPort.join("region", JoinType.LEFT);
 
-
         List<Predicate> criteria = new ArrayList<Predicate>();
 
+//        if (arriving != null) {
+//            ParameterExpression<String> p =
+//                    cb.parameter(String.class, "arriving");
+//            criteria.add(cb.equal(arriving.get("arriving"),p));
+//        }
+
         if (spacelinerList != null) {
-            ParameterExpression<String> p =
-                    cb.parameter(String.class, "spaceliner");
+            for (int i = 0; i < spacelinerList.length; i++){
+                ParameterExpression<String> p =
+                    cb.parameter(String.class, "spaceliner" + i);
             criteria.add(cb.equal(spaceliner.get("id"), p));
+            }
         }
-        if (portList != null) {
-            ParameterExpression<String> p =
-                    cb.parameter(String.class, "port");
-            criteria.add(cb.equal(departurePort.get("id"), p));
+        if (shuttleList != null) {
+            for (int i = 0; i < shuttleList.length; i++){
+                ParameterExpression<String> p =
+                        cb.parameter(String.class, "shuttle" + i);
+                criteria.add(cb.equal(shuttle.get("id"), p));
+            }
         }
-        if (regionList != null) {
-            ParameterExpression<String> p =
-                    cb.parameter(String.class, "region");
-            criteria.add(cb.equal(departureRegion.get("id"), p));
+        if (departurePortList != null) {
+            for (int i = 0; i < departurePortList.length; i++){
+                ParameterExpression<String> p =
+                        cb.parameter(String.class, "departurePort" + i);
+                criteria.add(cb.equal(departurePort.get("id"), p));
+            }
+        }
+        if (departureRegionList != null) {
+            for (int i = 0; i < departureRegionList.length; i++){
+                ParameterExpression<String> p =
+                        cb.parameter(String.class, "departureRegion" + i);
+                criteria.add(cb.equal(departureRegion.get("id"), p));
+            }
+        }
+        if (arrivalPortList != null) {
+            for (int i = 0; i < arrivalPortList.length; i++) {
+                ParameterExpression<String> p =
+                        cb.parameter(String.class, "arrivalPort" + i);
+                criteria.add(cb.equal(arrivalPort.get("id"), p));
+            }
+        }
+        if (arrivalRegionList != null) {
+            for (int i = 0; i < arrivalRegionList.length; i++){
+                ParameterExpression<String> p =
+                        cb.parameter(String.class, "arrivalRegion" + i);
+                criteria.add(cb.equal(arrivalRegion.get("id"), p));
+            }
         }
 
         if (criteria.size() == 0) {
             return this.findAll();
-
         } else if (criteria.size() == 1) {
             c.where(criteria.get(0));
         } else {
-            c.where(cb.and(criteria.toArray(new Predicate[0])));
+            c.where(cb.or(criteria.toArray(new Predicate[0])));
         }
 
         TypedQuery<Flight> q = em.createQuery(c);
-        if (spacelinerList != null) { q.setParameter("spaceliner", spacelinerList[0]); }
-        if (regionList != null) { q.setParameter("region", regionList[0]); }
-        if (portList != null) { q.setParameter("project", portList); }
-//        if (city != null) { q.setParameter("city", city); }
+        if (spacelinerList != null) {
+            int id = 0;
+            for (String s : spacelinerList) {
+                q.setParameter("spaceliner" + id++, s);
+            }
+        }
+        if (shuttleList != null) {
+            int id = 0;
+            for (String s : shuttleList) {
+                q.setParameter("shuttle" + id++, s);
+            }
+        }
+        if (departureRegionList != null) {
+            int id = 0;
+            for (String s : departureRegionList) {
+                q.setParameter("departureRegion" + id++, s);
+            }
+        }
+        if (departurePortList != null) {
+            int id = 0;
+            for (String s : departurePortList) {
+                q.setParameter("departurePort" + id++, s);
+            }
+        }
+        if (arrivalRegionList != null) {
+            int id = 0;
+            for (String s : arrivalRegionList) {
+                q.setParameter("arrivalRegion" + id++, s);
+            }
+        }
+        if (arrivalPortList != null) {
+            int id = 0;
+            for (String s : arrivalPortList) {
+                q.setParameter("arrivalPort" + id++, s);
+            }
+        }
 
         return q.getResultList();
 

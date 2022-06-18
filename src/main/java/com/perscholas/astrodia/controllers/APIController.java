@@ -35,36 +35,23 @@ public class APIController {
     public String getFlightSearchResults
             (
             @RequestParam(value = "spaceliner", required = false) String[] spaceliner,
-            @RequestParam(value = "region", required = false) String[] region,
-            @RequestParam(value = "port", required = false) String[] port,
+            @RequestParam(value = "shuttle", required = false) String[] shuttle,
+            @RequestParam(value = "departureRegion", required = false) String[] departureRegion,
+            @RequestParam(value = "arrivalRegion", required = false) String[] arrivalRegion,
+            @RequestParam(value = "departurePort", required = false) String[] departurePort,
+            @RequestParam(value = "arrivalPort", required = false) String[] arrivalPort,
             @RequestParam(value = "departing", required = false) String departing,
             @RequestParam(value = "arriving", required = false) String arriving
             )
     {
-        log.info("************** Spaceliner Params *************");
-        log.info("Departing: "+departing +" "+ "Arriving: " + arriving);
-        log.info("Spaceliners="+Arrays.toString(spaceliner) +" "+
-                "Region="+Arrays.toString(region) +" "+
-                "Port="+Arrays.toString(port));
-        List<Flight> flights = flightService.findFlightsBySelection(spaceliner, region, port, departing, arriving);
-        flights.forEach(flight -> log.info(flight.toString()));
+        log.info("************** Selection Params *************");
+        log.info("Spaceliners="+Arrays.toString(spaceliner) +" "+ "Shuttles="+Arrays.toString(shuttle));
+        log.info("Departing: " + departing +" "+ "Region="+Arrays.toString(departureRegion) +" "+ "Port="+Arrays.toString(departurePort));
+        log.info("Arriving: " + arriving +" "+ "Region="+Arrays.toString(arrivalRegion) +" "+ "Port="+Arrays.toString(arrivalPort));
+        List<Flight> flights = flightService.findFlightsBySelectionCriteria(spaceliner, shuttle, departing, departureRegion, departurePort, arriving, arrivalRegion, arrivalPort);
+//        flights.forEach(flight -> log.info(flight.toString()));
+        log.info("Results Count: " + flights.size());
         return flights.toString();
     }
 
-//    @GetMapping("/flights")
-//    public String getFlightSearchResults(
-//            @RequestParam("ports") String[] ports,
-//            @RequestParam("spaceliners") String[] spaceliners,
-//            @RequestParam("regions") String[] regions,
-//            @RequestParam("departure") String departure,
-//            @RequestParam("arrival") String arrival
-//    ) {
-//        log.info("************** API Flights Params ***************");
-//        log.info("Ports: "+ports);
-//        log.info("Regions: "+regions);
-//        log.info("Spaceliner: "+spaceliners);
-//        log.info("Departure: "+departure);
-//        log.info("Arrival: "+arrival);
-//        return "flight search results";
-//    }
 }

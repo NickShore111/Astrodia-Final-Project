@@ -2,10 +2,7 @@ package com.perscholas.astrodia.controllers;
 
 import com.perscholas.astrodia.dto.RoundtripDTO;
 import com.perscholas.astrodia.models.Flight;
-import com.perscholas.astrodia.services.FlightService;
-import com.perscholas.astrodia.services.PortService;
-import com.perscholas.astrodia.services.RegionService;
-import com.perscholas.astrodia.services.SpacelinerService;
+import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +27,20 @@ public class HomeController {
     RegionService regionService;
     PortService portService;
     SpacelinerService spacelinerService;
+    ShuttleService shuttleService;
 
     @Autowired
-    public HomeController(FlightService flightService, RegionService regionService, PortService portService, SpacelinerService spacelinerService) {
+    public HomeController(
+            FlightService flightService,
+            RegionService regionService,
+            PortService portService,
+            SpacelinerService spacelinerService,
+            ShuttleService shuttleService) {
         this.flightService = flightService;
         this.regionService = regionService;
         this.portService = portService;
         this.spacelinerService = spacelinerService;
+        this.shuttleService = shuttleService;
 
     }
     @GetMapping("test")
@@ -51,6 +55,7 @@ public class HomeController {
         view.addObject("regions", regionService.findAll());
         view.addObject("ports", portService.findAll());
         view.addObject("spaceliners", spacelinerService.findAll());
+        view.addObject("shuttles", shuttleService.findAll());
         return view;
     }
 

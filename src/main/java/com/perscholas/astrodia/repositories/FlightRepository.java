@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
+
+
 //    List<Flight> findFlightsBySelection(String[] spaceliner, String[] region, String[] port, String departing, String arriving) {
 //        CriteriaBuilder criteria = em.getCriteriaBuilder();
 //
