@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter @Setter
@@ -26,5 +27,18 @@ public class Spaceliner {
 
     public void addShuttle(Shuttle shuttle) {
         this.shuttles.add(shuttle);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Spaceliner that = (Spaceliner) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

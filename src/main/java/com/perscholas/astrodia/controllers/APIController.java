@@ -46,8 +46,9 @@ public class APIController {
         log.info("Spaceliners="+Arrays.toString(spaceliner) +" "+
                 "Region="+Arrays.toString(region) +" "+
                 "Port="+Arrays.toString(port));
-//        List<Flight> flightService.findFlightsBySelection(spaceliner, region, port, departing, arriving);
-        return "flight search results";
+        List<Flight> flights = flightService.findFlightsBySelection(spaceliner, region, port, departing, arriving);
+        flights.forEach(flight -> log.info(flight.toString()));
+        return flights.toString();
     }
 
 //    @GetMapping("/flights")

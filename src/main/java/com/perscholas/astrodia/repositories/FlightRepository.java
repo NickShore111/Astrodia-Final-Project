@@ -1,13 +1,22 @@
 package com.perscholas.astrodia.repositories;
 
 import com.perscholas.astrodia.models.Flight;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
+@Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
+
+//    List<Flight> findFlightsBySelection(String[] spaceliner, String[] region, String[] port, String departing, String arriving) {
+//        CriteriaBuilder criteria = em.getCriteriaBuilder();
+//
+//    };
     List<Flight> findAll();
 
     @Query(value = "SELECT flights.* FROM flights"
@@ -28,6 +37,5 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     @Query(value = "SELECT * FROM flights f WHERE f.launchPort = ?1 AND f.arrivalPort = ?2 AND DATE_FORMAT(DATE(f.arriving), '%m/%d/%Y') = ?3", nativeQuery = true)
     List<Flight> findFlightsByPortsAndArrivalDate(String fromPort, String toPort, String arrivalDate);
 
-//    @Query(value = "SELECT * FROM flights f WHERE ")
-//    List<Flight> findFlightsBySelection(String spaceliner, String region, String port, String departing, String arriving);
+
 }

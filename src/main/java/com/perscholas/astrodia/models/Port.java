@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter @Setter
@@ -35,5 +36,18 @@ public class Port {
 
     public void addPad(Pad p) {
         this.pads.add(p);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Port port = (Port) o;
+        return id.equals(port.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

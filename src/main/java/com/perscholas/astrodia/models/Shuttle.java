@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -34,5 +35,18 @@ public class Shuttle {
 
     public void addFlight(Flight flight) {
         this.flights.add(flight);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shuttle shuttle = (Shuttle) o;
+        return id.equals(shuttle.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

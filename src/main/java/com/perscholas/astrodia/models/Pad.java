@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -37,4 +38,16 @@ public class Pad {
         this.arrivingFlights.add(f);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pad pad = (Pad) o;
+        return id.equals(pad.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
