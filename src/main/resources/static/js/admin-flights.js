@@ -66,7 +66,6 @@ function buildURLParams(key, paramsList) {
 async function fetchSelectionResults(url) {
     const response = await fetch(url)
         .then(response => response.text()).then(data => console.log(data));
-//    return
 }
 function setParamsList(paramsList, event) {
     if (event.target.checked) {

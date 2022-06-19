@@ -10,14 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @Controller @Slf4j
 @RequestMapping("astrodia")
@@ -48,8 +55,6 @@ public class HomeController {
 
     @GetMapping("/admin/flights")
     public ModelAndView adminViewAllFlights() {
-        //        model.addAttribute("flights", flightService.findAll());
-
         ModelAndView view = new ModelAndView("admin-flights");
         view.addObject("flights", flightService.findByOrderBy());
         view.addObject("regions", regionService.findAll());
@@ -60,25 +65,37 @@ public class HomeController {
     }
 
     @GetMapping("")
-    public String mainPage(@ModelAttribute("roundtripDTO") RoundtripDTO roundtripDTO, BindingResult result, Model model){
+    public String mainPage(Model model, RoundtripDTO roundtripDTO){
         model.addAttribute("ports", portService.findAll());
-        model.addAttribute("roundtripSearch", roundtripDTO);
         return "home";
     }
 
     @GetMapping("/roundtrip")
-    public String roundtripFlightSearch(Model model, @ModelAttribute("roundtripDTO") BindingResult result, RoundtripDTO roundtripDTO) {
-        model.addAttribute("result", roundtripDTO);
-        DateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy");
+    public String roundtripFlightSearch(@Valid RoundtripDTO roundtripDTO, Errors errors, Model model, BindingResult result) {
         String departurePort = roundtripDTO.getDeparturePort();
         String arrivalPort = roundtripDTO.getArrivalPort();
         Date departureDate = roundtripDTO.getDepartureDate();
         Date arrivalDate = roundtripDTO.getArrivalDate();
+        if (result.hasErrors()) {
+            model.addAttribute("ports", portService.findAll());
+            return "home";
+        }
 
-        String formatDeparture = dFormat.format(departureDate);
-        String formatArrival = dFormat.format(arrivalDate);
-        model.addAttribute("departureFlights", flightService.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, formatDeparture));
-        model.addAttribute("arrivalFlights", flightService.findFLightsByPortsAndArrivalDate(departurePort, arrivalPort, formatArrival));
+
+        if (departureDate != null && arrivalDate != null) {
+            try {
+                DateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy");
+//                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); // for String to Date
+                String formatDeparture = dFormat.format(departureDate);
+                String formatArrival = dFormat.format(arrivalDate);
+                model.addAttribute("departureFlights", flightService.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, formatDeparture));
+                model.addAttribute("arrivalFlights", flightService.findFLightsByPortsAndArrivalDate(departurePort, arrivalPort, formatArrival));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        model.addAttribute("result", roundtripDTO);
 
         return "roundtripFlights";
     }

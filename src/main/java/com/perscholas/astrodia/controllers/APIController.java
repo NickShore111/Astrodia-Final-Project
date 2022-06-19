@@ -32,7 +32,7 @@ public class APIController {
         this.spacelinerService = spacelinerService;
     }
     @GetMapping("/flights")
-    public String getFlightSearchResults
+    public List<Flight> getFlightSearchResults
             (
             @RequestParam(value = "spaceliner", required = false) String[] spaceliner,
             @RequestParam(value = "shuttle", required = false) String[] shuttle,
@@ -51,7 +51,7 @@ public class APIController {
         List<Flight> flights = flightService.findFlightsBySelectionCriteria(spaceliner, shuttle, departing, departureRegion, departurePort, arriving, arrivalRegion, arrivalPort);
 //        flights.forEach(flight -> log.info(flight.toString()));
         log.info("Results Count: " + flights.size());
-        return flights.toString();
+        return flights;
     }
 
 }

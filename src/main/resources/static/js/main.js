@@ -12,7 +12,7 @@ const loadDatepicker = (datepickerSelector) => {
 };
 // Load datepickers for RoundTrip
 const loadDatepickerReturnAndArrival = () => {
-  var dateFormat = "mm/dd/yy",
+  var dateFormat = "mm/dd/yyyy",
     from = $("#departureDate")
       .datepicker({
         defaultDate: "+2d",
@@ -45,7 +45,8 @@ const loadDatepickerReturnAndArrival = () => {
 };
 
 // ==============================================================
-// START: index.html vanilla Javascript
+// START: home.html vanilla Javascript
+// helper functions for element clicks
 const addFocus = function (element) {
   if (!element.classList.contains("focus")) {
     element.className = element.className.concat(" focus");
@@ -167,6 +168,6 @@ const searchBtn = document.getElementById("searchBtn");
 searchBtn.onclick = () => {console.log("button clicked")};
 searchBtn.addEventListener("click", (event) => {
     const searchForm = document.getElementById("searchForm");
-    console.log(searchForm);
+
 })
 // END:  index.html vanilla Javascript

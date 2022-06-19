@@ -37,9 +37,15 @@ public class Region {
         Region region = (Region) o;
         return id.equals(region.id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+    @Override
+    public String toString() {
+        return "Region{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

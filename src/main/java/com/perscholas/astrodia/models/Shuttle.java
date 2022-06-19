@@ -2,6 +2,7 @@ package com.perscholas.astrodia.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "shuttles")
 public class Shuttle {
@@ -44,9 +46,17 @@ public class Shuttle {
         Shuttle shuttle = (Shuttle) o;
         return id.equals(shuttle.id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+    @Override
+    public String toString() {
+        return "Shuttle{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", passengerCapacity=" + passengerCapacity +
+                ", spaceliner=" + spaceliner +
+                '}';
     }
 }

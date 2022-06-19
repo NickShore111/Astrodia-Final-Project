@@ -38,16 +38,17 @@
         <h6 class="mx-4 p-2 d-inline" id="multi-port">Multi-port</h6>
     </div>
     <div class="input-fields-container">
-        <form id="searchForm" th:object="${roundtripSearch}" th:action="@{/astrodia/roundtrip}" class="d-flex-inline" method="GET">
+        <form id="searchForm" th:object="${roundtripDTO}" th:action="@{/astrodia/roundtrip}" class="d-flex-inline" method="GET">
             <div class="row g-2 justify-content-center" id="roundtrip-search-inputs">
                 <div class="col-lg-3">
                     <div class="form-floating">
                         <select th:field="*{departurePort}" class="form-select" id="departurePort">
                             <option selected value="">Select port</option>
                             <span th:each="port : ${ports}">
-                          <option th:value="${port.name}" th:text="${port.name}"></option>
-                      </span>
+                                <option th:value="${port.name}" th:text="${port.name}"></option>
+                            </span>
                         </select>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('departurePort')}" th:errors="*{departurePort}"></div>
                         <label for="departurePort">Departing from</label>
                     </div>
                 </div>
@@ -56,9 +57,10 @@
                         <select th:field="*{arrivalPort}" class="form-select" id="arrivalPort">
                             <option selected value="">Select port</option>
                             <span th:each="port : ${ports}">
-                            <option th:value="${port.name}" th:text="${port.name}"></option>
-                      </span>
+                                <option th:value="${port.name}" th:text="${port.name}"></option>
+                            </span>
                         </select>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('arrivalPort')}" th:errors="*{arrivalPort}"></div>
                         <label for="arrivalPort">Going to</label>
                     </div>
                 </div>
@@ -66,22 +68,24 @@
                     <div class="form-floating col-5 mx-1">
                         <input
                                 th:field="*{departureDate}"
-                                class="form-control mb-3 col datepicker"
+                                class="form-control col datepicker"
                                 type="text"
                                 id="departureDate"
                                 placeholder="Departure date"
                         />
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></div>
                         <label for="departureDate">Departure date</label>
                     </div>
                     <div class="form-floating col-5 mx-1">
                         <input
                                 th:field="*{arrivalDate}"
-                                class="form-control mb-3 col datepicker"
+                                class="form-control col datepicker"
                                 type="text"
                                 id="arrivalDate"
                                 placeholder="Return date"
                         />
                         <label for="arrivalDate">Return date</label>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></div>
                     </div>
                 </div>
             </div>

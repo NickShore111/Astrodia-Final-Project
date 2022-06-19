@@ -28,7 +28,7 @@ public class Port {
     @NonNull
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "region", nullable = false)
+    @JoinColumn(name = "regionId", nullable = false)
     Region region;
     @JsonBackReference
     @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -45,9 +45,17 @@ public class Port {
         Port port = (Port) o;
         return id.equals(port.id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+    @Override
+    public String toString() {
+        return "Port{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", region=" + region +
+                '}';
     }
 }

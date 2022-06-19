@@ -1,11 +1,15 @@
 package com.perscholas.astrodia.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -23,7 +27,9 @@ public class Flight {
     Integer id;
     String flightCode;
     @NonNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     Timestamp departing;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     @NonNull
     Timestamp arriving;
     Integer seatsAvailable;

@@ -11,17 +11,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service @Slf4j
 public class FlightService {
 
     @PersistenceContext
     private EntityManager em;
-    @Autowired
-    SpacelinerService spacelinerService;
 
     public List<Flight> findFlightsBySelectionCriteria(
             String[] spacelinerList,
@@ -37,7 +33,7 @@ public class FlightService {
         CriteriaQuery<Flight> c = cb.createQuery(Flight.class);
         Root<Flight> flight = c.from(Flight.class);
         c.select(flight);
-        c.distinct(true);
+//        c.distinct(true);
 
         Join<Flight, Shuttle> shuttle =
                 flight.join("shuttle", JoinType.LEFT);
@@ -58,6 +54,7 @@ public class FlightService {
 
         List<Predicate> criteria = new ArrayList<Predicate>();
 
+//TODO: Dates arriving and departing selectino added to criteria builder
 //        if (arriving != null) {
 //            ParameterExpression<String> p =
 //                    cb.parameter(String.class, "arriving");
