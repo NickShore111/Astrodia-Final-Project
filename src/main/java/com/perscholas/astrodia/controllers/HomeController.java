@@ -1,7 +1,10 @@
 package com.perscholas.astrodia.controllers;
 
-import com.perscholas.astrodia.dto.RoundtripDTO;
-import com.perscholas.astrodia.models.Flight;
+import com.perscholas.astrodia.dto.FlightDTO;
+import com.perscholas.astrodia.models.Port;
+import com.perscholas.astrodia.models.Region;
+import com.perscholas.astrodia.models.Shuttle;
+import com.perscholas.astrodia.models.Spaceliner;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -15,15 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @Controller @Slf4j
@@ -48,76 +46,56 @@ public class HomeController {
         this.portService = portService;
         this.spacelinerService = spacelinerService;
         this.shuttleService = shuttleService;
-
+    }
+    @ModelAttribute("regions")
+    public List<Region> regions() {
+        return regionService.findAll();
+    }
+    @ModelAttribute("ports")
+    public List<Port> ports() {
+        return portService.findAll();
+    }
+    @ModelAttribute("spaceliners")
+    public List<Spaceliner> spaceliners() {
+        return spacelinerService.findAll();
+    }
+    @ModelAttribute("shuttles")
+    public List<Shuttle> shuttles() {
+        return shuttleService.findAll();
     }
     @GetMapping("test")
-    public String index() {return "index";}
-
-    @GetMapping("/admin/flights")
-    public ModelAndView adminViewAllFlights() {
-        ModelAndView view = new ModelAndView("admin-flights");
-        view.addObject("flights", flightService.findByOrderBy());
-        view.addObject("regions", regionService.findAll());
-        view.addObject("ports", portService.findAll());
-        view.addObject("spaceliners", spacelinerService.findAll());
-        view.addObject("shuttles", shuttleService.findAll());
-        return view;
-    }
+    public String index() {return "index"; }
+    @GetMapping("/signup")
+    public String createUserForm() {return "signup"; }
+    @GetMapping("/stations")
+    public String staysPage() { return "stations"; }
+    @GetMapping("/signin")
+    public String signInUserForm() { return "signin"; }
+    @PostMapping("/signup")
+    public String signInUser() { return "redirect:astrodia"; }
 
     @GetMapping("")
-    public String mainPage(Model model, RoundtripDTO roundtripDTO){
-        model.addAttribute("ports", portService.findAll());
-        return "home";
+    public String mainPage(FlightDTO flightDTO){
+        return "main";
     }
 
-    @GetMapping("/roundtrip")
-    public String roundtripFlightSearch(@Valid RoundtripDTO roundtripDTO, Errors errors, Model model, BindingResult result) {
-        String departurePort = roundtripDTO.getDeparturePort();
-        String arrivalPort = roundtripDTO.getArrivalPort();
-        Date departureDate = roundtripDTO.getDepartureDate();
-        Date arrivalDate = roundtripDTO.getArrivalDate();
+    @GetMapping("/admin/flights")
+    public String adminViewAllFlights(Model model) {
+        model.addAttribute("flights", flightService.findByOrderBy());
+        return "admin-flights";
+    }
+
+    @GetMapping("/region-roundtrip")
+    public String Search(@Valid FlightDTO flightDTO, Errors errors, Model model, BindingResult result) {
+        String departing = flightDTO.getLeaving();
+        String arriving = flightDTO.getDestination();
+        String departureDateStr = flightDTO.getDepartureDate();
+        String arrivalDateStr = flightDTO.getArrivalDate();
         if (result.hasErrors()) {
-            model.addAttribute("ports", portService.findAll());
-            return "home";
+            return "main";
         }
-
-
-        if (departureDate != null && arrivalDate != null) {
-            try {
-                DateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy");
-//                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); // for String to Date
-                String formatDeparture = dFormat.format(departureDate);
-                String formatArrival = dFormat.format(arrivalDate);
-                model.addAttribute("departureFlights", flightService.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, formatDeparture));
-                model.addAttribute("arrivalFlights", flightService.findFLightsByPortsAndArrivalDate(departurePort, arrivalPort, formatArrival));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        model.addAttribute("result", roundtripDTO);
-
+        model.addAttribute("departureFlights", flightService.findFlightByRegionsAndDeparture(departing, arriving, departureDateStr));
         return "roundtripFlights";
     }
 
-    @GetMapping("/results")
-    public String flightSearchResults() {
-        return "flights";
-    }
-    @GetMapping("/signup")
-    public String createUserForm() {
-        return "signup";
-    }
-
-    @GetMapping("/stations")
-    public String staysPage() { return "stations"; }
-
-    @GetMapping("/signin")
-    public String signInUserForm() { return "signin"; }
-
-    @PostMapping("/signup")
-    public String signInUser() {
-
-        return "redirect:astrodia";
-    }
 }

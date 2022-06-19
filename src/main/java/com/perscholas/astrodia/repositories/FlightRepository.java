@@ -14,19 +14,59 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     List<Flight> findByOrderByDeparting();
 
 
-    @Query(value = "SELECT flights.* FROM flights"
-            + " JOIN shuttle_pads ON shuttle_pads.id = flights.launch_pad_id"
-            + " JOIN shuttle_ports ON shuttle_ports.id = shuttle_pads.shuttle_port_id"
-            + " JOIN regions ON regions.id = shuttle_ports.region_id"
-            + " WHERE regions.name = ?1", nativeQuery = true)
+//    TODO: Implement search by regions and date roundtrip
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            JOIN regions AS departureRegion ON departurePort.region_id = deparpartureRegion.id
+            JOIN regions AS arrivalRegion ON arrivalPort.region_id = arrivalRegion.id
+            WHERE departureRegion.id = ?1
+            AND arrivalRegion.id = ?2
+            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?3;
+            """, nativeQuery = true)
+    List<Flight> findFlightByRegionsAndDeparture(String departing, String arriving, String departureDateStr);
+//TODO: NEED TO UPDATE QUERY FOR DEPARTURE RANGE
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            JOIN regions AS departureRegion ON departurePort.region_id = deparpartureRegion.id
+            JOIN regions AS arrivalRegion ON arrivalPort.region_id = arrivalRegion.id
+            WHERE departureRegion.id = ?1
+            AND arrivalRegion.id = ?2
+            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?3;
+            """, nativeQuery = true)
+    List<Flight> findFlightByRegionsAndDepartureRange(String departing, String arriving, String departureDateStr);
+
+
+    @Query(value = """
+            SELECT flights.* FROM flights
+            JOIN shuttle_pads ON shuttle_pads.id = flights.launch_pad_id
+            JOIN shuttle_ports ON shuttle_ports.id = shuttle_pads.shuttle_port_id
+            JOIN regions ON regions.id = shuttle_ports.region_id
+            WHERE regions.name = ?1;
+            """, nativeQuery = true)
     List<Flight> findFlightsByRegionDeparture(String region);
 
     @Query(value = "SELECT * FROM flights WHERE DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?1", nativeQuery = true)
     List<Flight> findFlightsByDeparture(String date);
 
-    @Query(value = "SELECT * FROM flights f WHERE f.launchPort = ?1 AND f.arrivalPort = ?2 AND DATE_FORMAT(DATE(f.departing), '%m/%d/%Y') = ?3", nativeQuery = true)
-    List<Flight> findFlightsByPortsAndDepartureDate(String fromPort, String toPort, String departureDate);
 
-    @Query(value = "SELECT * FROM flights f WHERE f.launchPort = ?1 AND f.arrivalPort = ?2 AND DATE_FORMAT(DATE(f.arriving), '%m/%d/%Y') = ?3", nativeQuery = true)
-    List<Flight> findFlightsByPortsAndArrivalDate(String fromPort, String toPort, String arrivalDate);
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            WHERE departurePort.id = ?1
+            AND arrivalPort.id = ?2
+            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') BETWEEN ?3 AND ?4;
+            """, nativeQuery = true)
+    List<Flight> findFlightsByPortsAndDateRange(String fromPort, String toPort, String departureDate, String arrivalDate);
+
 }

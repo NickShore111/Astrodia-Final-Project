@@ -175,12 +175,11 @@ public class FlightService {
 
     public List<Flight> findByOrderBy() { return flightRepository.findByOrderByDeparting(); }
 
-    public List<Flight> findFlightsByPortsAndDepartureDate(String departurePort, String arrivalPort, String departureDate) {
-        return flightRepository.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, departureDate);
+    public List<Flight> findFlightsByPortsAndDepartureDate(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
+        return flightRepository.findFlightsByPortsAndDateRange(departurePort, arrivalPort, departureDate, arrivalDate);
     }
 
-    public List<Flight> findFLightsByPortsAndArrivalDate(String departurePort, String arrivalPort, String arrivalDate) {
-        return flightRepository.findFlightsByPortsAndArrivalDate(departurePort, arrivalPort, arrivalDate);
+    public List<Flight> findFlightByRegionsAndDeparture(String departing, String arriving, String departureDateStr) {
+        return flightRepository.findFlightByRegionsAndDeparture(departing, arriving, departureDateStr);
     }
-
 }

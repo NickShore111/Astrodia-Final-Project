@@ -7,7 +7,7 @@ body {
 .dropdown-menu {
 box-shadow: 8px 8px 8px grey;
 }
-input:hover {
+.form-select, input, .help-link {
 cursor: pointer;
 }
 /* START: index.html styling */
@@ -17,15 +17,8 @@ cursor: pointer;
 .no-line-anchor {
   text-decoration: none;
 }
-.help-link {
+.search-by-tab:hover {
   cursor: pointer;
-}
-.main-section-tab {
-  text-decoration: none;
-  color: black;
-}
-.main-section-tab:hover {
-  color: black;
   border-bottom: 2px solid black;
 }
 .main-section-form-box-tabs .focus {
