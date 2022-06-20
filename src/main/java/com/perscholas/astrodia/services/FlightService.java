@@ -54,18 +54,21 @@ public class FlightService {
 
         List<Predicate> criteria = new ArrayList<Predicate>();
 
-//TODO: Dates arriving and departing selectino added to criteria builder
-//        if (arriving != null) {
-//            ParameterExpression<String> p =
-//                    cb.parameter(String.class, "arriving");
-//            criteria.add(cb.equal(arriving.get("arriving"),p));
-//        }
-
+        if (arriving != null) {
+            ParameterExpression<String> p =
+                    cb.parameter(String.class, "arriving");
+                criteria.add(cb.equal(flight.get("arriving"),p));
+        }
+        if (arriving != null) {
+            ParameterExpression<String> p =
+                    cb.parameter(String.class, "departing");
+                criteria.add(cb.equal(flight.get("departing"),p));
+        }
         if (spacelinerList != null) {
             for (int i = 0; i < spacelinerList.length; i++){
                 ParameterExpression<String> p =
                     cb.parameter(String.class, "spaceliner" + i);
-            criteria.add(cb.equal(spaceliner.get("id"), p));
+                criteria.add(cb.equal(spaceliner.get("id"), p));
             }
         }
         if (shuttleList != null) {
@@ -113,6 +116,13 @@ public class FlightService {
         }
 
         TypedQuery<Flight> q = em.createQuery(c);
+
+        if (arriving != null) {
+            q.setParameter("arriving", arriving);
+        }
+        if (arriving != null) {
+            q.setParameter("departing", departing);
+        }
         if (spacelinerList != null) {
             int id = 0;
             for (String s : spacelinerList) {
@@ -156,6 +166,8 @@ public class FlightService {
 
     private final FlightRepository flightRepository;
 
+    public List<Flight> findByOrderByDeparting() { return flightRepository.findByOrderByDeparting(); }
+
     @Autowired
     public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
@@ -173,13 +185,16 @@ public class FlightService {
         return flightRepository.findFlightsByDeparture(date);
     }
 
-    public List<Flight> findByOrderBy() { return flightRepository.findByOrderByDeparting(); }
 
-    public List<Flight> findFlightsByPortsAndDepartureDate(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
+    public List<Flight> findFlightsByPortsAndDateRange(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
         return flightRepository.findFlightsByPortsAndDateRange(departurePort, arrivalPort, departureDate, arrivalDate);
     }
 
-    public List<Flight> findFlightByRegionsAndDeparture(String departing, String arriving, String departureDateStr) {
-        return flightRepository.findFlightByRegionsAndDeparture(departing, arriving, departureDateStr);
+    public List<Flight> findFlightsByRegionsAndDepartureDate(String departing, String arriving, String departureDate) {
+        return flightRepository.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDate);
+    }
+
+    public List<Flight> findFlightsByRegionsAndArrivalDate(String departing, String arriving, String arrivalDate) {
+        return flightRepository.findFlightsByRegionsAndArrivalDate(departing, arriving, arrivalDate);
     }
 }

@@ -81,12 +81,12 @@ public class HomeController {
 
     @GetMapping("/admin/flights")
     public String adminViewAllFlights(Model model) {
-        model.addAttribute("flights", flightService.findByOrderBy());
+        model.addAttribute("flights", flightService.findByOrderByDeparting());
         return "admin-flights";
     }
 
     @GetMapping("/region-roundtrip")
-    public String Search(@Valid FlightDTO flightDTO, Errors errors, Model model, BindingResult result) {
+    public String regionRoundtrip(@Valid FlightDTO flightDTO, Errors errors, Model model, BindingResult result) {
         String departing = flightDTO.getLeaving();
         String arriving = flightDTO.getDestination();
         String departureDateStr = flightDTO.getDepartureDate();
@@ -94,8 +94,22 @@ public class HomeController {
         if (result.hasErrors()) {
             return "main";
         }
-        model.addAttribute("departureFlights", flightService.findFlightByRegionsAndDeparture(departing, arriving, departureDateStr));
+        log.info("Search Params:" );
+        log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
+        model.addAttribute("departureFlights", flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr));
+        model.addAttribute("arrivalFlights", flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr));
+
         return "roundtripFlights";
     }
 
+//    findFlightsBySelectionCriteria(
+//            String[] spacelinerList,
+//            String[] shuttleList,
+//            String departing,
+//            String[] departureRegionList,
+//            String[] departurePortList,
+//            String arriving,
+//            String[] arrivalRegionList,
+//            String[] arrivalPortList
+//    )
 }

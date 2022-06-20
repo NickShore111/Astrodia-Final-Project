@@ -12,8 +12,9 @@
 
     <div class="container-fluid">
         <div class="row ">
-            <div class="col-2">
-                <h5 class="border-3 border-bottom">Filter flights</h5>
+            <div class="col-2 p-2">
+                <h5 class="border-3 border-bottom">Filter Flights</h5>
+                <form id="search-parameters" method="GET" action="#">
                 <h6>Spaceliner</h6>
                 <div th:each="spaceliner : ${spaceliners}" class="form-check spacelinerSelection">
                     <input
@@ -45,7 +46,6 @@
                         placeholder="MM/DD/YYYY"
                         id="departureDate"
                 />
-
                 <h6>Region</h6>
                 <div th:each="region : ${regions}" class="form-check departureRegionSelection">
                     <input
@@ -76,7 +76,6 @@
                         placeholder="MM/DD/YYYY"
                         id="arrivalDate"
                 />
-
                 <h6>Region</h6>
                 <div th:each="region : ${regions}" class="form-check arrivalRegionSelection">
                     <input
@@ -99,6 +98,7 @@
                     <label th:text="${port.name}" class="form-check-label" th:for="${port.id}">
                     </label>
                 </div>
+                </form>
             </div>
         <div class="col border-start">
             <table class="table table-hover">
@@ -122,12 +122,12 @@
                             th:id="${flight.flightCode}"
                         >
                             <th scope="row" th:text="${flight.flightCode}"></th>
-                            <td th:text="${flight.launchPad.port.id}">MoonBase</td>
+                            <td th:text="${flight.launchPad.port.id}"></td>
                             <td th:text="${#calendars.format({flight.departing},'MMM dd, YYYY hh:mm a')}"></td>
                             <td th:text="${flight.arrivalPad.port.id}"></td>
                             <td th:text="${#calendars.format({flight.arriving},'MMM dd, YYYY hh:mm a')}"></td>
                             <td th:text="${flight.shuttle.name}"></td>
-                            <td><a href="#">Delete</a></td>
+                            <td><a th:href="@{/flights/delete}">Delete</a></td>
                         </tr>
                     </th:block>
                 </tbody>

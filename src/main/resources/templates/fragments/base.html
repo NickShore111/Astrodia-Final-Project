@@ -38,7 +38,7 @@
                         <select th:field="*{leaving}" class="form-select" id="leaving">
                             <option selected value="">Select Region</option>
                             <span th:each="region : ${regions}">
-                            <option th:value="${region.name}" th:text="${region.name}"></option>
+                            <option th:value="${region.id}" th:text="${region.name}"></option>
                         </span>
                         </select>
                         <div class="alert alert-warning" th:if="${#fields.hasErrors('leaving')}" th:errors="*{leaving}"></div>
@@ -50,7 +50,7 @@
                         <select th:field="*{destination}" class="form-select" id="destination">
                             <option selected value="">Select Region</option>
                             <span th:each="region : ${regions}">
-                            <option th:value="${region.name}" th:text="${region.name}"></option>
+                            <option th:value="${region.id}" th:text="${region.name}"></option>
                         </span>
                         </select>
                         <div class="alert alert-warning" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></div>

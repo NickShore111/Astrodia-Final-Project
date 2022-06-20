@@ -27,16 +27,18 @@ public class Flight {
     Integer id;
     String flightCode;
     @NonNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm a")
     Timestamp departing;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm a")
     @NonNull
     Timestamp arriving;
     Integer seatsAvailable;
     @NumberFormat(style= NumberFormat.Style.CURRENCY)
     Double pricePerSeat;
     @Column(updatable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     Timestamp createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     Timestamp updatedAt;
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
