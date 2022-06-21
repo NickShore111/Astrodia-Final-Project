@@ -1,16 +1,12 @@
 package com.perscholas.astrodia.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -55,6 +51,18 @@ public class Flight {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shuttleId", nullable = false)
     Shuttle shuttle;
+    @Transient
+    Date arrivalDate;
+    @Transient
+    Date departureDate;
+
+    public Date getArrivalDate() {
+        return new Date(this.arriving.getTime());
+    }
+    public Date getDepartureDate() {
+        return new Date(this.departing.getTime());
+    }
+
 
     @PrePersist
     protected void onCreate() {

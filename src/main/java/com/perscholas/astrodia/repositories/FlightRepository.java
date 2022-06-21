@@ -25,7 +25,8 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             JOIN regions AS arrivalRegion ON arrivalPort.region_id = arrivalRegion.id
             WHERE departureRegion.id = :departureRegion
             AND arrivalRegion.id = :arrivalRegion
-            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = :departureDate
+            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') >= :departureDate
+            ORDER BY flights.departing asc
             """, nativeQuery = true)
     List<Flight> findFlightsByRegionsAndDepartureDate(
             @Param("departureRegion") String departureRegion,
@@ -42,7 +43,8 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             JOIN regions AS arrivalRegion ON arrivalPort.region_id = arrivalRegion.id
             WHERE departureRegion.id = ?1
             AND arrivalRegion.id = ?2
-            AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') = ?3
+            AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') <= ?3
+            ORDER BY flights.arriving desc
             """, nativeQuery = true)
     List<Flight> findFlightsByRegionsAndArrivalDate(String departing, String arriving, String departureDate);
 

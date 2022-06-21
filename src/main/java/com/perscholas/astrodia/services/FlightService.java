@@ -8,9 +8,17 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service @Slf4j
@@ -54,16 +62,17 @@ public class FlightService {
 
         List<Predicate> criteria = new ArrayList<Predicate>();
 
-        if (arriving != null) {
-            ParameterExpression<String> p =
-                    cb.parameter(String.class, "arriving");
-                criteria.add(cb.equal(flight.get("arriving"),p));
-        }
-        if (arriving != null) {
-            ParameterExpression<String> p =
-                    cb.parameter(String.class, "departing");
-                criteria.add(cb.equal(flight.get("departing"),p));
-        }
+//        TODO: Using dates for parameters in dynamic query
+//        if (arriving != null) {
+//            ParameterExpression<Date> p =
+//                    cb.parameter(Date.class, "arriving");
+//                criteria.add(cb.lessThanOrEqual(flight.get("arriving"),p));
+//        }
+//        if (departing != null) {
+//            ParameterExpression<Date> p =
+//                    cb.parameter(Date.class, "departing");
+//                criteria.add(cb.equal(flight.get("departing"),p));
+//        }
         if (spacelinerList != null) {
             for (int i = 0; i < spacelinerList.length; i++){
                 ParameterExpression<String> p =
@@ -108,21 +117,47 @@ public class FlightService {
         }
 
         if (criteria.size() == 0) {
-            return this.findAll();
+            return this.findByOrderByDeparting();
         } else if (criteria.size() == 1) {
             c.where(criteria.get(0));
         } else {
             c.where(cb.or(criteria.toArray(new Predicate[0])));
         }
+        log.warn("criteria size: " + criteria.size());
 
         TypedQuery<Flight> q = em.createQuery(c);
 
-        if (arriving != null) {
-            q.setParameter("arriving", arriving);
-        }
-        if (arriving != null) {
-            q.setParameter("departing", departing);
-        }
+//        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+//        if (arriving != null) {
+//            String[] a = arriving.split("/");
+//            String m = a[0], d = a[1], y = a[2];
+//
+//            String afs = String.format("%s-%s-%s",y, m, d);
+//            q.setParameter("arriving", {ts afs});
+//        }
+        // MM/dd/yyyy
+//        if (departing != null) {
+//            DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+//            String currDate = departing.concat(" 00:00:00");
+//            LocalDateTime localDateTime = LocalDateTime.from(formatDateTime.parse(currDate));
+//            Timestamp ts = Timestamp.valueOf(localDateTime);
+//
+//            String[] d = departing.split("/");
+//            String month = d[0], day = d[1], year = d[2];
+//            String depStr = String.format("%s-%s-%s",year, month, day);
+//            Date date = new Date();
+//            q.setParameter("departing", date, TemporalType.DATE);
+
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//            try {
+//                Date date = dateFormat.parse(departing);
+//                q.setParameter("departing", date, TemporalType.DATE);
+//
+//            } catch (ParseException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        }
         if (spacelinerList != null) {
             int id = 0;
             for (String s : spacelinerList) {

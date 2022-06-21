@@ -90,16 +90,12 @@ cursor: pointer;
   height: auto;
   margin-right: 5px;
 }
-.select-flight-details-wrapper {
-  border: none;
-  background-color: white;
-}
-.listview-flight-details:hover {
+.flight:hover {
   border: 1px solid black;
   border-radius: 10px;
   cursor: pointer;
 }
-.flight-selected {
+.selected {
   border: 1px solid black;
   border-radius: 10px;
 }

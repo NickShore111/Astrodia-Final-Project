@@ -40,16 +40,16 @@ document.getElementById("search-parameters")
                 setParamsList(arrivalPortParams, event);
                 break;
         }
+//        TODO: Using dates for parameters in dynamic query
 //     get dates if valid length
-        var departureDate = document.getElementById('departureDate').value;
-        var arrivalDate = document.getElementById('arrivalDate').value;
-
-        if (departureDate.length == 10) {
-            URLParams.append('departureDate', departureDate);
-        }
-        if (departureDate.length == 10) {
-            URLParams.append('arrivalDate', arrivalDate);
-        }
+//        var departureDate = document.getElementById('departureDate').value;
+//        var arrivalDate = document.getElementById('arrivalDate').value;
+//        if (departureDate.length == 10) {
+//            URLParams.append('departing', departureDate);
+//        }
+//        if (arrivalDate.length == 10) {
+//            URLParams.append('arriving', arrivalDate);
+//        }
         buildURLParams('spaceliner', spacelinerParams);
         buildURLParams('shuttle', shuttleParams);
         buildURLParams('departureRegion', departureRegionParams);
@@ -85,15 +85,40 @@ function remove(element, array) {
         }
     }
 }
+function displayError(response) {
+    const tableBody = document.querySelector("tbody");
+    tableBody.innerHTML = "";
+    var error = document.createElement("tr")
+    error.innerHTML = `<h3>${response.status} Sorry, there was an issue with your request...</h3>`;
+    error.className = "text-center";
+    tableBody.appendChild(error);
+}
+function displayNoResults() {
+    const tableBody = document.querySelector("tbody");
+    tableBody.innerHTML = "";
+    var noResults = document.createElement("tr")
+    noResults.innerHTML = "<h3>Sorry, no results found...</h3>";
+    noResults.className = "text-center";
+    tableBody.appendChild(noResults);
+}
 async function fetchSelection(url) {
     const response = await fetch(url);
+    console.log(response);
+
+    if (!response.ok) {
+        displayError(response);
+    }
     const flights = await response.json();
     return flights;
 }
 async function buildDOMWithResults(flights) {
     const tableBody = document.querySelector("tbody");
     tableBody.innerHTML = "";
-    console.log(flights[0]);
+//    console.log(flights[0]);
+//    console.log(flights);
+    if (flights.length == 0) {
+        displayNoResults();
+    }
     flights.forEach((key, idx) => {
         var flight = flights[idx];
 //        console.log(`Index:${idx}: ${flights[idx]}`);
@@ -105,7 +130,7 @@ async function buildDOMWithResults(flights) {
             <th class="fs-6 fw-normal">${flight.arrivalPad.port.id}</th>
             <th class="fs-6 fw-normal">${flight.arriving}</th>
             <th class="fs-6 fw-normal">${flight.shuttle.name}</th>
-            <td class="fs-6 fw-normal"><a href="/delete/${flight.flightCode}">Delete</a></td>`;
+            <td class="fs-6 fw-normal"><a href="/flights/delete/${flight.flightCode}">Delete</a></td>`;
         tableBody.appendChild(tr);
     });
 }

@@ -13,6 +13,7 @@ public class FlightCreator {
     private final List<Shuttle> shuttles;
     private final List<Pad> pads;
     private final Random rand = new Random();
+//    default window of 30 days for flight departure creation
     private int departureWindow = 30;
 
     private List<Flight> flightsList = new ArrayList<>();
@@ -44,20 +45,7 @@ public class FlightCreator {
     }
 
     private Flight createNewFlight() {
-        // add random days, minute, hour to departure timestamp
-        int randDay = rand.nextInt(departureWindow);
-        int randMinute = rand.nextInt(60);
-        int randHour = rand.nextInt(24);
-        // create new timestamp object with current time
-        Timestamp timestamp = new Timestamp(new Date().getTime());
-        // create cal object instance
-        Calendar cal = Calendar.getInstance();
-        // set calendar object to now
-        cal.setTimeInMillis(timestamp.getTime());
-        // add random values to cal object
-        cal.add(Calendar.DAY_OF_MONTH, randDay);
-        cal.add(Calendar.MINUTE, randMinute);
-        cal.add(Calendar.HOUR, randHour);
+        Calendar cal = this.getFutureDeparture();
         // set timestamp object to new timestamp using future cal object
         Timestamp futureDeparture = new Timestamp(cal.getTime().getTime());
         int randomShuttleIdx = rand.nextInt(shuttles.size());
@@ -81,7 +69,24 @@ public class FlightCreator {
 
         return newFlight;
     }
-
+    private Calendar getFutureDeparture() {
+        // add random days, minute, hour to departure timestamp
+        int randDay = rand.nextInt(departureWindow);
+        int randHour = rand.nextInt(24);
+        int randMinute = rand.nextInt(12) * 5;
+        // create new timestamp object with current time
+        Timestamp timestamp = new Timestamp(new Date().getTime());
+        // create cal object instance
+        Calendar cal = Calendar.getInstance();
+        // set calendar object to now
+        cal.setTimeInMillis(timestamp.getTime());
+        // add random values to cal object
+        cal.add(Calendar.DAY_OF_MONTH, randDay);
+        cal.add(Calendar.HOUR, randHour);
+        cal.set(Calendar.MINUTE, 0);
+        cal.add(Calendar.MINUTE, randMinute);
+        return cal;
+    }
     private Timestamp getFutureArrival(Timestamp departureTimestamp, Pad launchPad, Pad arrivalPad) {
         String fromRegion = launchPad.getPort().getRegion().getId();
         String toRegion = arrivalPad.getPort().getRegion().getId();

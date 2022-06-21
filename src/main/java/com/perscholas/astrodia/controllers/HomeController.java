@@ -94,12 +94,13 @@ public class HomeController {
         if (result.hasErrors()) {
             return "main";
         }
+
         log.info("Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
         model.addAttribute("departureFlights", flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr));
-        model.addAttribute("arrivalFlights", flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr));
-
-        return "roundtripFlights";
+        model.addAttribute("returnFlights", flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr));
+        model.addAttribute("flightDTO", result);
+        return "roundtrip-flights";
     }
 
 //    findFlightsBySelectionCriteria(

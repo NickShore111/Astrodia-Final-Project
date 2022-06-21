@@ -39,13 +39,13 @@
                     </label>
                 </div>
                 <h5 class="border-top">Departure</h5>
-                <h6>Date</h6>
-                <input
-                        class="form-control form-select-sm mb-3 col datepicker"
-                        type="text"
-                        placeholder="MM/DD/YYYY"
-                        id="departureDate"
-                />
+<!--                <h6>Date</h6>-->
+<!--                <input-->
+<!--                        class="form-control form-select-sm mb-3 col datepicker"-->
+<!--                        type="text"-->
+<!--                        placeholder="MM/DD/YYYY"-->
+<!--                        id="departureDate"-->
+<!--                />-->
                 <h6>Region</h6>
                 <div th:each="region : ${regions}" class="form-check departureRegionSelection">
                     <input
@@ -69,13 +69,13 @@
                     </label>
                 </div>
                 <h5 class="border-top">Arrival</h5>
-                <h6>Date</h6>
-                <input
-                        class="form-control form-select-sm mb-3 col datepicker"
-                        type="text"
-                        placeholder="MM/DD/YYYY"
-                        id="arrivalDate"
-                />
+<!--                <h6>Date</h6>-->
+<!--                <input-->
+<!--                        class="form-control form-select-sm mb-3 col datepicker"-->
+<!--                        type="text"-->
+<!--                        placeholder="MM/DD/YYYY"-->
+<!--                        id="arrivalDate"-->
+<!--                />-->
                 <h6>Region</h6>
                 <div th:each="region : ${regions}" class="form-check arrivalRegionSelection">
                     <input
@@ -127,7 +127,7 @@
                             <td th:text="${flight.arrivalPad.port.id}"></td>
                             <td th:text="${#calendars.format({flight.arriving},'MMM dd, YYYY hh:mm a')}"></td>
                             <td th:text="${flight.shuttle.name}"></td>
-                            <td><a th:href="@{/flights/delete}">Delete</a></td>
+                            <td><a th:href="@{/flights/delete/{id} (id = ${flight.id})}">Delete</a></td>
                         </tr>
                     </th:block>
                 </tbody>
