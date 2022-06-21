@@ -1,10 +1,7 @@
 package com.perscholas.astrodia.controllers;
 
-import com.perscholas.astrodia.dto.FlightDTO;
-import com.perscholas.astrodia.models.Port;
-import com.perscholas.astrodia.models.Region;
-import com.perscholas.astrodia.models.Shuttle;
-import com.perscholas.astrodia.models.Spaceliner;
+import com.perscholas.astrodia.dto.RoundtripSearchDTO;
+import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -15,14 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Controller @Slf4j
 @RequestMapping("astrodia")
@@ -74,32 +66,33 @@ public class HomeController {
     @PostMapping("/signup")
     public String signInUser() { return "redirect:astrodia"; }
 
-    @GetMapping("")
-    public String mainPage(FlightDTO flightDTO){
-        return "main";
-    }
-
     @GetMapping("/admin/flights")
     public String adminViewAllFlights(Model model) {
         model.addAttribute("flights", flightService.findByOrderByDeparting());
         return "admin-flights";
     }
-
-    @GetMapping("/region-roundtrip")
-    public String regionRoundtrip(@Valid FlightDTO flightDTO, Errors errors, Model model, BindingResult result) {
-        String departing = flightDTO.getLeaving();
-        String arriving = flightDTO.getDestination();
-        String departureDateStr = flightDTO.getDepartureDate();
-        String arrivalDateStr = flightDTO.getArrivalDate();
+    @GetMapping("")
+    public String mainPage(@ModelAttribute("searchDTO") RoundtripSearchDTO searchDTO){
+        return "main";
+    }
+    @GetMapping("/roundtrip-region")
+    public String roundtripSearchByRegion(Model model, @ModelAttribute("searchDTO") RoundtripSearchDTO searchDTO, BindingResult result, Errors errors) {
         if (result.hasErrors()) {
+            log.warn(result.getAllErrors().toString());
             return "main";
         }
+        String departing = searchDTO.getLeaving();
+        String arriving = searchDTO.getDestination();
+        String departureDateStr = searchDTO.getDepartureDate();
+        String arrivalDateStr = searchDTO.getArrivalDate();
 
         log.info("Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
+        List<Flight> returnFlights = flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr);
         model.addAttribute("departureFlights", flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr));
-        model.addAttribute("returnFlights", flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr));
-        model.addAttribute("flightDTO", result);
+        model.addAttribute("returnFlights",returnFlights);
+        returnFlights.forEach((flight) -> log.info(flight.toString()));
+        model.addAttribute("newSearch", searchDTO);
         return "roundtrip-flights";
     }
 

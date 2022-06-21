@@ -9,84 +9,83 @@
     <div th:replace="fragments/nav :: nav"></div>
     <!-- Start: Main image and additional content -->
     <div class="container-lg">
-        <div class="row">
+        <div class="row row-cols-md-auto justify-content-center p-3 border-bottom" id="form-container">
             <form
-                    th:object="${flightDTO}"
-                    th:action="@{/astrodia/region-roundtrip}"
-                    class="d-flex-inline"
-                    method="GET"
+                    th:object="${newSearch}"
+                    th:action="@{/astrodia/roundtrip-region}"
+                    method="GET" class="d-flex"
             >
-<!--                <div class="row g-2 justify-content-center" id="region-search">-->
-<!--                    <div class="col-lg-3">-->
-<!--                        <div class="form-floating" id="leaving-div">-->
-<!--                            <select th:field="*{leaving}" class="form-select" id="leaving">-->
-<!--                                <option selected value="">Select Region</option>-->
-<!--                                <span th:each="region : ${regions}">-->
-<!--                            <option th:value="${region.id}" th:text="${region.name}"></option>-->
-<!--                        </span>-->
-<!--                            </select>-->
-<!--                            <div class="alert alert-warning" th:if="${#fields.hasErrors('leaving')}" th:errors="*{leaving}"></div>-->
-<!--                            <label for="leaving">Departing from</label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-3">-->
-<!--                        <div class="form-floating" id="destination-div">-->
-<!--                            <select th:field="*{destination}" class="form-select" id="destination">-->
-<!--                                <option selected value="">Select Region</option>-->
-<!--                                <span th:each="region : ${regions}">-->
-<!--                            <option th:value="${region.id}" th:text="${region.name}"></option>-->
-<!--                        </span>-->
-<!--                            </select>-->
-<!--                            <div class="alert alert-warning" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></div>-->
-<!--                            <label for="destination">Going to</label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-4 d-flex justify-content-center" id="date-input-container">-->
-<!--                        <div class="form-floating col-5 mx-1" id="departureDate-div">-->
-<!--                            <input-->
-<!--                                    th:field="*{departureDate}"-->
-<!--                                    class="form-control col datepicker"-->
-<!--                                    type="text"-->
-<!--                                    id="departureDate"-->
-<!--                                    placeholder="Departure date"-->
-<!--                            />-->
-<!--                            <div class="alert alert-warning" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></div>-->
-<!--                            <label for="departureDate">From Date</label>-->
-<!--                        </div>-->
-<!--                        <div class="form-floating col-5 mx-1" id="arrivalDate-div">-->
-<!--                            <input-->
-<!--                                    th:field="*{arrivalDate}"-->
-<!--                                    class="form-control col datepicker"-->
-<!--                                    type="text"-->
-<!--                                    id="arrivalDate"-->
-<!--                                    placeholder="Return date"-->
-<!--                            />-->
-<!--                            <label for="arrivalDate">Return by</label>-->
-<!--                            <div class="alert alert-warning" th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                    <div class="col-12 col-sm-3 mx-1">
+                        <div class="form-floating" id="leaving-div">
+                            <select th:field="*{leaving}" class="form-select" id="leaving">
+                                <option selected value="">Select Region</option>
+                                <span th:each="region : ${regions}">
+                            <option th:value="${region.id}" th:text="${region.name}"></option>
+                        </span>
+                            </select>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('leaving')}" th:errors="*{leaving}"></div>
+                            <label for="leaving">Departing from</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3 mx-1">
+                        <div class="form-floating" id="destination-div">
+                            <select th:field="*{destination}" class="form-select" id="destination">
+                                <option selected value="">Select Region</option>
+                                <span th:each="region : ${regions}">
+                            <option th:value="${region.id}" th:text="${region.name}"></option>
+                        </span>
+                            </select>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></div>
+                            <label for="destination">Going to</label>
+                        </div>
+                    </div>
+                        <div class="form-floating col-12 col-sm-2 mx-1" id="departureDate-div">
+                            <input
+                                    th:field="*{departureDate}"
+                                    class="form-control col datepicker"
+                                    type="text"
+                                    id="departureDate"
+                                    placeholder="Departure date"
+                            />
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></div>
+                            <label for="departureDate">From Date</label>
+                        </div>
+                        <div class="form-floating col-12 col-sm-2 mx-1" id="arrivalDate-div">
+                            <input
+                                    th:field="*{arrivalDate}"
+                                    class="form-control col datepicker"
+                                    type="text"
+                                    id="arrivalDate"
+                                    placeholder="Return date"
+                            />
+                            <label for="arrivalDate">Return by</label>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></div>
+                        </div>
                     <button
-                            class="btn btn-primary btn-lg justify-content-center my-3 px-5"
+                            type="submit"
+                            class="btn btn-primary btn-lg col-2 mx-2"
                             id="searchBtn"
                     >
                         Search
                     </button>
             </form>
+            </div>
+
         </div>
         <!-- Start: Sidebar for narrowing selection -->
+    <div class="row">
+        <div class="mx-auto d-flex my-3 justify-content-evenly">
+            <button id="toggle-departures" class="btn btn-primary text-nowrap col-2 toggle-flight" disabled data-bs-toggle="button">Departing Flights</button>
+            <button id="toggle-returns" class="btn btn-primary text-nowrap col-2 toggle-flight" data-bs-toggle="button">Returning Flights</button>
+        </div>
+    </div>
         <!-- Start: Search results flight list  -->
-        <div class="container col border rounded-end">
-            <div class="row">
-                <div class="mx-auto d-flex my-3 justify-content-evenly">
-                    <button class="btn btn-primary col-2" disabled data-bs-toggle="button" aria-pressed="true">Departing Flights</button>
-                    <button class="btn btn-primary col-2" data-bs-toggle="button">Returning Flights</button>
-                </div>
-            </div>
+        <div class="container col border rounded">
+
             <section id="departure-flights">
             <div class="row p-2 my-1 flight "
                  th:each="flight : ${departureFlights}"
-                th:id="${flight.flightCode}">
+                th:id="${flight.id}">
                 <div class="col-12 col-sm-5" id="departure-arrival-time">
                     <th:block th:inline="text">
                         [[${#calendars.format({flight.departing},'hh:mm a')}]] -
@@ -138,10 +137,10 @@
             </div>
             </section>
 
-
-            <div class="row listview-flight-details p-2 my-1"
-                 id="return-flights"
-                 th:each="flight : ${returnFlights}" style="display: none;">
+            <section id="return-flights" style="display: none;">
+                <div class="row p-2 my-1 flight"
+                     th:each="flight : ${returnFlights}"
+                     th:id="${flight.id}" >
                 <div class="col-12 col-sm-5" id="return-arrival-time">
                     <th:block th:inline="text">
                         [[${#calendars.format({flight.departing},'hh:mm a')}]] -
@@ -189,25 +188,25 @@
                         <h5>2300</h5>
                     </span>
                 </div>
-            </div>
-
-
+                </div>
+            </section>
         </div>
-            <!-- End: Search results flight list -->
-
-        <!-- Start: Flight selection detail overlay side panal -->
+    <!-- End: Search results flight list -->
+        <!-- Start: Selected flight overlay-->
         <div class="container" id="flight-detail-overlay">
             <div class="row p-3 border-bottom">
-                <div class="overlay-close" id="overlay-close"></div>
+                <div class="overlay-close"></div>
             </div>
-            <div class="row p-3 border-1 border-bottom border-dark">
-                <h4 id="overlay-departure-arrival-time"></h4>
-                <p><img id="overlay-flight-spaceliner-logo"/>
-
-                </p>
-                <br />
+            <h4 class="row justify-content-center" id="flight-code" ></h4>
+            <div class="row">
+                <h6 class="col" id="flight-launch">Departs: </h6>
+                <h6 class="col" id="flight-landing">Arrives: </h6>
+            </div>
+            <div class="row py-3 my-0 px-0 border-1 border-bottom border-dark">
+                 <h6 id="aboard"></h6>
+            </div>
+            <img class="d-inline-flex" id="overlay-spaceliner-logo"/>
                 <p><span class="fw-bold">12:34pm-3:02pm</span><br />3h 24m(Nonstop)</p>
-            </div>
             <div class="row p-3">
                 <h5 class="m-0">Selected fare to Moon Base</h5>
                 <p>Your selection applies to this flight only</p>

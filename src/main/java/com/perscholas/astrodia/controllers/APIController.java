@@ -8,10 +8,7 @@ import com.perscholas.astrodia.services.SpacelinerService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +27,11 @@ public class APIController {
         this.regionService = regionService;
         this.portService = portService;
         this.spacelinerService = spacelinerService;
+    }
+
+    @GetMapping("/flights/{id}")
+    public Flight getFlight(@PathVariable("id") int id) {
+        return flightService.findById(id);
     }
     @GetMapping("/flights")
     public List<Flight> getFlightSearchResults

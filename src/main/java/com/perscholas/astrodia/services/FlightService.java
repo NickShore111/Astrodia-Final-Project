@@ -62,7 +62,7 @@ public class FlightService {
 
         List<Predicate> criteria = new ArrayList<Predicate>();
 
-//        TODO: Using dates for parameters in dynamic query
+//  TODO: Using dates for parameters in dynamic query
 //        if (arriving != null) {
 //            ParameterExpression<Date> p =
 //                    cb.parameter(Date.class, "arriving");
@@ -127,36 +127,32 @@ public class FlightService {
 
         TypedQuery<Flight> q = em.createQuery(c);
 
+//  TODO: Departure and Arrival Date Selection Criteria
 //        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
 //        if (arriving != null) {
 //            String[] a = arriving.split("/");
 //            String m = a[0], d = a[1], y = a[2];
-//
 //            String afs = String.format("%s-%s-%s",y, m, d);
 //            q.setParameter("arriving", {ts afs});
-//        }
-        // MM/dd/yyyy
+//        } // MM/dd/yyyy
 //        if (departing != null) {
 //            DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
 //            String currDate = departing.concat(" 00:00:00");
 //            LocalDateTime localDateTime = LocalDateTime.from(formatDateTime.parse(currDate));
 //            Timestamp ts = Timestamp.valueOf(localDateTime);
-//
+//  TODO:
 //            String[] d = departing.split("/");
 //            String month = d[0], day = d[1], year = d[2];
 //            String depStr = String.format("%s-%s-%s",year, month, day);
 //            Date date = new Date();
 //            q.setParameter("departing", date, TemporalType.DATE);
-
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 //            try {
 //                Date date = dateFormat.parse(departing);
 //                q.setParameter("departing", date, TemporalType.DATE);
-//
 //            } catch (ParseException e) {
 //                throw new RuntimeException(e);
 //            }
-//
 //        }
         if (spacelinerList != null) {
             int id = 0;
@@ -201,6 +197,8 @@ public class FlightService {
 
     private final FlightRepository flightRepository;
 
+    public Flight findById(int id) { return flightRepository.findById(id); }
+
     public List<Flight> findByOrderByDeparting() { return flightRepository.findByOrderByDeparting(); }
 
     @Autowired
@@ -222,7 +220,7 @@ public class FlightService {
 
 
     public List<Flight> findFlightsByPortsAndDateRange(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
-        return flightRepository.findFlightsByPortsAndDateRange(departurePort, arrivalPort, departureDate, arrivalDate);
+        return flightRepository.findFlightsByPortsAndDepartureDateRange(departurePort, arrivalPort, departureDate, arrivalDate);
     }
 
     public List<Flight> findFlightsByRegionsAndDepartureDate(String departing, String arriving, String departureDate) {

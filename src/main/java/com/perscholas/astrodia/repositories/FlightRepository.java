@@ -13,6 +13,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     List<Flight> findAll();
     List<Flight> findByOrderByDeparting();
+    Flight findById(int id);
 
 
     @Query(value = """
@@ -41,12 +42,15 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
             JOIN regions AS departureRegion ON departurePort.region_id = departureRegion.id
             JOIN regions AS arrivalRegion ON arrivalPort.region_id = arrivalRegion.id
-            WHERE departureRegion.id = ?1
-            AND arrivalRegion.id = ?2
-            AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') <= ?3
+            WHERE departureRegion.id = :departureRegion
+            AND arrivalRegion.id = :arrivalRegion
+            AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') <= :arrivalDate
             ORDER BY flights.arriving desc
             """, nativeQuery = true)
-    List<Flight> findFlightsByRegionsAndArrivalDate(String departing, String arriving, String departureDate);
+    List<Flight> findFlightsByRegionsAndArrivalDate(
+            @Param("departureRegion") String departing,
+            @Param("arrivalRegion") String arriving,
+            @Param("arrivalDate") String arrivalDate);
 
 //TODO: NEED TO UPDATE QUERY FOR DEPARTURE RANGE
     @Query(value = """
@@ -61,7 +65,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             AND arrivalRegion.id = ?2
             AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?3
             """, nativeQuery = true)
-    List<Flight> findFlightsByRegionsAndDepartureRange(String departing, String arriving, String departureDate);
+    List<Flight> findFlightsByRegionsAndDepartureDateRange(String departing, String arriving, String departureDate);
 
 
     @Query(value = """
@@ -87,6 +91,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             AND arrivalPort.id = ?2
             AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') BETWEEN ?3 AND ?4;
             """, nativeQuery = true)
-    List<Flight> findFlightsByPortsAndDateRange(String fromPort, String toPort, String departureDate, String arrivalDate);
+    List<Flight> findFlightsByPortsAndDepartureDateRange(String fromPort, String toPort, String departureDate, String arrivalDate);
 
 }

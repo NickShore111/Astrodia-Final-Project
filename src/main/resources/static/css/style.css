@@ -51,6 +51,7 @@ cursor: pointer;
   box-shadow: 10px 10px 10px grey;
   animation-name: signInPopup;
   animation-duration: 0.3s;
+  z-index: 1;
 }
 @keyframes signInPopup {
   from {
@@ -74,6 +75,9 @@ cursor: pointer;
 }
 /* END: index.html styling */
 /* START: flights.html styling */
+#aboard img {
+  display: block;
+}
 #overlay-bitcoin-symbol {
   width: 15px;
   height: 20px;
@@ -197,5 +201,6 @@ border-radius:10px;
   }
   #flight-detail-overlay {
     width: 40%;
+    overflow-y: scroll;
   }
 }

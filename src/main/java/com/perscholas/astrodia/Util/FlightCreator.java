@@ -4,6 +4,7 @@ import com.perscholas.astrodia.models.Flight;
 import com.perscholas.astrodia.models.Pad;
 import com.perscholas.astrodia.models.Shuttle;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -95,32 +96,31 @@ public class FlightCreator {
         if (fromRegion.equals("ES") && toRegion.equals("EO") ||
                 fromRegion.equals("EO") && toRegion.equals("ES")) {
             randHour = rand.nextInt(66) + 6; // 6 hours to 3 days
-        } // Earth surface <to> Moon
-        if (fromRegion.equals("ES") && toRegion.equals("MO") ||
+        } else if// Earth surface <to> Moon
+            (fromRegion.equals("ES") && toRegion.equals("MO") ||
                 fromRegion.equals("MO") && toRegion.equals("ES")) {
             randHour = rand.nextInt(12) + 66; // 3 days on average, 12 hour window
-        } // Earth surface <to> Mars
-        if (fromRegion.equals("ES") && toRegion.equals("MA") ||
+        } else if// Earth surface <to> Mars
+            (fromRegion.equals("ES") && toRegion.equals("MA") ||
                 fromRegion.equals("MA") && toRegion.equals("ES")) {
             randHour = rand.nextInt(593) + 93; // from 93 hours to 686 hours(farthest approach)
-        }// Earth orbit <to> Moon
-        if (fromRegion.equals("EO") && toRegion.equals("MO") ||
+        } else if// Earth orbit <to> Moon
+            (fromRegion.equals("EO") && toRegion.equals("MO") ||
                 fromRegion.equals("MO") && toRegion.equals("EO")) {
             randHour = rand.nextInt(24) + 24; // 1 to 2 days
-        }// Earth orbit <to> Mars
-        if (fromRegion.equals("EO") && toRegion.equals("MA") ||
+        } else if// Earth orbit <to> Mars
+            (fromRegion.equals("EO") && toRegion.equals("MA") ||
                 fromRegion.equals("MA") && toRegion.equals("EO")) {
             randHour = rand.nextInt(545) + 87; // 6hours - 48hours shorter travel
-        }// Moon <to> Mars
-        if (fromRegion.equals("MO") && toRegion.equals("MA") ||
-                fromRegion.equals("MA") && toRegion.equals("MO")) {
+        } else// Moon <to> Mars
+         {
             randHour = rand.nextInt(545) + 80; //
         }
         int randMinute = rand.nextInt(60);
         Calendar cal = Calendar.getInstance();
-        // set calendar object to now
+        // set calendar object to departure time
         cal.setTimeInMillis(departureTimestamp.getTime());
-        // add random time to cal object
+        // add random time values to cal object
         cal.add(Calendar.MINUTE, randMinute);
         cal.add(Calendar.HOUR, randHour);
         // set timestamp object to new timestamp using future cal object

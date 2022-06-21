@@ -27,8 +27,8 @@
     </div>
     <div id="region-form-container" class="form-container">
         <form
-                th:object="${flightDTO}"
-                th:action="@{/astrodia/region-roundtrip}"
+                th:object="${searchDTO}"
+                th:action="@{/astrodia/roundtrip-region}"
                 class="d-flex-inline"
                 method="GET"
         >
@@ -94,7 +94,7 @@
     </div>
 
     <div id="port-form-container" class="form-container" style="display:none;">
-        <form th:object="${flightDTO}" th:action="@{/astrodia/portRoundtripSearch}" class="d-flex-inline" method="GET">
+        <form th:object="${searchDTO}" th:action="@{/astrodia/portRoundtripSearch}" class="d-flex-inline" method="GET">
             <div class="row g-2 justify-content-center" id="roundtrip-search-inputs">
                 <div class="col-lg-3">
                     <div class="form-floating">
