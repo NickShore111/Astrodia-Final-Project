@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-@RestController @Slf4j
+@org.springframework.web.bind.annotation.RestController
+@Slf4j
 @RequestMapping("astrodia/api")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class APIController {
+public class RestController {
     FlightService flightService;
     RegionService regionService;
     PortService portService;
     SpacelinerService spacelinerService;
 
-    public APIController(FlightService flightService, RegionService regionService, PortService portService, SpacelinerService spacelinerService) {
+    public RestController(FlightService flightService, RegionService regionService, PortService portService, SpacelinerService spacelinerService) {
         this.flightService = flightService;
         this.regionService = regionService;
         this.portService = portService;
