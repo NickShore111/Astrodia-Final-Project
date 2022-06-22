@@ -9,9 +9,14 @@
   <!-- Start: Navbar element -->
   <div th:replace="fragments/nav :: nav"></div>
     <div class="container-lg">
-    <div th:replace="fragments/admin :: region"></div>
+        <div th:replace="fragments/admin :: spaceliners"></div>
+        <div th:replace="fragments/admin :: shuttles"></div>
 
-  </div>
+        <div th:replace="fragments/admin :: regions"></div>
+        <div th:replace="fragments/admin :: ports"></div>
+        <div th:replace="fragments/admin :: pads"></div>
+
+    </div>
 </div>
 
 </body>

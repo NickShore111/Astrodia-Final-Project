@@ -17,7 +17,7 @@ cursor: pointer;
 .no-line-anchor {
   text-decoration: none;
 }
-.search-by-tab:hover {
+.searchBy-tab:hover {
   cursor: pointer;
   border-bottom: 2px solid black;
 }

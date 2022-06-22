@@ -1,9 +1,6 @@
 package com.perscholas.astrodia.controllers;
 
-import com.perscholas.astrodia.models.Port;
-import com.perscholas.astrodia.models.Region;
-import com.perscholas.astrodia.models.Shuttle;
-import com.perscholas.astrodia.models.Spaceliner;
+import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -57,10 +54,12 @@ public class AdminController {
     public List<Shuttle> shuttles() {
         return shuttleService.findAll();
     }
-    @RequestMapping("regions")
+    @ModelAttribute("pads")
+    public List<Pad> pads() { return padService.findAll(); }
 
+    @RequestMapping("portal")
     public String adminRegionPortal() {
-        return "admin-regions";
+        return "admin-portal";
     }
 
 }

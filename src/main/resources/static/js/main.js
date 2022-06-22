@@ -1,10 +1,16 @@
-const loadDatepicker = (datepickerSelector) => {
-    $(datepickerSelector).datepicker();
-};
+const forms = document.querySelectorAll(".form-container");
+window.onload = function () {
+    for (let form of forms) {
+        console.log(form.id);
+        let depDateId = "#"+form.id.concat("-departureDate");
+        let arrDateId = "#"+form.id.concat("-arrivalDate");
 
-const loadDatepickers = () => {
+        loadDatepickers(depDateId, arrDateId);
+    }
+}
+const loadDatepickers = (depId, arrId) => {
   var dateFormat = "mm/dd/yyyy",
-    from = $("#departureDate")
+    from = $(depId)
       .datepicker({
         defaultDate: "+2d",
         minDate: 0,
@@ -14,7 +20,7 @@ const loadDatepickers = () => {
       .on("change", function () {
         to.datepicker("option", "minDate", getDate(this));
       }),
-    to = $("#arrivalDate")
+    to = $(arrId)
       .datepicker({
         defaultDate: "+1w",
         minDate: +1,
@@ -34,66 +40,15 @@ const loadDatepickers = () => {
     return date;
   }
 };
+$(function () {
+    $(".searchBy-tab").click(function (event) {
+        if (!event.target.classList.contains("focus")) {
+            $("#region-tab").toggleClass("focus");
+            $("#port-tab").toggleClass("focus");
 
-// ==============================================================
-// START: home.html vanilla Javascript
-// helper functions
-const addFocus = function (element) {
-  if (!element.classList.contains("focus")) {
-    element.className = element.className.concat(" focus");
-  }
-};
-const removeFocus = function (element, elements) {
-  for (let others of elements) {
-    if (!others.isSameNode(element)) {
-      others.classList.remove("focus");
-    }
-  }
-};
-const displayForm = function (showFormId) {
-    const forms = document.querySelectorAll(".form-container");
-    for (let form of forms) {
-        if (form.id != showFormId) {
-            form.style.display = "none";
-        } else {
-            form.style.display = "block";
+            $(".port-content").toggle();
+            $(".region-content").toggle();
         }
-        loadDatepickers();
-    }
-}
-const inputFeildsContainer = document.querySelector(".input-fields-container");
-
-window.onload = () => {
-  loadDatepickers();
-};
-// Start: main-section-form-box-tabs onclick focus element
-// change form by user selection (region, port, spaceliner)
-const formTabs = document.querySelectorAll(".search-by-tab")
-for (const formTab of formTabs) {
-  formTab.addEventListener("click", (event) => {
-    addFocus(formTab);
-    removeFocus(formTab, formTabs);
-    let showFormId = event.target.id.split("-")[0] + "-form-container";
-
-    displayForm(showFormId);
-
-  });
-}
-// End: main-section-form-box-tabs onclick underline element
-// Start: main-section-form-choice-tabs onclick focus element and populate input fields
-const choiceTabs = document.querySelectorAll(".form-choice");
-
-for (const choiceTab of choiceTabs) {
-  choiceTab.addEventListener("click", (event) => {
-    addFocus(choiceTab);
-    removeFocus(choiceTab, choiceTabs);
-
-// Modify search inputs
-    if (event.target.id == "roundtrip") {
-        console.log("roundtrip selected");
-    } else {
-        console.log("oneway selected");
-    }
     })
-}
-// END:  index.html vanilla Javascript
+})
+

@@ -6,7 +6,8 @@
 </head>
 <body>
 
-<div th:fragment="region">
+<div th:fragment="regions">
+    <h1>Regions</h1>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -16,9 +17,90 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="region : ${regions}">
-            <th th:text="${region.id}" scope="row">1</th>
-            <td th:text="${region.name}">Mark</td>
+        <tr th:each="r : ${regions}">
+            <th th:text="${r.id}" scope="row">1</th>
+            <td th:text="${r.name}">Mark</td>
+            <td>Delete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="ports">
+    <h1>Ports</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th Scape="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${ports}">
+            <th th:text="${p.id}" scope="row">1</th>
+            <td th:text="${p.name}">Mark</td>
+            <td>Delete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="shuttles">
+    <h1>Shuttles</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th Scape="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${shuttles}">
+            <th th:text="${s.id}" scope="row">1</th>
+            <td th:text="${s.name}">Mark</td>
+            <td>Delete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="spaceliners">
+    <h1>Spaceliners</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th Scape="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sl : ${spaceliners}">
+            <th th:text="${sl.id}" scope="row">1</th>
+            <td th:text="${sl.name}">Mark</td>
+            <td>Delete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="pads">
+    <h1>Pads</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th Scape="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pads}">
+            <th th:text="${p.id}" scope="row">1</th>
+            <td th:text="${p.port}">Mark</td>
+            <td>Delete</td>
         </tr>
         </tbody>
     </table>
