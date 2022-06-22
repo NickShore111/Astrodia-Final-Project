@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<section th:fragment="roundtrip-for-results">
+    <div class="row row-cols-md-auto justify-content-center p-3 border-bottom" id="form-container">
+        <form
+                th:object="${newSearch}"
+                th:action="@{/astrodia/roundtrip-region}"
+                method="GET" class="d-flex"
+        >
+            <div class="col-12 col-sm-3 mx-1">
+                <div class="form-floating" id="leaving-div">
+                    <select th:field="*{leaving}" class="form-select" id="leaving">
+                        <option selected value="">Select Region</option>
+                        <span th:each="region : ${regions}">
+                            <option th:value="${region.id}" th:text="${region.name}"></option>
+                        </span>
+                    </select>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('leaving')}" th:errors="*{leaving}"></div>
+                    <label for="leaving">Departing from</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 mx-1">
+                <div class="form-floating" id="destination-div">
+                    <select th:field="*{destination}" class="form-select" id="destination">
+                        <option selected value="">Select Region</option>
+                        <span th:each="region : ${regions}">
+                            <option th:value="${region.id}" th:text="${region.name}"></option>
+                        </span>
+                    </select>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></div>
+                    <label for="destination">Going to</label>
+                </div>
+            </div>
+            <div class="form-floating col-12 col-sm-2 mx-1" id="departureDate-div">
+                <input
+                        th:field="*{departureDate}"
+                        class="form-control col datepicker"
+                        type="text"
+                        id="departureDate"
+                        placeholder="Departure date"
+                />
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></div>
+                <label for="departureDate">From Date</label>
+            </div>
+            <div class="form-floating col-12 col-sm-2 mx-1" id="arrivalDate-div">
+                <input
+                        th:field="*{arrivalDate}"
+                        class="form-control col datepicker"
+                        type="text"
+                        id="arrivalDate"
+                        placeholder="Return date"
+                />
+                <label for="arrivalDate">Return by</label>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></div>
+            </div>
+            <button
+                    type="submit"
+                    class="btn btn-primary btn-lg col-2 mx-2"
+                    id="searchBtn"
+            >
+                Search
+            </button>
+        </form>
+    </div>
+
+</section>
+</body>
+</html>

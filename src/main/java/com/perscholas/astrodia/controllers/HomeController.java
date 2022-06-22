@@ -59,8 +59,6 @@ public class HomeController {
     public String index() {return "index"; }
     @GetMapping("/signup")
     public String createUserForm() {return "signup"; }
-    @GetMapping("/stations")
-    public String staysPage() { return "stations"; }
     @GetMapping("/signin")
     public String signInUserForm() { return "signin"; }
     @PostMapping("/signup")
@@ -76,7 +74,12 @@ public class HomeController {
         return "main";
     }
     @GetMapping("/roundtrip-region")
-    public String roundtripSearchByRegion(Model model, @ModelAttribute("searchDTO") RoundtripSearchDTO searchDTO, BindingResult result, Errors errors) {
+    public String roundtripSearchByRegion(
+            Model model,
+            @ModelAttribute("searchDTO")
+            @Valid RoundtripSearchDTO searchDTO,
+            BindingResult result,
+            Errors errors) {
         if (result.hasErrors()) {
             log.warn(result.getAllErrors().toString());
             return "main";
@@ -86,14 +89,16 @@ public class HomeController {
         String departureDateStr = searchDTO.getDepartureDate();
         String arrivalDateStr = searchDTO.getArrivalDate();
 
-        log.info("Search Params:" );
-        log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
         List<Flight> returnFlights = flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr);
         model.addAttribute("departureFlights", flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr));
         model.addAttribute("returnFlights",returnFlights);
-        returnFlights.forEach((flight) -> log.info(flight.toString()));
+
+        log.info("Search Params:" );
+        log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
+        log.info("Return Count: "+returnFlights.size());
+//        returnFlights.forEach(flight -> log.info(flight.toString()));
         model.addAttribute("newSearch", searchDTO);
-        return "roundtrip-flights";
+        return "roundtrip-results";
     }
 
 //    findFlightsBySelectionCriteria(

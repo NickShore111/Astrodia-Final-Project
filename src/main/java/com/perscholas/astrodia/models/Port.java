@@ -27,7 +27,7 @@ public class Port {
     String location;
     @NonNull
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "regionId", nullable = false)
     Region region;
     @JsonBackReference

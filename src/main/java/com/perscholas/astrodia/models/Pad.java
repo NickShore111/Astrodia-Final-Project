@@ -23,7 +23,7 @@ public class Pad {
     String id;
     @NonNull
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "portId", nullable = false)
     Port port;
     @JsonBackReference

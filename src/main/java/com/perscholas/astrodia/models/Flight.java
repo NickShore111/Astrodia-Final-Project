@@ -42,13 +42,13 @@ public class Flight {
     @NonNull
     Pad launchPad;
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "arrivalPadId", nullable = false)
     @NonNull
     Pad arrivalPad;
     @JsonManagedReference
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "shuttleId", nullable = false)
     Shuttle shuttle;
     @Transient
@@ -91,5 +91,6 @@ public class Flight {
                 ", shuttle=" + shuttle +
                 '}';
     }
+
 
 }
