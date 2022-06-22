@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link th:replace="fragments/header :: header" />
+  <title>Admin Regions</title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+  <!-- Start: Navbar element -->
+  <div th:replace="fragments/nav :: nav"></div>
+    <div class="container-lg">
+    <div th:replace="fragments/admin :: region"></div>
+
+  </div>
+</div>
+
+</body>
+    <div th:replace="fragments/footer :: scripts"></div>
+    <script type="text/javascript" th:src="@{/js/nav.js}"></script>
+    <script type="text/javascript" th:src="@{/js/admin-portal.js}"></script>
+</html>
