@@ -8,7 +8,6 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Getter @Setter
 @AllArgsConstructor

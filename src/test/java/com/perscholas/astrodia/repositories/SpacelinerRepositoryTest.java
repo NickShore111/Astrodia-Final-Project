@@ -28,9 +28,7 @@ class SpacelinerRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        allValidSpaceliners.forEach(liner -> {
-            spacelinerRepository.save(liner);
-        });
+
     }
 
     @AfterEach
