@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="update-flight" class="border border-2 rounded" style="box-shadow: 8px 8px 8px grey; background-color: white; width: 500px; height: 500px; position: absolute; top: 100px; left: 100px;" >
+    <div class="container" >
+        <h3 class="border-bottom text-center">Update Flight</h3>
+        <div class="container px-2">
+            <div class="input-group mb-3">
+
+                <label class="input-group-text" for="inputGroupSelect01">Shuttle</label>
+                <select class="form-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+
+            <h5>Departing</h5>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Port</label>
+                <select class="form-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Date</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+                <span class="input-group-text">Time</span>
+                <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+            </div>
+            <h5>Arriving</h5>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Port</label>
+                <select class="form-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Date</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+                <span class="input-group-text">Time</span>
+                <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

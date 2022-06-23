@@ -1,7 +1,7 @@
 $(function () {
     $(".datepicker").datepicker();
   });
-// trigger after document content has loaded
+
 const url = "http://localhost:8080/astrodia/api/flights";
 const formCheckInputs = document.querySelectorAll(".form-check-input");
 const datepickers = document.querySelectorAll(".datepicker");

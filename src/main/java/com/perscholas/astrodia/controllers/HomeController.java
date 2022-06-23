@@ -55,6 +55,7 @@ public class HomeController {
     public List<Shuttle> shuttles() {
         return shuttleService.findAll();
     }
+
     @GetMapping("test")
     public String index() {return "index"; }
     @GetMapping("/signup")
@@ -95,7 +96,7 @@ public class HomeController {
         log.info("Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
         model.addAttribute("newSearch", searchDTO);
-        return "roundtrip-results";
+        return "results";
     }
     @GetMapping("/roundtrip-port")
     public String roundtripSearchByPort(
@@ -119,7 +120,7 @@ public class HomeController {
         log.info("Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
         model.addAttribute("newSearch", searchDTO);
-        return "roundtrip-results";
+        return "results";
     }
 //    findFlightsBySelectionCriteria(
 //            String[] spacelinerList,
