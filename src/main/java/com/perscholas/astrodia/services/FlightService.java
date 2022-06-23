@@ -213,10 +213,6 @@ public class FlightService {
         flightRepository.save(flight);
     }
 
-    public List<Flight> findFlightsByDeparture(String date) {
-        return flightRepository.findFlightsByDeparture(date);
-    }
-
     public List<Flight> findFlightsByPortsAndDepartureDate(String departurePort, String arrivalPort, String departureDate) {
         return flightRepository.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, departureDate);
     }

@@ -73,7 +73,7 @@ public class FlightCreator {
     }
 
     /**
-     * Creates a new Flight with randomized data
+     * Creates a new Flight object with randomized data
      * @return new Flight object
      */
     private Flight createNewFlight() {
@@ -89,6 +89,9 @@ public class FlightCreator {
         Timestamp futureArrival = this.getFutureArrival(futureDeparture, launchPad, arrivalPad);
         Shuttle shuttle = shuttles.get(randomShuttleIdx);
         String flightCode = this.createFlightCode(cal, shuttle.getSpaceliner().getId(), launchPad.getId(), arrivalPad.getId());
+        int availableSeats = this.getAvailableSeating(shuttle.getPassengerCapacity());
+        // seat value range 5000 to 15000 in increments of 100
+        int seatValue = (rand.nextInt(100) + 50) * 100;
 
         Flight newFlight = new Flight();
         newFlight.setFlightCode(flightCode);
@@ -97,9 +100,19 @@ public class FlightCreator {
         newFlight.setLaunchPad(launchPad);
         newFlight.setArrivalPad(arrivalPad);
         newFlight.setShuttle(shuttle);
-        newFlight.setSeatsAvailable(shuttle.getPassengerCapacity());
+        newFlight.setSeatsAvailable(availableSeats);
+        newFlight.setPricePerSeat(seatValue);
 
         return newFlight;
+    }
+
+    /**
+     * Creates a random int for seating capacity between 1 and shuttle seating capacity
+     * @param maxSeating
+     * @return random int
+     */
+    private int getAvailableSeating(int maxSeating) {
+        return rand.nextInt(maxSeating)+1;
     }
 
     /**

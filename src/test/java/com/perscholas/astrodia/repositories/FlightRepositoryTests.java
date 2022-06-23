@@ -1,19 +1,14 @@
 package com.perscholas.astrodia.repositories;
 
-import com.perscholas.astrodia.models.Flight;
-import com.perscholas.astrodia.models.Pad;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.sql.Timestamp;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @DataJpaTest
-class FlightRepositoryTest {
+class FlightRepositoryTests {
 
     FlightRepository flightRepository;
     SpacelinerRepository spacelinerRepository;

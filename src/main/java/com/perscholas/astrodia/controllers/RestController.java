@@ -8,6 +8,7 @@ import com.perscholas.astrodia.services.SpacelinerService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -18,16 +19,12 @@ import java.util.List;
 @RequestMapping("astrodia/api")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RestController {
-    FlightService flightService;
-    RegionService regionService;
-    PortService portService;
-    SpacelinerService spacelinerService;
 
-    public RestController(FlightService flightService, RegionService regionService, PortService portService, SpacelinerService spacelinerService) {
+    FlightService flightService;
+
+    @Autowired
+    public RestController(FlightService flightService) {
         this.flightService = flightService;
-        this.regionService = regionService;
-        this.portService = portService;
-        this.spacelinerService = spacelinerService;
     }
 
     @GetMapping("/flights/{id}")

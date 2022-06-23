@@ -6,11 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface SpacelinerRepository extends JpaRepository<Spaceliner, Integer> {
+public interface SpacelinerRepository extends JpaRepository<Spaceliner, String> {
 
     List<Spaceliner> findAll();
 
     Optional<Spaceliner> findById(String id);
 
-    Optional<Spaceliner> findByName(String name);
 }

@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PortRepository extends JpaRepository<Port, Integer> {
+public interface PortRepository extends JpaRepository<Port, String> {
     List<Port> findAll();
-    Optional<Port> findById(Integer id);
+    Optional<Port> findById(String id);
     Optional<Port> findByName(String name);
     Optional<Port> findByLocation(String location);
 

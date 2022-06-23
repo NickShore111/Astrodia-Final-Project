@@ -30,7 +30,7 @@ public class Flight {
     Timestamp arriving;
     Integer seatsAvailable;
     @NumberFormat(style= NumberFormat.Style.CURRENCY)
-    Double pricePerSeat;
+    int pricePerSeat;
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     Timestamp createdAt;

@@ -4,6 +4,7 @@ package com.perscholas.astrodia.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "spaceliners")
 public class Spaceliner {
-    @Id @NonNull
+    @Id @NonNull @Length(max=3)
     String id;
     @NonNull
     String name;
