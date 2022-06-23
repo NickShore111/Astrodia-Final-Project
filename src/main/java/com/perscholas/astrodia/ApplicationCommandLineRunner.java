@@ -1,6 +1,6 @@
 package com.perscholas.astrodia;
 
-import com.perscholas.astrodia.Util.FlightCreator;
+import com.perscholas.astrodia.util.FlightCreator;
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
@@ -25,6 +25,22 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     RegionService regionService;
     ShuttleService shuttleService;
     SpacelinerService spacelinerService;
+    @Autowired
+    ApplicationCommandLineRunner(
+            FlightService flightService,
+            PadService padService,
+            PortService portService,
+            RegionService regionService,
+            ShuttleService shuttleService,
+            SpacelinerService spacelinerService)
+    {
+        this.flightService = flightService;
+        this.padService = padService;
+        this.portService = portService;
+        this.regionService = regionService;
+        this.shuttleService = shuttleService;
+        this.spacelinerService = spacelinerService;
+    }
     Spaceliner SPX = new Spaceliner("SPX", "SpaceX");
     Spaceliner VGN = new Spaceliner("VGN", "Virgin Galactic");
     Spaceliner BLO =  new Spaceliner("BLO", "Blue Origin");
@@ -84,22 +100,6 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             new Pad("V2", MVS)
     ));
 
-    @Autowired
-    ApplicationCommandLineRunner(
-            FlightService flightService,
-            PadService padService,
-            PortService portService,
-            RegionService regionService,
-            ShuttleService shuttleService,
-            SpacelinerService spacelinerService)
-    {
-        this.flightService = flightService;
-        this.padService = padService;
-        this.portService = portService;
-        this.regionService = regionService;
-        this.shuttleService = shuttleService;
-        this.spacelinerService = spacelinerService;
-    }
     @PostConstruct
     public void postConstruct(){
         log.warn("================== Application CommandLine Runner ==================");
@@ -110,14 +110,14 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         FlightCreator flightCreator = new FlightCreator(shuttles, pads, 7);
         List<Flight> flights = flightCreator.getListOfFlights(50);
 
-        for (Region r : regions) {
-            regionService.saveOrUpdate(r);
-        }
         for (Spaceliner s : spaceliners) {
             spacelinerService.saveOrUpdate(s);
         }
         for (Shuttle s : shuttles) {
             shuttleService.saveOrUpdate(s);
+        }
+        for (Region r : regions) {
+            regionService.saveOrUpdate(r);
         }
         for (Port p : ports) {
             portService.saveOrUpdate(p);
@@ -128,6 +128,5 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         for (Flight f : flights) {
             flightService.saveOrUpdate(f);
         }
-
     }
 }

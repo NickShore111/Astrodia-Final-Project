@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
+@Builder
 @Entity
 @Table(name = "ports")
 public class Port {

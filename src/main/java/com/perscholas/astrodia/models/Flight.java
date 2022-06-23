@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Builder
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Entity
 @Table(name = "flights")
@@ -51,18 +52,6 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "shuttleId", nullable = false)
     Shuttle shuttle;
-    @Transient
-    Date arrivalDate;
-    @Transient
-    Date departureDate;
-
-    public Date getArrivalDate() {
-        return new Date(this.arriving.getTime());
-    }
-    public Date getDepartureDate() {
-        return new Date(this.departing.getTime());
-    }
-
 
     @PrePersist
     protected void onCreate() {

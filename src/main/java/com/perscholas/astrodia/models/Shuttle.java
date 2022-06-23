@@ -17,6 +17,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Builder
 @Entity
 @Table(name = "shuttles")
 public class Shuttle {

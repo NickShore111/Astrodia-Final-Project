@@ -14,6 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
+@Builder
 @Entity
 @Table(name = "spaceliners")
 public class Spaceliner {

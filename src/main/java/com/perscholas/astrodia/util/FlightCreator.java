@@ -1,34 +1,52 @@
-package com.perscholas.astrodia.Util;
+package com.perscholas.astrodia.util;
 
 import com.perscholas.astrodia.models.Flight;
 import com.perscholas.astrodia.models.Pad;
 import com.perscholas.astrodia.models.Shuttle;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * A utility class used to create Flights for database population
+ */
 @Slf4j
 public class FlightCreator {
     private final List<Shuttle> shuttles;
     private final List<Pad> pads;
     private final Random rand = new Random();
-//    default window of 30 days for flight departure creation
     private int departureWindow = 30;
 
     private List<Flight> flightsList = new ArrayList<>();
 
+    /**
+     * A FlightCreator with default departureWindow set to 30 days
+     * @param shuttles - List of Shuttle objects
+     * @param pads - List of Pad objects
+     */
     public FlightCreator(List<Shuttle> shuttles, List<Pad> pads) {
         this.shuttles = shuttles;
         this.pads = pads;
     }
+
+    /**
+     * A FlightCreator with parameter for custom departureWindow setting
+     * @param shuttles - List of Shuttle objects
+     * @param pads - List of Pad objects
+     * @param departureWindow - Integer representing number of days to create Flights for
+     */
     public FlightCreator(List<Shuttle> shuttles, List<Pad> pads, int departureWindow) {
         this.shuttles = shuttles;
         this.pads = pads;
         this.departureWindow = departureWindow;
     }
 
+    /**
+     * Returns designated number of Flights in a List
+     * @param numberOfFlights - Quantity of flights to create
+     * @return List of Flights with size numberOfFlights
+     */
     public List<Flight> getListOfFlights(int numberOfFlights) {
         for (int i = 0; i < numberOfFlights; i++) {
             Flight f = this.createNewFlight();
@@ -36,6 +54,15 @@ public class FlightCreator {
         }
         return flightsList;
     }
+
+    /**
+     * FlightCode = (SpacelinerID)(Day of the year) (LaunchPadID)-(ArrivalPadID)
+     * @param departure - Calendar object representing Flight departure date
+     * @param shuttleSpacelinerId - Spaceliner id operating created flight
+     * @param launchPadId - Pad id where Flight will take off from
+     * @param arrivalPadId - Pad id where Flight will land
+     * @return String with unique FlightCode based on Flight information
+     */
     private String createFlightCode(
             Calendar departure,
             String shuttleSpacelinerId,
@@ -45,6 +72,10 @@ public class FlightCreator {
         return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
     }
 
+    /**
+     * Creates a new Flight with randomized data
+     * @return new Flight object
+     */
     private Flight createNewFlight() {
         Calendar cal = this.getFutureDeparture();
         // set timestamp object to new timestamp using future cal object
@@ -70,6 +101,11 @@ public class FlightCreator {
 
         return newFlight;
     }
+
+    /**
+     * Create Calendar object with random future time using departureWindow
+     * @return Calendar object
+     */
     private Calendar getFutureDeparture() {
         // add random days, minute, hour to departure timestamp
         int randDay = rand.nextInt(departureWindow);
@@ -88,6 +124,15 @@ public class FlightCreator {
         cal.add(Calendar.MINUTE, randMinute);
         return cal;
     }
+
+    /**
+     * Create future Timestamp instance with departureDate as base
+     * and dependent on Take and Landing location
+     * @param departureTimestamp - Timestamp with future arrival time needs to be based on
+     * @param launchPad - Pad representing the launch site
+     * @param arrivalPad - Pad representing the landing site
+     * @return new Timestamp instance
+     */
     private Timestamp getFutureArrival(Timestamp departureTimestamp, Pad launchPad, Pad arrivalPad) {
         String fromRegion = launchPad.getPort().getRegion().getId();
         String toRegion = arrivalPad.getPort().getRegion().getId();
@@ -127,9 +172,14 @@ public class FlightCreator {
         return new Timestamp(cal.getTime().getTime());
     }
 
+    /**
+     * For setting landing region not equal to launch region
+     * @param launchPadIdx - Randomized Pad index value
+     * @return int Pad id
+     */
     private int getArrivalPadIdx(int launchPadIdx) {
         int randomIdx = rand.nextInt(pads.size());
-        // avoid creating flights travelling to and from same region
+        // avoid creating flights travelling to and from same region/system
         while (pads.get(randomIdx).getPort().getRegion() ==
                 pads.get(launchPadIdx).getPort().getRegion()) {
             randomIdx = rand.nextInt(pads.size());

@@ -89,18 +89,38 @@ public class HomeController {
         String departureDateStr = searchDTO.getDepartureDate();
         String arrivalDateStr = searchDTO.getArrivalDate();
 
-        List<Flight> returnFlights = flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr);
         model.addAttribute("departureFlights", flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr));
-        model.addAttribute("returnFlights",returnFlights);
+        model.addAttribute("returnFlights", flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr));
 
         log.info("Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
-        log.info("Return Count: "+returnFlights.size());
-//        returnFlights.forEach(flight -> log.info(flight.toString()));
         model.addAttribute("newSearch", searchDTO);
         return "roundtrip-results";
     }
+    @GetMapping("/roundtrip-port")
+    public String roundtripSearchByPort(
+            Model model,
+            @ModelAttribute("searchDTO")
+            @Valid RoundtripSearchDTO searchDTO,
+            BindingResult result,
+            Errors errors) {
+        if (result.hasErrors()) {
+            log.warn(result.getAllErrors().toString());
+            return "main";
+        }
+        String departing = searchDTO.getLeaving();
+        String arriving = searchDTO.getDestination();
+        String departureDateStr = searchDTO.getDepartureDate();
+        String arrivalDateStr = searchDTO.getArrivalDate();
 
+        model.addAttribute("departureFlights", flightService.findFlightsByPortsAndDepartureDate(departing, arriving, departureDateStr));
+        model.addAttribute("returnFlights", flightService.findFlightsByPortsAndArrivalDate(arriving, departing, arrivalDateStr));
+
+        log.info("Search Params:" );
+        log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
+        model.addAttribute("newSearch", searchDTO);
+        return "roundtrip-results";
+    }
 //    findFlightsBySelectionCriteria(
 //            String[] spacelinerList,
 //            String[] shuttleList,

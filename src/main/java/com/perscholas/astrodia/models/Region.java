@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
+@Builder
 @Entity
 @Table(name = "regions")
 public class Region {

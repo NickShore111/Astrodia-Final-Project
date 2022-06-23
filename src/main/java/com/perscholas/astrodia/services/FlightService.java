@@ -23,7 +23,8 @@ import java.util.List;
 
 @Service @Slf4j
 public class FlightService {
-
+    @Autowired
+    private final FlightRepository flightRepository;
     @PersistenceContext
     private EntityManager em;
 
@@ -41,7 +42,7 @@ public class FlightService {
         CriteriaQuery<Flight> c = cb.createQuery(Flight.class);
         Root<Flight> flight = c.from(Flight.class);
         c.select(flight);
-//        c.distinct(true);
+        c.distinct(true);
 
         Join<Flight, Shuttle> shuttle =
                 flight.join("shuttle", JoinType.LEFT);
@@ -195,8 +196,6 @@ public class FlightService {
 
     }
 
-    private final FlightRepository flightRepository;
-
     public Flight findById(int id) { return flightRepository.findById(id); }
 
     public List<Flight> findByOrderByDeparting() { return flightRepository.findByOrderByDeparting(); }
@@ -218,15 +217,15 @@ public class FlightService {
         return flightRepository.findFlightsByDeparture(date);
     }
 
-
-    public List<Flight> findFlightsByPortsAndDateRange(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
-        return flightRepository.findFlightsByPortsAndDepartureDateRange(departurePort, arrivalPort, departureDate, arrivalDate);
+    public List<Flight> findFlightsByPortsAndDepartureDate(String departurePort, String arrivalPort, String departureDate) {
+        return flightRepository.findFlightsByPortsAndDepartureDate(departurePort, arrivalPort, departureDate);
     }
-
+    public List<Flight> findFlightsByPortsAndArrivalDate(String departurePort, String arrivalPort, String arrivalDate) {
+        return flightRepository.findFlightsByPortsAndArrivalDate(departurePort, arrivalPort, arrivalDate);
+    }
     public List<Flight> findFlightsByRegionsAndDepartureDate(String departing, String arriving, String departureDate) {
         return flightRepository.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDate);
     }
-
     public List<Flight> findFlightsByRegionsAndArrivalDate(String departing, String arriving, String arrivalDate) {
         return flightRepository.findFlightsByRegionsAndArrivalDate(departing, arriving, arrivalDate);
     }

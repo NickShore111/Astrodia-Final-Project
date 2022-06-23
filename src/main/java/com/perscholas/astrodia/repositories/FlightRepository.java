@@ -15,7 +15,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     List<Flight> findByOrderByDeparting();
     Flight findById(int id);
 
-
     @Query(value = """
             SELECT * FROM flights
             JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
@@ -52,7 +51,37 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("arrivalRegion") String arriving,
             @Param("arrivalDate") String arrivalDate);
 
-//TODO: NEED TO UPDATE QUERY FOR DEPARTURE RANGE
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            WHERE departurePort.id = :departurePort
+            AND arrivalPort.id = :arrivalPort
+            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = :departureDate
+            """, nativeQuery = true)
+    List<Flight> findFlightsByPortsAndDepartureDate(
+            @Param("departurePort") String departing,
+            @Param("arrivalPort") String arriving,
+            @Param("departureDate") String departureDate);
+
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            WHERE departurePort.id = :departurePort
+            AND arrivalPort.id = :arrivalPort
+            AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') = :arrivalDate;
+            """, nativeQuery = true)
+    List<Flight> findFlightsByPortsAndArrivalDate(
+            @Param("departurePort") String departing,
+            @Param("arrivalPort") String arriving,
+            @Param("arrivalDate") String arrivalDate);
+
+    //TODO: UNDER CONSTRUCTION
     @Query(value = """
             SELECT * FROM flights
             JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
@@ -67,7 +96,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             """, nativeQuery = true)
     List<Flight> findFlightsByRegionsAndDepartureDateRange(String departing, String arriving, String departureDate);
 
-
     @Query(value = """
             SELECT flights.* FROM flights
             JOIN shuttle_pads ON shuttle_pads.id = flights.launch_pad_id
@@ -79,18 +107,5 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     @Query(value = "SELECT * FROM flights WHERE DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = ?1", nativeQuery = true)
     List<Flight> findFlightsByDeparture(String date);
-
-
-    @Query(value = """
-            SELECT * FROM flights
-            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
-            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
-            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
-            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
-            WHERE departurePort.id = ?1
-            AND arrivalPort.id = ?2
-            AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') BETWEEN ?3 AND ?4;
-            """, nativeQuery = true)
-    List<Flight> findFlightsByPortsAndDepartureDateRange(String fromPort, String toPort, String departureDate, String arrivalDate);
 
 }

@@ -1,7 +1,6 @@
 const forms = document.querySelectorAll(".form-container");
 window.onload = function () {
     for (let form of forms) {
-        console.log(form.id);
         let depDateId = "#"+form.id.concat("-departureDate");
         let arrDateId = "#"+form.id.concat("-arrivalDate");
 
