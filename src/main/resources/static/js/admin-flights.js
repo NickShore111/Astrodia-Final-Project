@@ -1,23 +1,48 @@
 $(function () {
     $(".datepicker").datepicker();
-    populateAndShowUpdateOverlayForm();
+    populateAndShowUpdateFlightForm();
 
 });
-const populateAndShowUpdateOverlayForm = function() {
-$(".admin-flight-tr").click(function(event) {
-    const flightId = event.target.parentElement.id;
-    fetchFlight(flightId).then((flight)=> {
-    console.log(flight);
-    $("#update-flight-overlay").show();
-    var flightRow = event.target.parentElement;
-    var updateForm = document.getElementById("update-form");
-    console.log(updateForm.shuttle);
-//    updateForm.shuttle.value = f.shuttle;
+const populateAndShowUpdateFlightForm = function() {
+    $(".admin-flight-tr").click(function(event) {
+        const flightId = event.target.parentElement.id;
+        fetchFlight(flightId).then((f)=> {
+        console.log(f);
+        var flightRow = event.target.parentElement;
+        var updateForm = document.getElementById("update-form");
 
+        updateForm.flightCode.value = f.flightCode;
+        updateForm.shuttle.value = f.shuttle.id;
+        updateForm.pricePerSeat.value = f.pricePerSeat;
+        updateForm.availableSeats.value = f.seatsAvailable;
+        updateForm.availableSeats.max = f.shuttle.passengerCapacity;
 
-    });
+        updateForm.departurePort.value = f.launchPad.port.id;
+        updateForm.departurePad.value = f.launchPad.id;
+        updateForm.departureDate.value = getDate(f.departing);
+        updateForm.departureTime.value = getTime(f.departing);
+
+        updateForm.arrivalPort.value = f.arrivalPad.port.id;
+        updateForm.arrivalPad.value = f.arrivalPad.id;
+        updateForm.arrivalDate.value = getDate(f.arriving);
+        updateForm.arrivalTime.value = getTime(f.arriving);
+
+        $("#update-flight-overlay").show();
+
+        }).catch(console.error);
     })
 }
+function getTime(datetime) {
+    const newDatetime = new Date(datetime);
+    console.log(newDatetime.toLocaleString().split(",")[1]);
+    return newDatetime.toLocaleString().split(",")[1];
+}
+function getDate(datetime) {
+    const newDatetime = new Date(datetime);
+    console.log(newDatetime.toLocaleString().split(",")[0]);
+    return newDatetime.toLocaleString().split(",")[0];
+};
+
 async function fetchFlight(id) {
 const url = "http://localhost:8080/astrodia/api/flights/".concat(id);
 //console.log(url);
@@ -151,6 +176,7 @@ async function buildDOMWithResults(flights) {
 //        console.log(`Index:${idx}: ${flights[idx]}`);
         var tr = document.createElement("tr");
         tr.className = "admin-flight-tr"
+        tf.id = flight.id;
         tr.innerHTML = `
             <th scope="row">${flight.flightCode}</th>
             <th class="fs-6 fw-normal">${flight.launchPad.port.id}</th>
@@ -158,24 +184,9 @@ async function buildDOMWithResults(flights) {
             <th class="fs-6 fw-normal">${flight.arrivalPad.port.id}</th>
             <th class="fs-6 fw-normal">${flight.arriving}</th>
             <th class="fs-6 fw-normal">${flight.shuttle.name}</th>
-            <td class="fs-6 fw-normal"><a href="/flights/delete/${flight.flightCode}">Delete</a></td>`;
+            <td class="fs-6 fw-normal"><a href="/flights/delete/${flight.id}">Delete</a></td>`;
         tableBody.appendChild(tr);
     });
 
-     populateAndShowUpdateOverlayForm();
+     populateAndShowUpdateFlightForm();
 }
-//function flightOverlayAction () {
-//    const flightRows = document.querySelectorAll(".admin-flight-tr")
-//    for (let row of flightRows) {
-//        row.addEventListener("click", ()=>{
-//        console.log("clicked")
-//        });
-//    }
-//}
-//flightOverlayAction();
-//const loadOverlayAction = function () {
-//    const flightRows = document.querySelectorAll(".admin-flight-tr")
-//    for (let row of flightRows) {
-//        row.addEventListener("click", console.log("hey"));
-//    }
-//}

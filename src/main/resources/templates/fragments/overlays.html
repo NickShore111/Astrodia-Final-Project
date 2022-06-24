@@ -15,67 +15,67 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Override</a></li>
                     </ul>
-                    <input class="form-control" type="text" id="flightCode" value="XXX123 A1-B2/h3" readonly>
+                    <input name="flightCode" class="form-control" type="text" id="flightCode" value="XXX123 A1-B2/h3" readonly>
                 </div>
                 <div class="input-group mb-2">
                     <label class="input-group-text" for="shuttle">Shuttle</label>
                     <select name="shuttle" class="form-select" id="shuttle">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option selected></option>
+                        <span th:each="shuttle : ${shuttles}">
+                            <option th:value="${shuttle.id}" th:text="${shuttle.name}"></option>
+                        </span>
                     </select>
                     <label class="input-group-text">$ Per Seat</label>
-                    <input type="text" class="form-control" placeholder="$1000.00">
+                    <input name="pricePerSeat" type="text" class="form-control" placeholder="$1000.00">
                     <label class="input-group-text">Available Seats</label>
-                    <input type="number" class="form-control" placeholder="availableSeats">
+                    <input name="availableSeats" type="number" class="form-control" placeholder="availableSeats">
                 </div>
 
                 <h5>Departing</h5>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="departurePort">Port</label>
-                    <select class="form-select" id="departurePort">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select name="departurePort" class="form-select" id="departurePort">
+                        <option selected></option>
+                        <span th:each="port : ${ports}">
+                            <option th:value="${port.id}" th:text="${port.name}"></option>
+                        </span>
                     </select>
-                    <label class="input-group-text" for="launchPad">Pad</label>
-                    <select class="form-select" id="launchPad">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <label class="input-group-text" for="departurePad">Pad</label>
+                    <select name="departurePad" class="form-select" id="departurePad">
+                        <option selected></option>
+                        <span th:each="pad : ${pads}">
+                            <option th:value="${pad.id}" th:text="${pad.id}"></option>
+                        </span>
                     </select>
                 </div>
                 <div class="input-group mb-2">
                     <label class="input-group-text" for="departureDate">Date</label>
-                    <input type="text" class="form-control" id="departureDate" placeholder="MM/DD/YYYY">
+                    <input name="departureDate" type="text" class="form-control" id="departureDate" placeholder="MM/DD/YYYY">
                     <label class="input-group-text" for="departureTime">Time</label>
-                    <input type="text" class="form-control" id="departureTime" placeholder="HH:MM">
+                    <input name="departureTime" type="text" class="form-control" id="departureTime" placeholder="HH:MM">
                 </div>
                 <h5>Arriving</h5>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="arrivalPort">Port</label>
-                    <select class="form-select" id="arrivalPort">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select name="arrivalPort" class="form-select" id="arrivalPort">
+                        <option selected></option>
+                        <span th:each="port : ${ports}">
+                            <option th:value="${port.id}" th:text="${port.name}"></option>
+                        </span>
                     </select>
                     <label class="input-group-text" for="arrivalPad">Pad</label>
-                    <select class="form-select" id="arrivalPad">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select name="arrivalPad" class="form-select" id="arrivalPad">
+                        <option selected></option>
+                        <span th:each="pad : ${pads}">
+                            <option th:value="${pad.id}" th:text="${pad.id}"></option>
+                        </span>
                     </select>
                 </div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" id="arrivalDate">Date</label>
-                    <input type="text" class="form-control" placeholder="MM/DD/YYYY">
+                    <input name="arrivalDate" type="text" class="form-control" placeholder="MM/DD/YYYY">
                     <label class="input-group-text" id="arrivalTime">Time</label>
-                    <input type="text" class="form-control" placeholder="HH:MM">
+                    <input name="arrivalTime" type="text" class="form-control" placeholder="HH:MM">
                 </div>
             </div>
             <div class="row">
