@@ -23,9 +23,7 @@
         <th:block th:each="flight : ${flights}">
             <tr
                     class="admin-flight-tr"
-                    data-bs-toggle="modal"
-                    data-bs-target="#flightModal"
-                    th:id="${flight.flightCode}"
+                    th:id="${flight.id}"
             >
                 <th scope="row" th:text="${flight.flightCode}"></th>
                 <td th:text="${flight.launchPad.port.id}"></td>

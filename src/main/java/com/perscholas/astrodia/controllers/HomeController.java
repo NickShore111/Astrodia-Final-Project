@@ -65,11 +65,6 @@ public class HomeController {
     @PostMapping("/signup")
     public String signInUser() { return "redirect:astrodia"; }
 
-    @GetMapping("/admin/flights")
-    public String adminViewAllFlights(Model model) {
-        model.addAttribute("flights", flightService.findByOrderByDeparting());
-        return "admin-flights";
-    }
     @GetMapping("")
     public String mainPage(@ModelAttribute("searchDTO") RoundtripSearchDTO searchDTO){
         return "main";

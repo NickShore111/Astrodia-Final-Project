@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,5 +66,10 @@ public class AdminController {
     public String deleteFlightById(@PathVariable int id) {
         log.info("Deleting Flight with ID: " + id);
         return "admin-portal";
+    }
+    @GetMapping("flights")
+    public String adminViewAllFlights(Model model) {
+        model.addAttribute("flights", flightService.findByOrderByDeparting());
+        return "admin-flights";
     }
 }

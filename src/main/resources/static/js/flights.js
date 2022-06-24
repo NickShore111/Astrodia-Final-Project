@@ -61,7 +61,7 @@ const url = "http://localhost:8080/astrodia/api/flights/".concat(flight.id);
 //console.log(url);
 const response = await fetch(url);
     if (!response.ok) {
-//    console.log(response);
+    console.log(response);
     }
     const f = await response.json();
 //    console.log(f);

@@ -12,6 +12,5 @@ public interface PadRepository extends JpaRepository<Pad, String> {
     List<Pad> findAll();
     List<Pad> findByOrderById();
     Optional<Pad> findById(String id);
-    void delete(Pad p);
 
 }

@@ -1,7 +1,34 @@
 $(function () {
     $(".datepicker").datepicker();
-  });
+    populateAndShowUpdateOverlayForm();
 
+});
+const populateAndShowUpdateOverlayForm = function() {
+$(".admin-flight-tr").click(function(event) {
+    const flightId = event.target.parentElement.id;
+    fetchFlight(flightId).then((flight)=> {
+    console.log(flight);
+    $("#update-flight-overlay").show();
+    var flightRow = event.target.parentElement;
+    var updateForm = document.getElementById("update-form");
+    console.log(updateForm.shuttle);
+//    updateForm.shuttle.value = f.shuttle;
+
+
+    });
+    })
+}
+async function fetchFlight(id) {
+const url = "http://localhost:8080/astrodia/api/flights/".concat(id);
+//console.log(url);
+const response = await fetch(url);
+    if (!response.ok) {
+    console.log(response);
+    }
+    const f = await response.json();
+//    console.log(f);
+    return f;
+}
 const url = "http://localhost:8080/astrodia/api/flights";
 const formCheckInputs = document.querySelectorAll(".form-check-input");
 const datepickers = document.querySelectorAll(".datepicker");
@@ -123,6 +150,7 @@ async function buildDOMWithResults(flights) {
         var flight = flights[idx];
 //        console.log(`Index:${idx}: ${flights[idx]}`);
         var tr = document.createElement("tr");
+        tr.className = "admin-flight-tr"
         tr.innerHTML = `
             <th scope="row">${flight.flightCode}</th>
             <th class="fs-6 fw-normal">${flight.launchPad.port.id}</th>
@@ -133,4 +161,21 @@ async function buildDOMWithResults(flights) {
             <td class="fs-6 fw-normal"><a href="/flights/delete/${flight.flightCode}">Delete</a></td>`;
         tableBody.appendChild(tr);
     });
+
+     populateAndShowUpdateOverlayForm();
 }
+//function flightOverlayAction () {
+//    const flightRows = document.querySelectorAll(".admin-flight-tr")
+//    for (let row of flightRows) {
+//        row.addEventListener("click", ()=>{
+//        console.log("clicked")
+//        });
+//    }
+//}
+//flightOverlayAction();
+//const loadOverlayAction = function () {
+//    const flightRows = document.querySelectorAll(".admin-flight-tr")
+//    for (let row of flightRows) {
+//        row.addEventListener("click", console.log("hey"));
+//    }
+//}
