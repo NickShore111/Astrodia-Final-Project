@@ -2,28 +2,36 @@ $(function () {
     $(".datepicker").datepicker();
     populateAndShowUpdateFlightForm();
 
+    $("#updateBtn").click((e) => {
+        e.preventDefault();
+        const isValid = validateUpdateForm();
+
+    })
     $("#cancelBtn").click((e)=>{
         e.preventDefault();
         $("#update-flight-overlay").hide();
     })
     $("#resetBtn").click((e)=>{
         e.preventDefault();
-        console.log(document.getElementById("formFlightId").value);
+//        console.log(document.getElementById("formFlightId").value);
+        updateForm.flightCode.readOnly = true;
         var flightId = document.getElementById("formFlightId").value;
 
         setFormFields(flightId);
-
         showAllDropdownOptions();
     })
-
+    $("#edit-flightCode").click(function() {
+        updateForm.flightCode.readOnly = false;
+    })
     $("#update-form").change(function() {
         updateFlightCode();
     })
-
-
 });
 const updateForm = document.getElementById("update-form");
 
+function validateUpdateForm() {
+
+}
 function updateFlightCode() {
     var form = document.getElementById("update-form")
     var dayOfYear = getDepartureDayOfYear(form.departureDate.value);
@@ -33,7 +41,6 @@ function updateFlightCode() {
     var newFlightCode = `${spacelinerId}${dayOfYear} ${depPad}-${arrPad}`;
 
     document.getElementById("flightCode").value = newFlightCode;
-
 }
 function getDepartureDayOfYear(date) {
     var now = new Date(date);
@@ -47,7 +54,7 @@ function setFormFields(flightId) {
 
         fetchFlight(flightId).then((f)=> {
         console.log(f);
-        document.getElementById("update-flight-title").innerHTML = `Update Flight ${f.flightCode}`
+        document.getElementById("update-flight-title").innerHTML = `Updating: ${f.flightCode}`
         document.getElementById("formFlightId").value = f.id;
         updateForm.flightCode.value = f.flightCode;
         updateForm.spaceliner.value = f.shuttle.spaceliner.id;
@@ -70,6 +77,9 @@ function setFormFields(flightId) {
         shuttleDropdownResponseToSpaceliner();
         spacelinerDropdownResponseToShuttle();
         departurePadDropdownResponseToPort();
+        departurePortDropdownResponseToPad();
+        arrivalPadDropdownResponseToPort();
+        arrivalPortDropdownResponseToPad();
 
         }).catch(console.error);
 }
@@ -81,28 +91,51 @@ const populateAndShowUpdateFlightForm = function() {
     })
 }
 function showAllDropdownOptions() {
-
     var dropdowns = document.querySelectorAll(".update-dropdown");
-    console.log(dropdowns);
     dropdowns.forEach((element, idx) => {
-        console.log(element);
         for (let i = 0; i < element.options.length; i++) {
             element.options[i].hidden = false;
         }
     })
 }
+function arrivalPadDropdownResponseToPort() {
+    $("#arrivalPort").change((e) => {
+        var portId = e.target.value;
+        const ddlArrivalPads = document.getElementById("arrivalPad");
+
+        for (let i = 0; i < ddlArrivalPads.options.length; i++) {
+            if (ddlArrivalPads.options[i].getAttribute('data-arr-pad-port-id') != portId) {
+                ddlArrivalPads.options[i].hidden = true;
+                ddlArrivalPads.value = "";
+            } else { ddlArrivalPads.options[i].hidden = false; }
+        }
+    })
+}
+function arrivalPortDropdownResponseToPad() {
+    $("#arrivalPad").change((e) => {
+        var arrivalPadPortId = $('option:selected', "#arrivalPad").attr('data-arr-pad-port-id');
+        const ddlArrivalPorts = document.getElementById("arrivalPort");
+        ddlArrivalPorts.value = arrivalPadPortId
+    })
+}
 function departurePadDropdownResponseToPort() {
     $("#departurePort").change((e) => {
         var portId = e.target.value;
-// TODO NEEDS TO FIX DISPLAY OF PADS AND PORT RESPONSE
-        const ddlDeparturePads = document.getElementById("departurePort");
+        const ddlDeparturePads = document.getElementById("departurePad");
 
         for (let i = 0; i < ddlDeparturePads.options.length; i++) {
-            if (ddlDeparturePads.options[i].getAttribute('data-pad-port-id') != portId) {
+            if (ddlDeparturePads.options[i].getAttribute('data-dep-pad-port-id') != portId) {
                 ddlDeparturePads.options[i].hidden = true;
                 ddlDeparturePads.value = "";
             } else { ddlDeparturePads.options[i].hidden = false; }
         }
+    })
+}
+function departurePortDropdownResponseToPad() {
+    $("#departurePad").change((e) => {
+        var departurePadPortId = $('option:selected', "#departurePad").attr('data-dep-pad-port-id');
+        const ddlDeparturePorts = document.getElementById("departurePort");
+        ddlDeparturePorts.value = departurePadPortId
     })
 }
 function spacelinerDropdownResponseToShuttle() {
@@ -279,7 +312,7 @@ async function buildDOMWithResults(flights) {
 //        console.log(`Index:${idx}: ${flights[idx]}`);
         var tr = document.createElement("tr");
         tr.className = "admin-flight-tr"
-        tf.id = flight.id;
+        tr.id = flight.id;
         tr.innerHTML = `
             <th scope="row">${flight.flightCode}</th>
             <th class="fs-6 fw-normal">${flight.launchPad.port.id}</th>

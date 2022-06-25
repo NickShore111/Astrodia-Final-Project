@@ -179,11 +179,12 @@ border-radius:10px;
 }
 
 /* START: admin-flights.html styling */
-.admin-flight-tr:hover {
+.admin-flight-tr:hover,
+#edit-flightCode:hover {
   cursor: pointer;
 }
 #update-flight-overlay {
-max-width:40rem;
+/*max-width:40rem;*/
 box-shadow: 8px 8px 8px grey;
 background-color: white;
 position: absolute;
