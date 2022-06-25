@@ -2,16 +2,55 @@ $(function () {
     $(".datepicker").datepicker();
     populateAndShowUpdateFlightForm();
 
+    $("#cancelBtn").click((e)=>{
+        e.preventDefault();
+        $("#update-flight-overlay").hide();
+    })
+    $("#resetBtn").click((e)=>{
+        e.preventDefault();
+        console.log(document.getElementById("formFlightId").value);
+        var flightId = document.getElementById("formFlightId").value;
+
+        setFormFields(flightId);
+
+        showAllDropdownOptions();
+    })
+
+    $("#update-form").change(function() {
+        updateFlightCode();
+    })
+
+
 });
-const populateAndShowUpdateFlightForm = function() {
-    $(".admin-flight-tr").click(function(event) {
-        const flightId = event.target.parentElement.id;
+const updateForm = document.getElementById("update-form");
+
+function updateFlightCode() {
+    var form = document.getElementById("update-form")
+    var dayOfYear = getDepartureDayOfYear(form.departureDate.value);
+    var spacelinerId = form.spaceliner.value;
+    var depPad = form.departurePad.value;
+    var arrPad = form.arrivalPad.value;
+    var newFlightCode = `${spacelinerId}${dayOfYear} ${depPad}-${arrPad}`;
+
+    document.getElementById("flightCode").value = newFlightCode;
+
+}
+function getDepartureDayOfYear(date) {
+    var now = new Date(date);
+    var start = new Date(now.getFullYear(), 0, 0);
+    var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+    var oneDay = 1000 * 60 * 60 * 24;
+    var day = Math.floor(diff / oneDay);
+    return day;
+}
+function setFormFields(flightId) {
+
         fetchFlight(flightId).then((f)=> {
         console.log(f);
-        var flightRow = event.target.parentElement;
-        var updateForm = document.getElementById("update-form");
-
+        document.getElementById("update-flight-title").innerHTML = `Update Flight ${f.flightCode}`
+        document.getElementById("formFlightId").value = f.id;
         updateForm.flightCode.value = f.flightCode;
+        updateForm.spaceliner.value = f.shuttle.spaceliner.id;
         updateForm.shuttle.value = f.shuttle.id;
         updateForm.pricePerSeat.value = f.pricePerSeat;
         updateForm.availableSeats.value = f.seatsAvailable;
@@ -27,19 +66,83 @@ const populateAndShowUpdateFlightForm = function() {
         updateForm.arrivalDate.value = getDate(f.arriving);
         updateForm.arrivalTime.value = getTime(f.arriving);
 
-        $("#update-flight-overlay").show();
+//      Custom dropdown event listeners
+        shuttleDropdownResponseToSpaceliner();
+        spacelinerDropdownResponseToShuttle();
+        departurePadDropdownResponseToPort();
 
         }).catch(console.error);
+}
+const populateAndShowUpdateFlightForm = function() {
+    $(".admin-flight-tr").click(function(e) {
+        const flightId = e.target.parentElement.id;
+        setFormFields(flightId);
+        $("#update-flight-overlay").show();
     })
 }
+function showAllDropdownOptions() {
+
+    var dropdowns = document.querySelectorAll(".update-dropdown");
+    console.log(dropdowns);
+    dropdowns.forEach((element, idx) => {
+        console.log(element);
+        for (let i = 0; i < element.options.length; i++) {
+            element.options[i].hidden = false;
+        }
+    })
+}
+function departurePadDropdownResponseToPort() {
+    $("#departurePort").change((e) => {
+        var portId = e.target.value;
+// TODO NEEDS TO FIX DISPLAY OF PADS AND PORT RESPONSE
+        const ddlDeparturePads = document.getElementById("departurePort");
+
+        for (let i = 0; i < ddlDeparturePads.options.length; i++) {
+            if (ddlDeparturePads.options[i].getAttribute('data-pad-port-id') != portId) {
+                ddlDeparturePads.options[i].hidden = true;
+                ddlDeparturePads.value = "";
+            } else { ddlDeparturePads.options[i].hidden = false; }
+        }
+    })
+}
+function spacelinerDropdownResponseToShuttle() {
+    $("#shuttle").change((e) => {
+        var shuttleSpacelinerId = $('option:selected', "#shuttle").attr('data-spaceliner-id');
+        const ddlSpaceliners = document.getElementById("spaceliner");
+        ddlSpaceliners.value = shuttleSpacelinerId;
+
+//        set max seating availability to new shuttle max
+        updateForm.availableSeats.max = $('option:selected', "#shuttle").attr('data-shuttle-maxseating');;
+    })
+}
+function shuttleDropdownResponseToSpaceliner() {
+    $("#spaceliner").change((e) => {
+
+        var selectedSpacelinerId = e.target.value;
+//        console.log(selectedSpacelinerId);
+
+        const ddlShuttles = document.getElementById("shuttle");
+
+        for (let i = 0; i < ddlShuttles.options.length; i++) {
+//            console.log(ddlShuttleList.options[i].getAttribute('data-spaceliner-id'));
+            if (ddlShuttles.options[i].getAttribute('data-spaceliner-id') != selectedSpacelinerId) {
+                ddlShuttles.options[i].hidden = true;
+                ddlShuttles.value = "";
+//                console.log(ddlShuttles.options[i].getAttribute('data-spaceliner-id'));
+            } else { ddlShuttles.options[i].hidden = false; }
+        }
+//        $('option:selected', "#shuttle").attr('data-spaceliner-id');
+
+    })
+};
 function getTime(datetime) {
     const newDatetime = new Date(datetime);
-    console.log(newDatetime.toLocaleString().split(",")[1]);
+//    console.log(newDatetime.toLocaleString().split(",")[1]);
     return newDatetime.toLocaleString().split(",")[1];
 }
 function getDate(datetime) {
     const newDatetime = new Date(datetime);
-    console.log(newDatetime.toLocaleString().split(",")[0]);
+//    console.log(newDatetime.toLocaleString().split(",")[0]);
     return newDatetime.toLocaleString().split(",")[0];
 };
 

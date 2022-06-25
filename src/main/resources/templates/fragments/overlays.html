@@ -7,25 +7,34 @@
 <body>
 
 <div th:fragment="update-flight" id="update-flight-overlay" style="display:none;" class="container border border-2 rounded">
-        <h3 class="border-bottom border-2 text-center my-2">Update Flight Info</h3>
+        <h3 id="update-flight-title" class="border-bottom border-2 text-center my-2">Update Flight</h3>
         <form action="/astrodia/admin/flights" method="POST" id="update-form">
             <div class="container px-2">
+                <input type="hidden" id="formFlightId" value="default">
                 <div class="input-group mb-3">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Code</button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Override</a></li>
                     </ul>
                     <input name="flightCode" class="form-control" type="text" id="flightCode" value="XXX123 A1-B2/h3" readonly>
+                    <label class="input-group-text" for="spaceliner">Spaceliner</label>
+                    <select name="spaceliner" class="form-select update-dropdown" id="spaceliner">
+                        <span th:each="spaceliner : ${spaceliners}">
+                            <option th:value="${spaceliner.id}" th:text="${spaceliner.name}"></option>
+                        </span>
+                    </select>
                 </div>
                 <div class="input-group mb-2">
                     <label class="input-group-text" for="shuttle">Shuttle</label>
-                    <select name="shuttle" class="form-select" id="shuttle">
-                        <option selected></option>
+                    <select name="shuttle" class="form-select update-dropdown" id="shuttle">
                         <span th:each="shuttle : ${shuttles}">
-                            <option th:value="${shuttle.id}" th:text="${shuttle.name}"></option>
+                            <option
+                                    th:data-shuttle-maxseating="${shuttle.passengerCapacity}"
+                                    th:data-spaceliner-id="${shuttle.spaceliner.id}"
+                                    th:value="${shuttle.id}" th:text="${shuttle.name}"></option>
                         </span>
                     </select>
-                    <label class="input-group-text">$ Per Seat</label>
+                    <label class="input-group-text">$/Seat</label>
                     <input name="pricePerSeat" type="text" class="form-control" placeholder="$1000.00">
                     <label class="input-group-text">Available Seats</label>
                     <input name="availableSeats" type="number" class="form-control" placeholder="availableSeats">
@@ -34,17 +43,16 @@
                 <h5>Departing</h5>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="departurePort">Port</label>
-                    <select name="departurePort" class="form-select" id="departurePort">
-                        <option selected></option>
+                    <select name="departurePort" class="form-select update-dropdown" id="departurePort">
                         <span th:each="port : ${ports}">
                             <option th:value="${port.id}" th:text="${port.name}"></option>
                         </span>
                     </select>
                     <label class="input-group-text" for="departurePad">Pad</label>
-                    <select name="departurePad" class="form-select" id="departurePad">
-                        <option selected></option>
+                    <select name="departurePad" class="form-select update-dropdown" id="departurePad">
                         <span th:each="pad : ${pads}">
-                            <option th:value="${pad.id}" th:text="${pad.id}"></option>
+                            <option th:data-pad-port-id="${pad.port.id}"
+                                    th:value="${pad.id}" th:text="${pad.id}"></option>
                         </span>
                     </select>
                 </div>
@@ -57,15 +65,13 @@
                 <h5>Arriving</h5>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="arrivalPort">Port</label>
-                    <select name="arrivalPort" class="form-select" id="arrivalPort">
-                        <option selected></option>
+                    <select name="arrivalPort" class="form-select update-dropdown" id="arrivalPort">
                         <span th:each="port : ${ports}">
                             <option th:value="${port.id}" th:text="${port.name}"></option>
                         </span>
                     </select>
                     <label class="input-group-text" for="arrivalPad">Pad</label>
-                    <select name="arrivalPad" class="form-select" id="arrivalPad">
-                        <option selected></option>
+                    <select name="arrivalPad" class="form-select update-dropdown" id="arrivalPad">
                         <span th:each="pad : ${pads}">
                             <option th:value="${pad.id}" th:text="${pad.id}"></option>
                         </span>
@@ -80,8 +86,9 @@
             </div>
             <div class="row">
                 <span class="d-flex justify-content-evenly mb-2">
-                    <button class="btn btn-primary">Update</button>
-                    <button class="btn btn-danger">Cancel</button>
+                    <button id="resetBtn" class="btn btn-success">Reset</button>
+                    <button id="updateBtn" class="btn btn-primary">Update</button>
+                    <button id="cancelBtn" class="btn btn-danger">Cancel</button>
                 </span>
             </div>
         </form>
