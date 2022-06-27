@@ -179,6 +179,9 @@ border-radius:10px;
 }
 
 /* START: admin-flights.html styling */
+.error-msg {
+color: red;
+}
 .admin-flight-tr:hover,
 #edit-flightCode:hover {
   cursor: pointer;

@@ -1,11 +1,12 @@
 $(function () {
+
+    $(".error-msg").hide();
     $(".datepicker").datepicker();
     populateAndShowUpdateFlightForm();
 
     $("#updateBtn").click((e) => {
         e.preventDefault();
-        const isValid = validateUpdateForm();
-
+        validateUpdateForm();
     })
     $("#cancelBtn").click((e)=>{
         e.preventDefault();
@@ -25,19 +26,180 @@ $(function () {
     })
     $("#update-form").change(function() {
         updateFlightCode();
+
     })
 });
 const updateForm = document.getElementById("update-form");
-
+const REGEX_DATE = new RegExp('(((0[1-9]|[12]\\d|3[01])\\/(0[13578]|1[02])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)\\/(0[13456789]|1[012])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])\\/02\\/((19|[2-9]\\d)\\d{2}))|(29\\/02\\/((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))');
+const REGEX_TIME = new RegExp('((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]$))');
+const REGEX_FC = new RegExp('(([A-Z]{3,4})\\d{1,3}\\s([A-Z]{1}\\d{1})-([A-Z]{1}\\d{1}))');
+const REGEX_NUM = new RegExp('^\\d*$');
 function validateUpdateForm() {
+    var updateFlightCode = updateForm.flightCode.value;
+    var updateSpaceliner = updateForm.spaceliner.value;
+    var updateDeparturePort = updateForm.departurePort.value;
+    var updateArrivalPort = updateForm.arrivalPort.value;
+
+    const validDates = (validateDepartureDate() && validateArrivalDate()) ? validateDates() : false;
+
+    if (
+        validateAvailableSeats()
+        && validatePricePerSeat()
+        && validateShuttle()
+        && validateDeparturePad()
+        && validateArrivalPad()
+        && validateDepartureTime()
+        && validateArrivalTime()
+        && validDates) {
+
+        }
 
 }
+function validateDates() {
+    var updateDepartureDate = updateForm.departureDate.value;
+    var updateArrivalDate = updateForm.arrivalDate.value;
+    if (new Date(updateDepartureDate) < new Date(updateArrivalDate)){
+        $("#departureDate").addClass("is-invalid").removeClass("is-valid");
+        $("#arrivalDate").addClass("is-invalid").removeClass("is-valid");
+        $("#departureDate").html("Departure cannot be before Arrival.");
+        $("#arrivalDate").html("Departure cannot be before Arrival.");
+        $("#dep-date-error-msg").show();
+        $("#arr-date-error-msg").show();
+        return false;
+    } else {
+        $("#departureDate").removeClass("is-invalid").addClass("is-valid");
+        $("#arrivalDate").removeClass("is-invalid").addClass("is-valid");
+        $("#dep-date-error-msg").hide();
+        $("#arr-date-error-msg").hide();
+        return true;
+    }
+}
+function validateAvailableSeats() {
+    var updateSeats = parseInt(updateForm.availableSeats.value);
+
+    if(updateSeats > updateForm.availableSeats.max
+        || !REGEX_NUM.test(updateSeats)) {
+        $("#seats-error-msg").html("Enter value from 0 to ".concat(updateForm.availableSeats.max));
+        $("#availableSeats").addClass("is-invalid").removeClass("is-valid");
+        $("#seats-error-msg").show();
+        return false;
+    } else {
+        $("#availableSeats").removeClass("is-invalid").addClass("is-valid")
+        $("#seats-error-msg").hide();
+        return true;
+    }
+}
+function validatePricePerSeat() {
+    var updatePrice = updateForm.pricePerSeat.value;
+
+    if(!REGEX_NUM.test(updatePrice)) {
+        $("#pricePerSeat").addClass("is-invalid").removeClass("is-valid");
+        $("#price-error-msg").show();
+        return false;
+    } else {
+        $("#pricePerSeat").addClass("is-valid").removeClass("is-invalid");
+        $("#price-error-msg").hide();
+        return true;
+    }
+}
+function validateShuttle() {
+    var updateShuttle = updateForm.shuttle.value;
+
+    if(!updateShuttle) {
+        $("#shuttle").addClass("is-invalid").removeClass("is-valid");
+        $("#shuttle-error-msg").show();
+        return false;
+    } else {
+        $("#shuttle").removeClass("is-invalid").addClass("is-valid");
+        $("#shuttle-error-msg").hide();
+        return true;
+    }
+}
+function validateDeparturePad() {
+    var updateDeparturePad = updateForm.departurePad.value;
+
+    if(!updateDeparturePad) {
+        $("#departurePad").addClass("is-invalid").removeClass("is-valid");
+        $("#dep-pad-error-msg").show();
+        return false;
+    } else {
+        $("#departurePad").removeClass("is-invalid").addClass("is-valid");
+        $("#dep-pad-error-msg").hide();
+        return true;
+    }
+}
+function validateArrivalPad() {
+    var updateArrivalPad = updateForm.arrivalPad.value;
+
+    if(!updateArrivalPad) {
+        $("#arrivalPad").addClass("is-invalid").removeClass("is-valid");
+        $("#arr-pad-error-msg").show();
+        return false;
+    } else {
+        $("#arrivalPad").removeClass("is-invalid").addClass("is-valid");
+        $("#arr-pad-error-msg").hide();
+        return true;
+    }
+}
+function validateDepartureDate() {
+    var updateDepartureDate = updateForm.departureDate.value;
+
+    if (!REGEX_DATE.test(updateDepartureDate)) {
+        $("#departureDate").addClass("is-invalid").removeClass("is-valid");
+        $("#departureDate").html("Invalid Date format.");
+        $("#dep-date-error-msg").show();
+        return false;
+    } else {
+        $("#departureDate").removeClass("is-invalid").addClass("is-valid");
+        $("#dep-date-error-msg").hide();
+        return true;
+    }
+}
+function validateDepartureTime() {
+    var updateDepartureTime = updateForm.departureTime.value;
+
+    if (!REGEX_TIME.test(updateDepartureTime)) {
+        $("#departureTime").addClass("is-invalid").removeClass("is-valid");
+        $("#dep-time-error-msg").show();
+        return false;
+    } else {
+        $("#departureTime").removeClass("is-invalid").addClass("is-valid");
+        $("#dep-time-error-msg").hide();
+        return true;
+    }
+}
+function validateArrivalDate() {
+    var updateArrivalDate = updateForm.arrivalDate.value;
+
+    if (!REGEX_DATE.test(updateArrivalDate)) {
+        $("#arrivalDate").addClass("is-invalid").removeClass("is-valid");
+        $("#arrivalDate").html("Invalid Date format.");
+        $("#arr-date-error-msg").show();
+        return false;
+    } else {
+        $("#arrivalDate").removeClass("is-invalid").addClass("is-valid");
+        $("#arr-date-error-msg").hide();
+        return true;
+    }
+}
+function validateArrivalTime() {
+    var updateArrivalTime = updateForm.arrivalTime.value;
+
+    if (!REGEX_TIME.test(updateArrivalTime)) {
+        $("#arrivalTime").addClass("is-invalid").removeClass("is-valid");
+        $("#arr-time-error-msg").show();
+        return false;
+    } else {
+        $("#arrivalTime").removeClass("is-invalid").addClass("is-valid");
+        $("#arr-time-error-msg").hide();
+        return true;
+    }
+}
 function updateFlightCode() {
-    var form = document.getElementById("update-form")
-    var dayOfYear = getDepartureDayOfYear(form.departureDate.value);
-    var spacelinerId = form.spaceliner.value;
-    var depPad = form.departurePad.value;
-    var arrPad = form.arrivalPad.value;
+    var dayOfYear = getDepartureDayOfYear(updateForm.departureDate.value);
+    var spacelinerId = updateForm.spaceliner.value;
+    var depPad = updateForm.departurePad.value;
+    var arrPad = updateForm.arrivalPad.value;
     var newFlightCode = `${spacelinerId}${dayOfYear} ${depPad}-${arrPad}`;
 
     document.getElementById("flightCode").value = newFlightCode;
@@ -171,7 +333,10 @@ function shuttleDropdownResponseToSpaceliner() {
 function getTime(datetime) {
     const newDatetime = new Date(datetime);
 //    console.log(newDatetime.toLocaleString().split(",")[1]);
-    return newDatetime.toLocaleString().split(",")[1];
+    let t1 = newDatetime.toLocaleString().split(",")[1].trim();
+    let meridiem = t1.split(" ")[1]
+    let t2 = t1.split(" ")[0].slice(0,-3);
+    return t2.concat(" "+meridiem);
 }
 function getDate(datetime) {
     const newDatetime = new Date(datetime);
