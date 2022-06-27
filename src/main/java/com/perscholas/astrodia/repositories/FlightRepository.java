@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
@@ -26,7 +27,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             WHERE departureRegion.id = :departureRegion
                 AND arrivalRegion.id = :arrivalRegion
                 AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') >= :departureDate
-                AND flights.seatsAvailable > 0
                     ORDER BY flights.departing asc
                     """, nativeQuery = true)
     List<Flight> findFlightsByRegionsAndDepartureDate(
@@ -45,12 +45,11 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             WHERE departureRegion.id = :departureRegion
                 AND arrivalRegion.id = :arrivalRegion
                 AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') <= :arrivalDate
-                AND flights.seatsAvailable > 0
                     ORDER BY flights.arriving desc
                     """, nativeQuery = true)
     List<Flight> findFlightsByRegionsAndArrivalDate(
-            @Param("departureRegion") String departing,
-            @Param("arrivalRegion") String arriving,
+            @Param("departureRegion") String departureRegion,
+            @Param("arrivalRegion") String arrivalRegion,
             @Param("arrivalDate") String arrivalDate);
 
     @Query(value = """
@@ -62,7 +61,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             WHERE departurePort.id = :departurePort
                 AND arrivalPort.id = :arrivalPort
                 AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') = :departureDate
-                AND flights.seatsAvailable > 0
                 """, nativeQuery = true)
     List<Flight> findFlightsByPortsAndDepartureDate(
             @Param("departurePort") String departing,
@@ -78,7 +76,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             WHERE departurePort.id = :departurePort
                 AND arrivalPort.id = :arrivalPort
                 AND DATE_FORMAT(DATE(flights.arriving), '%m/%d/%Y') = :arrivalDate
-                AND flights.seatsAvailable > 0
                 """, nativeQuery = true)
     List<Flight> findFlightsByPortsAndArrivalDate(
             @Param("departurePort") String departing,

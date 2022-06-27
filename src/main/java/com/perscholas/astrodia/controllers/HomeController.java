@@ -1,7 +1,6 @@
 package com.perscholas.astrodia.controllers;
 
-import com.perscholas.astrodia.dto.RoundtripSearchDTO;
-import com.perscholas.astrodia.dto.UpdateFlightDTO;
+import com.perscholas.astrodia.dto.SearchDTO;
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
@@ -57,6 +56,14 @@ public class HomeController {
         return shuttleService.findAll();
     }
 
+//    @ModelAttribute("regionSearch")
+//    public RegionSearchDTO regionSearch() {
+//        return new RegionSearchDTO();
+//    }
+//    @ModelAttribute("portSearch")
+//    public PortSearchDTO portSearch() {
+//        return new PortSearchDTO();
+//    }
     @GetMapping("test")
     public String index() {return "index"; }
     @GetMapping("/signup")
@@ -67,55 +74,92 @@ public class HomeController {
     public String signInUser() { return "redirect:astrodia"; }
 
     @GetMapping("")
-    public String mainPage(@ModelAttribute("searchDTO") RoundtripSearchDTO searchDTO){
+    public String mainPage(
+            @ModelAttribute("searchDTO") SearchDTO searchDTO){
         return "main";
     }
 
-
-    @GetMapping("/roundtrip-region")
-    public String roundtripSearchByRegion(
+    @GetMapping("/region-search")
+    public String findRoundtripSearchFlights(
             Model model,
             @ModelAttribute("searchDTO")
-            @Valid RoundtripSearchDTO searchDTO,
+            @Valid SearchDTO searchDTO,
             BindingResult result,
             Errors errors) {
         if (result.hasErrors()) {
             log.warn(result.getAllErrors().toString());
             return "main";
         }
+
         String departing = searchDTO.getLeaving();
         String arriving = searchDTO.getDestination();
         String departureDateStr = searchDTO.getDepartureDate();
         String arrivalDateStr = searchDTO.getArrivalDate();
 
-        model.addAttribute("departureFlights", flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr));
-        model.addAttribute("returnFlights", flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr));
+        List<Flight> departureFlights = flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr);
+        List<Flight> returnFlights = flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr);
 
-        log.info("Search Params:" );
+        Region departureRegion = regionService.findById(departing).get();
+        Region arrivalRegion = regionService.findById(arriving).get();
+
+        if (departureFlights.isEmpty()) {
+            String resultsMsg = String.format("Sorry, no results found for %s to %s leaving %s.", departureRegion.getName(), arrivalRegion.getName(), departureDateStr);
+            model.addAttribute("departureMsg", resultsMsg);
+            log.info("no departure results");
+        } else {
+            model.addAttribute("departureFlights", departureFlights);
+        }
+        if (returnFlights.isEmpty()) {
+            String resultsMsg = String.format("Sorry, no results found for %s to %s returning %s.", arrivalRegion.getName(), departureRegion.getName(), arrivalDateStr);
+            model.addAttribute("returnMsg", resultsMsg);
+            log.info("no return results");
+        } else {
+            model.addAttribute("returnFlights", returnFlights);
+        }
+        log.info("Region Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
         model.addAttribute("newSearch", searchDTO);
         return "results";
     }
-    @GetMapping("/roundtrip-port")
+    @GetMapping("/port-search")
     public String roundtripSearchByPort(
             Model model,
             @ModelAttribute("searchDTO")
-            @Valid RoundtripSearchDTO searchDTO,
+            @Valid SearchDTO searchDTO,
             BindingResult result,
             Errors errors) {
         if (result.hasErrors()) {
             log.warn(result.getAllErrors().toString());
             return "main";
         }
+
         String departing = searchDTO.getLeaving();
         String arriving = searchDTO.getDestination();
         String departureDateStr = searchDTO.getDepartureDate();
         String arrivalDateStr = searchDTO.getArrivalDate();
 
-        model.addAttribute("departureFlights", flightService.findFlightsByPortsAndDepartureDate(departing, arriving, departureDateStr));
-        model.addAttribute("returnFlights", flightService.findFlightsByPortsAndArrivalDate(arriving, departing, arrivalDateStr));
+        List<Flight> departureFlights = flightService.findFlightsByPortsAndDepartureDate(departing, arriving, departureDateStr);
+        List<Flight> returnFlights = flightService.findFlightsByPortsAndArrivalDate(arriving, departing, arrivalDateStr);
 
-        log.info("Search Params:" );
+        Port departurePort = portService.findById(departing).get();
+        Port arrivalPort = portService.findById(arriving).get();
+
+        if (departureFlights.isEmpty()) {
+            String resultsMsg = String.format("Sorry, no results found for %s to %s leaving %s.", departurePort.getName(), arrivalPort.getName(), departureDateStr);
+            model.addAttribute("departureMsg", resultsMsg);
+            log.info("no departure results");
+        } else {
+            model.addAttribute("departureFlights", departureFlights);
+        }
+        if (returnFlights.isEmpty()) {
+            String resultsMsg = String.format("Sorry, no results found for %s to %s returning %s.", arrivalPort.getName(), departurePort.getName(), arrivalDateStr);
+            model.addAttribute("returnMsg", resultsMsg);
+            log.info("no return results");
+        } else {
+            model.addAttribute("returnFlights", returnFlights);
+        }
+
+        log.info("Port Search Params:" );
         log.info("departing: "+departing+" arriving: "+arriving+" departureDate: "+departureDateStr+" arrivalDate: "+arrivalDateStr);
         model.addAttribute("newSearch", searchDTO);
         return "results";

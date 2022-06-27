@@ -7,11 +7,10 @@
 <body>
 <div class="main container-fluid p-1">
     <div th:replace="fragments/nav :: nav"></div>
-    <!-- Start: Main image and additional content -->
     <div class="container-lg">
 
-        <div th:replace="fragments/forms :: roundtrip-results"></div>
-        <div th:replace="fragments/results :: roundtrip"></div>
+        <div th:replace="fragments/forms :: new-search"></div>
+        <div th:replace="fragments/flight-list :: roundtrip"></div>
 
             <div th:replace="fragments/footer :: links"></div>
             <div th:replace="fragments/footer :: footer"></div>

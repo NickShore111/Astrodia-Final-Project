@@ -72,20 +72,16 @@ public class AdminController {
         return "admin-portal";
     }
     @GetMapping("flights")
-    public String adminViewAllFlights(Model model) {
+    public String adminViewAllFlights(
+            @ModelAttribute("updateFlightDTO") UpdateFlightDTO updateFlightDTO,
+            Model model) {
         model.addAttribute("flights", flightService.findByOrderByDeparting());
         return "admin-flights";
     }
 
     @PostMapping("/flights")
-    public String updateFlight(
-            @ModelAttribute("updateFlightDTO") UpdateFlightDTO updateFlightDTO,
-            BindingResult results,
-            Errors errors,
-            @RequestParam("flightCode") String flightCode,
-            @RequestParam("availableSeats") String availableSeats
+    public String updateFlight() {
 
-        ) {
         log.info("***************POST REQUEST TRIGGERED***********");
 
         return "redirect:flights";

@@ -5,15 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-
-<div th:fragment="roundtrip(title, content)">
-    <div th:id="${title}" class="form-container">
-    <form
-            th:object="${searchDTO}"
-            th:action="@{/astrodia/roundtrip-region}"
-            class="d-flex-inline"
-            method="GET"
+<section th:fragment="main" class="container-lg main-section-form-box border border-2 my-5">
+    <div
+            class="main-section-form-box-tabs-container border-bottom border-2"
+            id="main-entrypoint-component"
     >
+        <div
+                class="main-section-form-box-tabs d-flex flex-row justify-content-center flex-wrap mt-3"
+        >
+            <h6 class="mx-4">Search By:</h6>
+            <h6 class="mx-4 searchBy-tab focus" id="region-tab">Region</h6>
+            <h6 class="mx-4 searchBy-tab" id="port-tab">Port</h6>
+        </div>
+    </div>
+    <div class="my-5">
+        <div class="region-content">
+            <div th:replace="fragments/forms :: roundtrip(Region, ${regions}, '/astrodia/region-search')"></div>
+        </div>
+        <div class="port-content" style="display:none;">
+            <div th:replace="fragments/forms :: roundtrip(Port, ${ports}, '/astrodia/port-search')"></div>
+        </div>
+    </div>
+</section>
+
+<div th:fragment="roundtrip(title, content, action)">
+    <div th:id="${title}" class="form-container">
+
+        <form
+                th:object="${searchDTO}"
+                th:action="${action}"
+                class="d-flex-inline"
+                method="GET"
+        >
+
         <div class="row g-2 justify-content-center" id="region-search">
             <div class="col-lg-3">
                 <div class="form-floating" id="leaving-div">
@@ -75,7 +99,7 @@
     </form>
     </div>
 </div>
-<section th:fragment="roundtrip-results">
+<section th:fragment="new-search">
     <div class="row row-cols-md-auto justify-content-center p-3 border-bottom" id="form-container">
         <form
                 th:object="${newSearch}"

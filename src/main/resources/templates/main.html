@@ -6,12 +6,16 @@
 </head>
 <body>
 <div class="main container-fluid p-1">
-    <!-- Start: Navbar element -->
+    <!-- Navbar element -->
     <div th:replace="fragments/nav :: nav"></div>
     <!-- Primary user interface and form display container   -->
-    <div th:replace="fragments/base :: formsContainer"></div>
-    <!-- Start: Image carousel and additional content -->
+    <div th:replace="fragments/forms :: main"></div>
+    <!-- Image carousel and ad content -->
     <div th:replace="fragments/base :: carousel"></div>
+    <div th:replace="fragments/footer :: links"></div>
+    <div th:replace="fragments/base :: moon"></div>
+    <div th:replace="fragments/base :: mars"></div>
+    <div th:replace="fragments/base :: stations"></div>
 
     <div th:replace="fragments/footer :: footer"></div>
 </div>

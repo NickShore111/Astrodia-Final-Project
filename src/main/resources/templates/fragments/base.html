@@ -5,28 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-<section th:fragment="formsContainer" class="container-lg main-section-form-box border border-2 my-5">
-    <div
-            class="main-section-form-box-tabs-container border-bottom border-2"
-            id="main-entrypoint-component"
-    >
-        <div
-                class="main-section-form-box-tabs d-flex flex-row justify-content-center flex-wrap mt-3"
-        >
-            <h6 class="mx-4">Search By:</h6>
-            <h6 class="mx-4 searchBy-tab focus" id="region-tab">Region</h6>
-            <h6 class="mx-4 searchBy-tab" id="port-tab">Port</h6>
-        </div>
-    </div>
-    <div class="my-5">
-        <div class="region-content">
-            <div th:replace="fragments/forms :: roundtrip(Region, ${regions})"></div>
-        </div>
-        <div class="port-content" style="display:none;">
-            <div th:replace="fragments/forms :: roundtrip(Port, ${ports})"></div>
-        </div>
-    </div>
-</section>
 
 <section th:fragment="carousel" class="container-lg main-image p-0" id="image-carousel">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
@@ -76,87 +54,86 @@
             </button>
         </div>
     </div>
-
-    <div th:replace="fragments/footer :: links"></div>
-
-    <div class="container p-0" id="moon-content">
-        <div class="row gx-0">
-            <div class="col-sm col-12">
-                <img id="moon-base" class="img-fluid rounded-start" th:src="@{/assets/image/moon-base.jpg}" alt="Moon base">
-            </div>
-            <div class="col-sm col-12 border border-2 rounded-end d-flex align-items-center ps-3">
-                <span>
-                    <h4>Experience the quiet cold embrace of space!</h4>All from the comfort of Earth's orbit!
-                </span>
-            </div>
-        </div>
-        <div class="row gx-2 my-4 px-2">
-            <div class="col-sm col-12 explore-container ">
-                <div class="row">
-                    <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/moon-cave.jpg}" alt="Moon cavern">
-                </div>
-                EXPLORE<h6>Discover unique caverns</h6>
-            </div>
-            <div class="col-sm col-12 explore-container mx-sm-5">
-                <div class="row">
-                    <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/moon-lander.jpg}" alt="Moon cavern">
-                </div>
-                LEARN<h6>Visit historical treasures</h6>
-            </div>
-            <div class="col-sm col-12 explore-container">
-                <div class="row">
-                    <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/space-truck.png}" alt="Moon cruiser">
-                </div>
-                CRUISE<h6>Traverse Moon dunes in style</h6>
-            </div>
-        </div>
-    </div>
-    <div class="container p-0" id="mars-content">
-        <div class="row gx-0">
-            <div class="col-sm col-12 border border-2 rounded-start d-flex justify-content-end align-items-center pe-4">
-                <span>
-                    <h4>Visit the many rovers of Mars!</h4>Don't forget to bring your sunblock!
-                </span>
-            </div>
-            <div class="col-sm col-12">
-                <img id="mars-base" class="img-fluid rounded-end" th:src="@{/assets/image/mars-colony2.jpg}" alt="Moon base">
-            </div>
-        </div>
-        <div class="row gx-2 my-4 px-2">
-            <div class="col-sm col-12 explore-container">
-                <div class="row">
-                    <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/mars-truck.jpg}" alt="Mars recreational vehicle">
-                </div>
-                RELAX<h6>See the sites in comfort and style</h6>
-            </div>
-            <div class="col-sm col-12 explore-container mx-sm-5">
-                <div class="row">
-                    <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/starships-on-mars.jpg}" alt="Starship field on Mars">
-                </div>
-                BE AMAZED<h6>Sunrises will never be the same</h6>
-            </div>
-            <div class="col-sm col-12 explore-container">
-                <div class="row">
-                    <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/couple-on-mars.jpg}" alt="Couple views start under Mars sky">
-                </div>
-                EXPERIENCE<h6>Witness the sunset like never before</h6>
-            </div>
-        </div>
-    </div>
-    <div class="container p-0" id="station-content">
-        <div class="row">
-            <div class="col">
-                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/asteroid-station.jpg}" alt="Space station near asteroid">
-                TEST YOUR LIMITS<h6>Travel to the farthest reaches of our inner solar system</h6>
-            </div>
-            <div class="col">
-                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/mars-space-station.jpg}" alt="Space station around Mars">
-                FEEL LIKE A MARTIAN<h6>See all of the red planet while orbiting in style</h6>
-            </div>
-        </div>
-    </div>
-
-
 </section>
+
+
+<div th:fragment="moon" class="container p-0" id="moon-content">
+    <div class="row gx-0">
+        <div class="col-sm col-12">
+            <img id="moon-base" class="img-fluid rounded-start" th:src="@{/assets/image/moon-base.jpg}" alt="Moon base">
+        </div>
+        <div class="col-sm col-12 border border-2 rounded-end d-flex align-items-center ps-3">
+            <span>
+                <h4>Experience the quiet cold embrace of space!</h4>All from the comfort of Earth's orbit!
+            </span>
+        </div>
+    </div>
+    <div class="row gx-2 my-4 px-2">
+        <div class="col-sm col-12 explore-container ">
+            <div class="row">
+                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/moon-cave.jpg}" alt="Moon cavern">
+            </div>
+            EXPLORE<h6>Discover unique caverns</h6>
+        </div>
+        <div class="col-sm col-12 explore-container mx-sm-5">
+            <div class="row">
+                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/moon-lander.jpg}" alt="Moon cavern">
+            </div>
+            LEARN<h6>Visit historical treasures</h6>
+        </div>
+        <div class="col-sm col-12 explore-container">
+            <div class="row">
+                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/space-truck.png}" alt="Moon cruiser">
+            </div>
+            CRUISE<h6>Traverse Moon dunes in style</h6>
+        </div>
+    </div>
+</div>
+<div th:fragment="mars" class="container p-0" id="mars-content">
+    <div class="row gx-0">
+        <div class="col-sm col-12 border border-2 rounded-start d-flex justify-content-end align-items-center pe-4">
+            <span>
+                <h4>Visit the many rovers of Mars!</h4>Don't forget to bring your sunblock!
+            </span>
+        </div>
+        <div class="col-sm col-12">
+            <img id="mars-base" class="img-fluid rounded-end" th:src="@{/assets/image/mars-colony2.jpg}" alt="Moon base">
+        </div>
+    </div>
+    <div class="row gx-2 my-4 px-2">
+        <div class="col-sm col-12 explore-container">
+            <div class="row">
+                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/mars-truck.jpg}" alt="Mars recreational vehicle">
+            </div>
+            RELAX<h6>See the sites in comfort and style</h6>
+        </div>
+        <div class="col-sm col-12 explore-container mx-sm-5">
+            <div class="row">
+                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/starships-on-mars.jpg}" alt="Starship field on Mars">
+            </div>
+            BE AMAZED<h6>Sunrises will never be the same</h6>
+        </div>
+        <div class="col-sm col-12 explore-container">
+            <div class="row">
+                <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/couple-on-mars.jpg}" alt="Couple views start under Mars sky">
+            </div>
+            EXPERIENCE<h6>Witness the sunset like never before</h6>
+        </div>
+    </div>
+</div>
+<div th:fragment="stations" class="container p-0" id="station-content">
+    <div class="row">
+        <div class="col">
+            <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/asteroid-station.jpg}" alt="Space station near asteroid">
+            TEST YOUR LIMITS<h6>Travel to the farthest reaches of our inner solar system</h6>
+        </div>
+        <div class="col">
+            <img class="img-fluid rounded p-0 mb-1" th:src="@{/assets/image/mars-space-station.jpg}" alt="Space station around Mars">
+            FEEL LIKE A MARTIAN<h6>See all of the red planet while orbiting in style</h6>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

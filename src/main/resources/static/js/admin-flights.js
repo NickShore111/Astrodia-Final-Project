@@ -1,5 +1,5 @@
 const updateForm = document.getElementById("update-form");
-const REGEX_DATE = new RegExp('(0?[1-9])|([1-3]\\d{1})[/](0?[1-9]|[1-3][0-9])[/](\\d{4})');
+const REGEX_DATE = new RegExp('^(0?[1-9])|([1-3]\\d{1})[/](0?[1-9]|[1-3][0-9])[/](\\d{4})$');
 const REGEX_TIME = new RegExp('((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]$))');
 //const REGEX_FLIGHTCODE = new RegExp('(([A-Z]{3,4})\\d{1,3}\\s([A-Z]{1}\\d{1})-([A-Z]{1}\\d{1}))');
 const REGEX_NUM = new RegExp('^\\d*$');
@@ -14,8 +14,8 @@ var arrivalPortParams = [];
 var URLParams;
 
 /**
- * Criteria Selection URL Builder, triggers new Flight Selection
- * population after change
+ * Selection Criteria URL Builder, triggers new Flight Selection
+ * population after every change
  */
 document.getElementById("search-parameters")
     .addEventListener("change", (event) => {
@@ -66,6 +66,45 @@ document.getElementById("search-parameters")
             buildDOMWithResults(flights);
         });
     })
+
+/**
+ * Helper function adds Query parameters to URLParams object
+ * @param key
+ * @param paramsList
+ */
+function buildURLParams(key, paramsList) {
+    for (let param of paramsList) {
+        URLParams.append(key, param);
+    }
+}
+
+/**
+ * Helper Function creates list of Parameters used to build URL query parameters
+ * @param paramsList
+ * @param event
+ */
+function setParamsList(paramsList, event) {
+    if (event.target.checked) {
+        paramsList.push(event.target.value);
+    } else {
+        remove(event.target.value, paramsList);
+    }
+//    console.log(paramsList);
+}
+
+/**
+ * Helper Function used to remove parameter from ParamsList when unselected
+ * @param element
+ * @param array
+ */
+function remove(element, array) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] == element) {
+            array.splice(i,1);
+        }
+    }
+}
+
 /**
  * Resets all Update Form validations and error messages
  */
@@ -76,7 +115,8 @@ function resetForm() {
 }
 
 /**
- * Perform Departure and Arrival Date validations
+ * Perform Departure and Arrival Range Date validations
+ * Ensures that departure date entered is before arrival date
  * @returns {boolean}
  */
 function validateDateRange() {
@@ -86,10 +126,10 @@ function validateDateRange() {
     if (new Date(updateDepartureDate) > new Date(updateArrivalDate)){
         $("#departureDate").addClass("is-invalid").removeClass("is-valid");
         $("#arrivalDate").addClass("is-invalid").removeClass("is-valid");
-        $("#dep-date-error-msg").html("Departure cannot be before Arrival.");
-        $("#arr-date-error-msg").html("Departure cannot be before Arrival.");
-        $("#dep-date-error-msg").show();
-        $("#arr-date-error-msg").show();
+        $("#dep-date-error-msg").html("Departure cannot be before Arrival.").show();
+        $("#arr-date-error-msg").html("Departure cannot be before Arrival.").show();
+        // $("#dep-date-error-msg").show();
+        // $("#arr-date-error-msg").show();
         return false;
     } else {
         $("#departureDate").removeClass("is-invalid").addClass("is-valid");
@@ -101,7 +141,7 @@ function validateDateRange() {
 }
 
 /**
- * Arrival port validation
+ * Arrival port validation, checks for empty field
  * @returns {boolean}
  */
 function validateArrivalPort() {
@@ -117,7 +157,7 @@ function validateArrivalPort() {
 }
 
 /**
- * Departure Port validation
+ * Departure Port validation, checks for empty field
  * @returns {boolean}
  */
 function validateDeparturePort() {
@@ -133,7 +173,7 @@ function validateDeparturePort() {
 }
 
 /**
- * Spaceliner validation
+ * Spaceliner validation, checks for empty field
  * @returns {boolean}
  */
 function validateSpaceliner() {
@@ -149,7 +189,10 @@ function validateSpaceliner() {
 }
 
 /**
- * Available Seat validation
+ * Available Seat validation, checks for empty field and
+ * format check using RegEx. If new shuttle selection has
+ * changed max seating, checks that new max is not lower
+ * than designated available seating
  * @returns {boolean}
  */
 function validateAvailableSeats() {
@@ -169,7 +212,8 @@ function validateAvailableSeats() {
 }
 
 /**
- * Price Per Seat validation
+ * Price Per Seat validation, checks for empty field
+ * and format using RegEx
  * @returns {boolean}
  */
 function validatePricePerSeat() {
@@ -187,7 +231,7 @@ function validatePricePerSeat() {
 }
 
 /**
- * Shuttle validation
+ * Shuttle validation, checks for empty field
  * @returns {boolean}
  */
 function validateShuttle() {
@@ -205,7 +249,7 @@ function validateShuttle() {
 }
 
 /**
- * Departure Port validation
+ * Departure Port validation, checks for empty field
  * @returns {boolean}
  */
 function validateDeparturePad() {
@@ -223,7 +267,7 @@ function validateDeparturePad() {
 }
 
 /**
- * Arrival Pad validation
+ * Arrival Pad validation, checks for empty field
  * @returns {boolean}
  */
 function validateArrivalPad() {
@@ -241,7 +285,8 @@ function validateArrivalPad() {
 }
 
 /**
- * Departure Date validation
+ * Departure Date validation, checks for empty field
+ * and format using RegEx
  * @returns {boolean}
  */
 function validateDepartureDate() {
@@ -261,7 +306,8 @@ function validateDepartureDate() {
 }
 
 /**
- * Departure Time validation
+ * Departure Time validation, checks for empty field
+ * and format using RegEx
  * @returns {boolean}
  */
 function validateDepartureTime() {
@@ -279,7 +325,8 @@ function validateDepartureTime() {
 }
 
 /**
- * Arrival Date validation
+ * Arrival Date validation, checks for empty field
+ * and format using RegEx
  * @returns {boolean}
  */
 function validateArrivalDate() {
@@ -298,7 +345,8 @@ function validateArrivalDate() {
 }
 
 /**
- * Arrival Time validation
+ * Arrival Time validation, checks for empty field
+ * and format using RegEx
  * @returns {boolean}
  */
 function validateArrivalTime() {
@@ -316,7 +364,7 @@ function validateArrivalTime() {
 }
 
 /**
- * Update Flight Code according to flight detail changes
+ * Update Flight Code according to flight detail changes. Format:
  * (SpacelinerID)(Day of the year departure) (DeparturePadID)-(ArrivalPadID)
  */
 function updateFlightCode() {
@@ -330,7 +378,8 @@ function updateFlightCode() {
 }
 
 /**
- * Returns day of the year Flight departure Date used in Flight Code assembly
+ * Returns day of the year Flight departure Date,
+ * used in Flight Code assembly
  * @param date
  * @returns {number}
  */
@@ -344,8 +393,8 @@ function getDepartureDayOfYear(date) {
 }
 
 /**
- * Assemble Update Form fields according to selected flight parameters
- * after fetching flight by ID
+ * Assemble Update Form fields according to selected flight attributes
+ * after fetching flight by ID, sets custom dropdown behaviors
  * @param flightId
  */
 function setFormFields(flightId) {
@@ -383,8 +432,8 @@ function setFormFields(flightId) {
 }
 
 /**
- * Trigger event for flight selection, required to reload after
- * each flight selection population
+ * Load click event for flight selection, required to reload after
+ * each flight selection is re-populated
  */
 const loadFlightSelectionFormTriggerEvent = function() {
     $(".admin-flight-tr").click(function(e) {
@@ -395,7 +444,8 @@ const loadFlightSelectionFormTriggerEvent = function() {
 }
 
 /**
- * Helper function used to during form reset
+ * Helper function used during form reset, used to show
+ * all previously hidden dropdown options
  */
 function showAllDropdownOptions() {
     var dropdowns = document.querySelectorAll(".update-dropdown");
@@ -496,7 +546,7 @@ function shuttleDropdownResponseToSpaceliner() {
 }
 
 /**
- * Return formatted Time String from input
+ * Return formatted Time String used for Departure Time input field
  * @param datetime
  * @returns {string}
  */
@@ -510,7 +560,7 @@ function getTime(datetime) {
 }
 
 /**
- * Return formatted Date String from input
+ * Return formatted Date String used for Departure Date input field
  * @param datetime
  * @returns {string}
  */
@@ -521,7 +571,7 @@ function getDate(datetime) {
 }
 
 /**
- * Fetch flight by id and return JSON object used to set Update Form fields
+ * Fetch flight by id and return JSON object used to set #update-form fields
  * @param id
  * @returns {Promise<any>}
  */
@@ -538,51 +588,13 @@ const response = await fetch(new_url);
 }
 
 /**
- * Helper function adds Query parameters to URLParams object
- * @param key
- * @param paramsList
- */
-function buildURLParams(key, paramsList) {
-    for (param of paramsList) {
-        URLParams.append(key, param);
-    }
-}
-
-/**
- * Helper Function creates list of Parameters used to build URL query parameters
- * @param paramsList
- * @param event
- */
-function setParamsList(paramsList, event) {
-    if (event.target.checked) {
-        paramsList.push(event.target.value);
-    } else {
-        remove(event.target.value, paramsList);
-    }
-//    console.log(paramsList);
-}
-
-/**
- * Helper Function used to remove parameter from ParamsList when unselected
- * @param element
- * @param array
- */
-function remove(element, array) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] == element) {
-             array.splice(i,1);
-        }
-    }
-}
-
-/**
  * Used to display Error on page in case of Flight Fetch failure
  * @param response
  */
 function displayError(response) {
     const tableBody = document.querySelector("tbody");
     tableBody.innerHTML = "";
-    var error = document.createElement("tr")
+    let error = document.createElement("tr")
     error.innerHTML = `<h3>${response.status} Sorry, there was an issue with your request...</h3>`;
     error.className = "text-center";
     tableBody.appendChild(error);
@@ -594,7 +606,7 @@ function displayError(response) {
 function displayNoResults() {
     const tableBody = document.querySelector("tbody");
     tableBody.innerHTML = "";
-    var noResults = document.createElement("tr")
+    let noResults = document.createElement("tr")
     noResults.innerHTML = "<h3>Sorry, no results found...</h3>";
     noResults.className = "text-center";
     tableBody.appendChild(noResults);
@@ -672,7 +684,7 @@ function validateUpdateForm() {
 }
 
 /**
- * Jquery Update Form control flow
+ * Jquery Update Form Control Flow
  */
 $(function () {
     $(".error-msg").hide();
@@ -683,7 +695,7 @@ $(function () {
         e.preventDefault();
         if(validateUpdateForm()) {
             console.log("form is valid");
-            $("update-form").submit();
+            $("#update-form").submit();
         }
     })
     $("#cancelBtn").click((e)=>{

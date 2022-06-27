@@ -10,13 +10,24 @@ import lombok.*;
 public class UpdateFlightDTO {
     Integer id;
     String flightCode;
-    String departingDate;
-    String departingTime;
+    String departureDate;
+    String departureTime;
     String arrivalDate;
     String arrivalTime;
     Integer seatsAvailable;
     Integer pricePerSeat;
-    String departurePad;
-    String arrivalPad;
+    String departurePadID;
+    String arrivalPadID;
     String shuttleID;
 }
+//        th:field="*{id}"
+//        th:field="*{flightCode}"
+//        th:field="*{seatsAvailable}"
+//        th:field="*{pricePerSeat}"
+//        th:field="*{shuttleID}"
+//        th:field="*{departurePadID}"
+//        th:field="*{departureDate}"
+//        th:field="*{departureTime}"
+//        th:field="*{arrivalPadID}"
+//        th:field="*{arrivalDate}"
+//        th:field="*{arrivalTime}"

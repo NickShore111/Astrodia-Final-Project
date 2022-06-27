@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RegionRepository extends JpaRepository<Region, Integer> {
+public interface RegionRepository extends JpaRepository<Region, String> {
     List<Region> findAll();
 
     Optional<Region> findByName(String name);
 
-    Optional<Region> findById(String id);
 }

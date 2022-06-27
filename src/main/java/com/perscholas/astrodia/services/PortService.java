@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PortService {
@@ -21,4 +22,6 @@ public class PortService {
     public void saveOrUpdate(Port liner) {
         portRepository.save(liner);
     }
+
+    public Optional<Port> findById(String id) { return portRepository.findById(id); }
 }

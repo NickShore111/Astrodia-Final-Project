@@ -6,13 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoundtripSearchDTO {
+public class SearchDTO {
     @NotEmpty(message = "{NotEmpty.Flight.Departure}")
     String leaving;
     @NotEmpty(message = "{NotEmpty.Flight.Arrival}")

@@ -16,7 +16,11 @@
     <!-- Start: Search results flight list  -->
     <div class="container col border rounded">
 
+
         <section id="departure-flights">
+            <div th:if="${departureMsg}">
+                <h3 th:text="${departureMsg}"></h3>
+            </div>
             <div class="row p-2 my-1 flight "
                  th:each="flight : ${departureFlights}"
                  th:id="${flight.id}">
@@ -71,7 +75,11 @@
             </div>
         </section>
 
+
         <section id="return-flights" style="display: none;">
+            <div th:if="${returnMsg}">
+                <h3 th:text="${returnMsg}">No flight msg display here</h3>
+            </div>
             <div class="row p-2 my-1 flight"
                  th:each="flight : ${returnFlights}"
                  th:id="${flight.id}" >

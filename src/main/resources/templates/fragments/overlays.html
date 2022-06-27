@@ -8,16 +8,20 @@
 
 <div th:fragment="update-flight" id="update-flight-overlay" style="display:none;" class="container border border-2 rounded">
         <h3 id="update-flight-title" class="border-bottom border-2 text-center my-2">Updating:</h3>
-        <form action="@{/astrodia/admin/flights}" class="needs-validation" method="POST" id="update-form" novalidate>
+        <form   th:object="${updateFlightDTO}"
+                th:action="@{/astrodia/admin/flights}"
+                class="needs-validation"
+                method="POST"
+                id="update-form" novalidate>
             <div class="container px-2">
-                    <input type="hidden" id="formFlightId" value="default">
+                    <input th:field="*{id}" type="hidden" id="formFlightId" value="default">
                     <div class="input-group">
                         <label class="input-group-text">ID</label>
-                        <input name="flightCode" id="flightCode" class="form-control" type="text" readonly>
+                        <input th:field="*{flightCode}" name="flightCode" id="flightCode" class="form-control" type="text" readonly>
                         <label class="input-group-text">Seats Left</label>
-                        <input name="availableSeats" id="availableSeats" min="0" type="number" class="form-control" placeholder="#">
+                        <input th:field="*{seatsAvailable}" name="availableSeats" id="availableSeats" min="0" type="number" class="form-control" placeholder="#">
                         <label class="input-group-text">$/Seat</label>
-                        <input name="pricePerSeat" id="pricePerSeat" type="text" class="form-control" placeholder="1000.00">
+                        <input th:field="*{pricePerSeat}" name="pricePerSeat" id="pricePerSeat" type="text" class="form-control" placeholder="1000.00">
                         <label class="input-group-text">.00</label>
                     </div>
                     <div class="row">
@@ -37,7 +41,7 @@
                             </span>
                         </select>
                         <label class="input-group-text" for="shuttle">Shuttle</label>
-                        <select name="shuttle" class="form-select update-dropdown" id="shuttle" required>
+                        <select th:field="*{shuttleID}" name="shuttle" class="form-select update-dropdown" id="shuttle" required>
                             <span th:each="shuttle : ${shuttles}">
                                 <option
                                         th:data-shuttle-maxseating="${shuttle.passengerCapacity}"
@@ -60,7 +64,7 @@
                             </span>
                         </select>
                         <label class="input-group-text" for="departurePad">Pad</label>
-                        <select name="departurePad" class="form-select update-dropdown" id="departurePad" required>
+                        <select th:field="*{departurePadID}" name="departurePad" class="form-select update-dropdown" id="departurePad" required>
                             <span th:each="pad : ${pads}">
                                 <option th:data-dep-pad-port-id="${pad.port.id}"
                                         th:value="${pad.id}" th:text="${pad.id}"></option>
@@ -74,9 +78,9 @@
                     </div>
                     <div class="input-group mt-2">
                         <label class="input-group-text" for="departureDate">Date</label>
-                        <input name="departureDate" type="text" class="form-control datepicker" id="departureDate" placeholder="MM/DD/YYYY">
+                        <input th:field="*{departureDate}" name="departureDate" type="text" class="form-control datepicker" id="departureDate" placeholder="MM/DD/YYYY">
                         <label class="input-group-text" for="departureTime">Time</label>
-                        <input name="departureTime" type="text" class="form-control" id="departureTime" placeholder="HH:MM">
+                        <input th:field="*{departureTime}" name="departureTime" type="text" class="form-control" id="departureTime" placeholder="HH:MM">
                     </div>
                     <div class="row">
                         <small class="col offset-1 error-msg" id="dep-date-error-msg">
@@ -95,7 +99,7 @@
                             </span>
                         </select>
                         <label class="input-group-text" for="arrivalPad">Pad</label>
-                        <select name="arrivalPad" class="form-select update-dropdown" id="arrivalPad">
+                        <select th:field="*{arrivalPadID}" name="arrivalPad" class="form-select update-dropdown" id="arrivalPad">
                             <span th:each="pad : ${pads}">
                                 <option th:data-arr-pad-port-id="${pad.port.id}"
                                         th:value="${pad.id}" th:text="${pad.id}"></option>
@@ -109,9 +113,9 @@
                     </div>
                     <div class="input-group mt-2">
                         <label class="input-group-text">Date</label>
-                        <input name="arrivalDate"  id="arrivalDate" type="text" class="form-control datepicker" placeholder="MM/DD/YYYY">
+                        <input th:field="*{arrivalDate}" name="arrivalDate"  id="arrivalDate" type="text" class="form-control datepicker" placeholder="MM/DD/YYYY">
                         <label class="input-group-text">Time</label>
-                        <input name="arrivalTime" id="arrivalTime" type="text" class="form-control" placeholder="HH:MM">
+                        <input th:field="*{arrivalTime}" name="arrivalTime" id="arrivalTime" type="text" class="form-control" placeholder="HH:MM">
                     </div>
                     <div class="row">
                         <small class="col offset-1 error-msg" id="arr-date-error-msg">
