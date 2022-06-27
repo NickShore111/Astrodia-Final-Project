@@ -6,10 +6,9 @@
 </head>
 <body>
 
-<div th:fragment="update-flight" id="update-flight-overlay" style="display:block;" class="container border border-2 rounded">
+<div th:fragment="update-flight" id="update-flight-overlay" style="display:none;" class="container border border-2 rounded">
         <h3 id="update-flight-title" class="border-bottom border-2 text-center my-2">Updating:</h3>
-<!--        <form action="/astrodia/admin/flights" class="needs-validation" method="POST" id="update-form" novalidate>-->
-        <form action="" class="needs-validation" id="update-form" novalidate>
+        <form action="@{/astrodia/admin/flights}" class="needs-validation" method="POST" id="update-form" novalidate>
             <div class="container px-2">
                     <input type="hidden" id="formFlightId" value="default">
                     <div class="input-group">
@@ -109,10 +108,10 @@
                         </small>
                     </div>
                     <div class="input-group mt-2">
-                        <label class="input-group-text" id="arrivalDate">Date</label>
-                        <input name="arrivalDate" type="text" class="form-control datepicker" placeholder="MM/DD/YYYY">
-                        <label class="input-group-text" id="arrivalTime">Time</label>
-                        <input name="arrivalTime" type="text" class="form-control" placeholder="HH:MM">
+                        <label class="input-group-text">Date</label>
+                        <input name="arrivalDate"  id="arrivalDate" type="text" class="form-control datepicker" placeholder="MM/DD/YYYY">
+                        <label class="input-group-text">Time</label>
+                        <input name="arrivalTime" id="arrivalTime" type="text" class="form-control" placeholder="HH:MM">
                     </div>
                     <div class="row">
                         <small class="col offset-1 error-msg" id="arr-date-error-msg">

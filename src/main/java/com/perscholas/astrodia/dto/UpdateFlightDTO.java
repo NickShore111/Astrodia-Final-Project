@@ -1,25 +1,22 @@
 package com.perscholas.astrodia.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.perscholas.astrodia.models.Pad;
-import com.perscholas.astrodia.models.Shuttle;
-import lombok.NonNull;
-import org.springframework.format.annotation.NumberFormat;
+import lombok.*;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UpdateFlightDTO {
     Integer id;
     String flightCode;
     String departingDate;
     String departingTime;
-    String arrivingDate;
-    String arrivingTime;
+    String arrivalDate;
+    String arrivalTime;
     Integer seatsAvailable;
-    int pricePerSeat;
-    String launchPad;
+    Integer pricePerSeat;
+    String departurePad;
     String arrivalPad;
-    String shuttle;
+    String shuttleID;
 }
