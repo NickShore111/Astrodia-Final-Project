@@ -76,35 +76,10 @@ function resetForm() {
 }
 
 /**
- * Runs all form validation checks
- * @returns {boolean}
- */
-function validateUpdateForm() {
-    if (validateDepartureDate() && validateArrivalDate()) {
-        let validateDates = validateDates();
-    }
-
-    if (
-        validateAvailableSeats()
-        && validatePricePerSeat()
-        && validateSpaceliner()
-        && validateShuttle()
-        && validateDeparturePort()
-        && validateDeparturePad()
-        && validateArrivalPort()
-        && validateArrivalPad()
-        && validateDepartureTime()
-        && validateArrivalTime()
-        && validateDates) {
-            return true;
-        } else return false;
-}
-
-/**
  * Perform Departure and Arrival Date validations
  * @returns {boolean}
  */
-function validateDates() {
+function validateDateRange() {
     var updateDepartureDate = updateForm.departureDate.value.trim();
     var updateArrivalDate = updateForm.arrivalDate.value.trim();
 
@@ -551,7 +526,7 @@ function getDate(datetime) {
  * @returns {Promise<any>}
  */
 async function fetchFlight(id) {
-let new_url = API_URL.concat(id);
+let new_url = API_URL.concat("/"+id);
 //console.log(new_url);
 const response = await fetch(new_url);
     if (!response.ok) {
@@ -674,6 +649,29 @@ async function buildDOMWithResults(flights) {
 }
 
 /**
+ * Runs all form validation checks
+ * @returns {boolean}
+ */
+function validateUpdateForm() {
+    if (
+        validateAvailableSeats()
+        && validatePricePerSeat()
+        && validateSpaceliner()
+        && validateShuttle()
+        && validateDeparturePort()
+        && validateDeparturePad()
+        && validateArrivalPort()
+        && validateArrivalPad()
+        && validateDepartureTime()
+        && validateArrivalTime()
+        && (validateDepartureDate() && validateArrivalDate()) ? validateDateRange() : false
+    ) {
+        return true;
+    }
+    return false;
+}
+
+/**
  * Jquery Update Form control flow
  */
 $(function () {
@@ -681,14 +679,12 @@ $(function () {
     $(".datepicker").datepicker();
     loadFlightSelectionFormTriggerEvent();
 
-    $("#updateForm").submit(function (e) {
-        if (!validateUpdateForm()) {
-            e.preventDefault();
-        }
-    })
     $("#updateBtn").click((e) => {
         e.preventDefault();
-        validateUpdateForm();
+        if(validateUpdateForm()) {
+            console.log("form is valid");
+            $("update-form").submit();
+        }
     })
     $("#cancelBtn").click((e)=>{
         e.preventDefault();
