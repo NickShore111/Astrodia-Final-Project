@@ -1,8 +1,10 @@
 package com.perscholas.astrodia.controllers;
 
+import com.perscholas.astrodia.dto.SearchDTO;
 import com.perscholas.astrodia.dto.UpdateFlightDTO;
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
+import com.perscholas.astrodia.util.StringTimestampConverter;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -80,9 +86,47 @@ public class AdminController {
     }
 
     @PostMapping("/flights")
-    public String updateFlight() {
+    public String updateFlight(
+            @ModelAttribute UpdateFlightDTO updateFlight,
+            RedirectAttributes redirectAttributes
+    ) {
+        log.info("***************POST REQUEST TRIGGERED*************");
+        Pad departurePad = padService.findById(updateFlight.getDeparturePadID()).get();
+        Pad arrivalPad = padService.findById(updateFlight.getArrivalPadID()).get();
+        Shuttle shuttle = shuttleService.findById(updateFlight.getShuttleID()).get();
 
-        log.info("***************POST REQUEST TRIGGERED***********");
+        StringTimestampConverter converter = new StringTimestampConverter();
+        Timestamp departureTimestamp = converter.getTimestamp(
+                updateFlight.getDepartureDate(),
+                updateFlight.getDepartureTime().split(" ")[0],
+                updateFlight.getDepartureTime().split(" ")[1]);
+
+        Timestamp arrivalTimestamp = converter.getTimestamp(
+                updateFlight.getArrivalDate(),
+                updateFlight.getDepartureTime().split(" ")[0],
+                updateFlight.getDepartureTime().split(" ")[1]);
+
+        Flight flight = new Flight();
+        flight.setId(updateFlight.getId());
+        flight.setFlightCode(updateFlight.getFlightCode());
+        flight.setSeatsAvailable(updateFlight.getSeatsAvailable());
+        flight.setShuttle(shuttle);
+        flight.setLaunchPad(departurePad);
+        flight.setArrivalPad(arrivalPad);
+        flight.setDeparting(departureTimestamp);
+        flight.setArriving(arrivalTimestamp);
+
+        log.info("Updating flight:");
+        log.info(flight.toString());
+        try {
+            flightService.saveOrUpdate(flight);
+            String flashMsg = String.format("Flight %s updated successfully!", flight.getFlightCode());
+            redirectAttributes.addFlashAttribute("success", flashMsg);
+
+        } catch (Exception e) {
+            String flashMsg = String.format("Failed to update Flight %s.", flight.getFlightCode());
+            redirectAttributes.addFlashAttribute("error", flashMsg);
+        }
 
         return "redirect:flights";
     }

@@ -56,14 +56,6 @@ public class HomeController {
         return shuttleService.findAll();
     }
 
-//    @ModelAttribute("regionSearch")
-//    public RegionSearchDTO regionSearch() {
-//        return new RegionSearchDTO();
-//    }
-//    @ModelAttribute("portSearch")
-//    public PortSearchDTO portSearch() {
-//        return new PortSearchDTO();
-//    }
     @GetMapping("test")
     public String index() {return "index"; }
     @GetMapping("/signup")

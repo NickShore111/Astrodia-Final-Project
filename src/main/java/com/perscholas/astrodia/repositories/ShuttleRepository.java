@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ShuttleRepository extends JpaRepository<Shuttle, Integer> {
+public interface ShuttleRepository extends JpaRepository<Shuttle, String> {
     List<Shuttle> findAll();
-
-    Optional<Shuttle> findById(String id);
-
     Optional<Shuttle> findByName(String name);
+
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShuttleService {
@@ -21,4 +22,6 @@ public class ShuttleService {
     public void saveOrUpdate(Shuttle s) {
         shuttleRepository.save(s);
     }
+
+    public Optional<Shuttle> findById(String id) { return shuttleRepository.findById(id); }
 }

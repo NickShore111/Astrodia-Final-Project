@@ -121,7 +121,6 @@ public class FlightService {
         } else {
             c.where(cb.or(criteria.toArray(new Predicate[0])));
         }
-        log.warn("criteria size: " + criteria.size());
 
         TypedQuery<Flight> q = em.createQuery(c);
 

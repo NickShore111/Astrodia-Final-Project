@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PadService {
@@ -20,5 +21,9 @@ public class PadService {
 
     public void saveOrUpdate(Pad liner) {
         padRepository.save(liner);
+    }
+
+    public Optional<Pad> findById(String id) {
+        return padRepository.findById(id);
     }
 }
