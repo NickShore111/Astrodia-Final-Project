@@ -10,13 +10,14 @@
     <div class="container-lg">
 
         <div th:replace="fragments/forms :: new-search"></div>
+
         <div th:replace="fragments/flight-list :: roundtrip"></div>
 
-            <div th:replace="fragments/footer :: links"></div>
-            <div th:replace="fragments/footer :: footer"></div>
-            <div th:replace="fragments/footer :: scripts"></div>
-            <script type="module" th:src="@{/js/flights.js}"></script>
-            <script type="module" th:src="@{/js/nav.js}"></script>
+        <div th:replace="fragments/footer :: links"></div>
+        <div th:replace="fragments/footer :: footer"></div>
+        <div th:replace="fragments/footer :: scripts"></div>
+        <script type="module" th:src="@{/js/flights.js}"></script>
+        <script type="module" th:src="@{/js/nav.js}"></script>
     </div>
 </div>
 

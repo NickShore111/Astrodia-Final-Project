@@ -30,14 +30,12 @@
 
 <div th:fragment="roundtrip(title, content, action)">
     <div th:id="${title}" class="form-container">
-
         <form
                 th:object="${searchDTO}"
                 th:action="${action}"
                 class="d-flex-inline"
                 method="GET"
         >
-
         <div class="row g-2 justify-content-center" id="region-search">
             <div class="col-lg-3">
                 <div class="form-floating" id="leaving-div">
@@ -103,7 +101,7 @@
     <div class="row row-cols-md-auto justify-content-center p-3 border-bottom" id="form-container">
         <form
                 th:object="${newSearch}"
-                th:action="@{/astrodia/roundtrip-region}"
+                th:action="@{/astrodia/region-search}"
                 method="GET" class="d-flex"
         >
             <div class="col-12 col-sm-3 mx-1">

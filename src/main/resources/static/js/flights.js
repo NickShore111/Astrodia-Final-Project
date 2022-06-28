@@ -30,8 +30,12 @@ $( function() {
     return date;
   }
 });
-// Start: flights.html flight details overlay
 const flights = document.getElementsByClassName("flight");
+
+/**
+ * Closes Flight Detail overlay
+ * @event {Onclick<close-overlay>}
+ */
 document.querySelector(".overlay-close").addEventListener("click", hideOverlay);
 $(window).click((event)=> {
     var overlay = document.getElementById("flight-detail-overlay");
@@ -40,8 +44,10 @@ $(window).click((event)=> {
     }
     hideOverlay();
 })
-
-// Select and Unselect flight behavior
+/**
+ * Triggers overlay generation of selected flight details and outline selected in table flight
+ * @event {Onclick<GenerateOverlayDOM>}
+ */
 for (const flight of flights) {
   flight.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -56,6 +62,12 @@ for (const flight of flights) {
     }
   })
 }
+
+/**
+ * Dynamically renders flight overlay DOM with provided flight as parameter
+ * @param flight
+ * @returns {Promise<void>}
+ */
 async function generateOverlayForFlight(flight) {
 const url = "http://localhost:8080/astrodia/api/flights/".concat(flight.id);
 //console.log(url);
@@ -66,14 +78,14 @@ const response = await fetch(url);
     const f = await response.json();
 //    console.log(f);
 
-//  Modify DOM with flight details
-const logos = {
+
+const LOGOS = {
     "SPX": "SpaceX_logo.png",
     "BLO": "Blue_Origin_logo.png",
     "VGN": "Virgin_Galactic_logo.jpg"
 }
-    var flightSpaceliner = f.shuttle.spaceliner.id;
-    var logo_asset_url = "/assets/logo/".concat(logos[flightSpaceliner]);
+    let flightSpaceliner = f.shuttle.spaceliner.id;
+    let logo_asset_url = "/assets/logo/".concat(LOGOS[flightSpaceliner]);
     document.getElementById("flight-code").innerHTML = f.flightCode;
     document.getElementById("flight-launch").innerHTML = `
         <h5>Departing<h5>
@@ -93,7 +105,7 @@ const logos = {
         Pad: ${f.arrivalPad.id}
         </h6>
         `;
-    var logo = document.createElement("img");
+    let logo = document.createElement("img");
     logo.src = logo_asset_url;
     logo.alt = `${f.shuttle.spaceliner.name} logo`;
     logo.style.height = "10px";
@@ -103,19 +115,30 @@ const logos = {
     document.getElementById("aboard").innerHTML = `Shuttle: ${f.shuttle.name}`;
     document.getElementById("aboard").appendChild(logo);
 
-
-showOverlay();
+    showOverlay();
 }
+
+/**
+ * Display overlay
+ */
 function showOverlay() {
   document.getElementById("flight-detail-overlay").style.display = "block";
 }
+
+/**
+ * Hide overlay
+ */
 function hideOverlay() {
   document.getElementById("flight-detail-overlay").style.display = "none";
   if (document.querySelector(".selected")) {
     document.querySelector(".selected").classList.remove("selected");
   }
 }
-// toggle between Departure and Return flights
+
+/**
+ * Toggles between departure and return flight lists
+ * @type {NodeListOf<Element>}
+ */
 const toggleBtns = document.querySelectorAll(".toggle-flight")
 for (let btn of toggleBtns) {
     btn.addEventListener("click",(event) => {
@@ -136,4 +159,3 @@ for (let btn of toggleBtns) {
         }
     })
 }
-// End: flights.html flight details overlay

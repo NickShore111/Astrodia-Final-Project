@@ -105,6 +105,7 @@ public class AdminController {
         Shuttle shuttle = shuttleService.findById(updateFlight.getShuttleID()).get();
 
         StringTimestampConverter converter = new StringTimestampConverter();
+
         Timestamp departureTimestamp = converter.getTimestamp(
                 updateFlight.getDepartureDate(),
                 updateFlight.getDepartureTime().split(" ")[0],

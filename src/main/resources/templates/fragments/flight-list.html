@@ -15,124 +15,23 @@
     </div>
     <!-- Start: Search results flight list  -->
     <div class="container col border rounded">
+
         <section id="departure-flights">
             <div th:if="${departureMsg}">
-                <h4 th:text="${departureMsg}">No flights to display msg here</h4>
+                <h4 th:text="${departureMsg}">No flights display msg</h4>
             </div>
-            <div class="row p-2 my-1 flight "
-                 th:each="flight : ${departureFlights}"
-                 th:id="${flight.id}">
-                <div class="col-12 col-sm-5" id="departure-arrival-time">
-                    <th:block th:inline="text">
-                        [[${#calendars.format({flight.departing},'hh:mm a')}]] -
-                        [[${#calendars.format({flight.arriving},'hh:mm a')}]]
-                    </th:block>
-                    <h5 class="mb-0" th:text="${flight.flightCode}"></h5>
-                    <p class="mb-0" th:inline="text">
-                        [[${flight.launchPad.port.name}]] ([[${flight.launchPad.port.id}]]) to
-                        [[${flight.arrivalPad.port.name}]] ([[${flight.arrivalPad.port.id}]])
-                    </p>
-                    <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
-                    <img    id="flight-spaceliner-logo"
-                            th:src="@{/assets/logo/SpaceX_logo.png}"
-                            alt="SpaceX logo"
-                            style="height: 10px"/>SpaceX Liners
-                    </span>
-                    <span th:if="${#strings.startsWith(flight.flightCode, 'BLO')}">
-                        <img
-                                th:src="@{/assets/logo/Blue_Origin_logo.png}"
-                                alt="BlueOrigin logo"
-                                style="height: 10px"/>
-                        Blue Origin
-                    </span>
-                    <span th:if="${#strings.startsWith(flight.flightCode, 'VGN')}">
-                        <img
-                                th:src="@{/assets/logo/Virgin_Galactic_logo.jpg}"
-                                alt="Virgin Galactic logo"
-                                style="height: 40px"/>
-                        Virgin Galactic
-                    </span>
-                </div>
-                <small class="col-6 col-sm-5 text-center ">
-                    60d 40m(1 stop)<br />
-                    <th:block th:inline="text">
-                        [[${flight.launchPad.port.location}]] -
-                        [[${flight.launchPad.port.region.name}]]<br>
-                        TO<br>[[${flight.arrivalPad.port.location}]] -
-                        [[${flight.arrivalPad.port.region.name}]]
-                    </th:block>
-                </small>
-                <div class="col">
-                    <small style="color: red" class="mb-0" th:inline="text">[[${flight.seatsAvailable}]] left</small>
-                    <h5 class="mb-0">$40000</h5>
-                    <span class="d-flex">
-                        <img id="bitcoin-symbol" class="mt-1" th:src="@{/assets/Btc-sans.png}" />
-                        <h5>2300</h5>
-                    </span>
-                </div>
-            </div>
+            <div th:replace="fragments/flight-list :: results(${departureFlights})"></div>
         </section>
-
 
         <section id="return-flights" style="display: none;">
             <div th:if="${returnMsg}">
                 <h4 th:text="${returnMsg}">No flights to display msg here</h4>
             </div>
-            <div class="row p-2 my-1 flight"
-                 th:each="flight : ${returnFlights}"
-                 th:id="${flight.id}" >
-                <div class="col-12 col-sm-5" id="return-arrival-time">
-                    <th:block th:inline="text">
-                        [[${#calendars.format({flight.departing},'hh:mm a')}]] -
-                        [[${#calendars.format({flight.arriving},'hh:mm a')}]]
-                    </th:block>
-                    <h5 class="mb-0" th:text="${flight.flightCode}"></h5>
-                    <p class="mb-0" th:inline="text">
-                        [[${flight.launchPad.port.name}]] ([[${flight.launchPad.port.id}]]) to
-                        [[${flight.arrivalPad.port.name}]] ([[${flight.arrivalPad.port.id}]])
-                    </p>
-                    <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
-                    <img    id="flight-spaceliner-logo"
-                            th:src="@{/assets/logo/SpaceX_logo.png}"
-                            alt="SpaceX logo"
-                            style="height: 10px"/>SpaceX Liners
-                    </span>
-                    <span th:if="${#strings.startsWith(flight.flightCode, 'BLO')}">
-                        <img
-                                th:src="@{/assets/logo/Blue_Origin_logo.png}"
-                                alt="BlueOrigin logo"
-                                style="height: 10px"/>
-                        Blue Origin
-                    </span>
-                    <span th:if="${#strings.startsWith(flight.flightCode, 'VGN')}">
-                        <img
-                                th:src="@{/assets/logo/Virgin_Galactic_logo.jpg}"
-                                alt="Virgin Galactic logo"
-                                style="height: 40px"/>
-                        Virgin Galactic
-                    </span>
-                </div>
-                <small class="col-6 col-sm-5 text-center ">
-                    60d 40m(1 stop)<br /><th:block th:inline="text" />
-                    [[${flight.launchPad.port.location}]] -
-                    [[${flight.launchPad.port.region.name}]]<br>
-                    TO<br>[[${flight.arrivalPad.port.location}]] -
-                    [[${flight.arrivalPad.port.region.name}]]
-
-                </small>
-                <div class="col">
-                    <small style="color: red" class="mb-0" th:inline="text">[[${flight.seatsAvailable}]] left</small>
-                    <h5 class="mb-0">$40000</h5>
-                    <span class="d-flex">
-                        <img id="bitcoin-symbol" class="mt-1" th:src="@{/assets/Btc-sans.png}" />
-                        <h5>2300</h5>
-                    </span>
-                </div>
-            </div>
+            <div th:replace="fragments/flight-list :: results(${returnFlights})"></div>
         </section>
     </div>
     <!-- End: Search results flight list -->
-    <!-- Start: Selected flight overlay-->
+    <!-- Start: Flight overlay -->
     <div class="container" id="flight-detail-overlay">
         <div class="row p-3 border-bottom">
             <div class="overlay-close"></div>
@@ -184,8 +83,117 @@
             </div>
         </div>
     </div>
-
-
 </section>
+
+<div th:fragment="results(content)"
+     class="row p-2 my-1 flight"
+     th:each="flight : ${content}"
+     th:id="${flight.id}">
+    <div class="col-12 col-sm-5" id="departure-arrival-time">
+        <th:block th:inline="text">
+            [[${#calendars.format({flight.departing},'hh:mm a')}]] -
+            [[${#calendars.format({flight.arriving},'hh:mm a')}]]
+        </th:block>
+        <h5 class="mb-0" th:text="${flight.flightCode}"></h5>
+        <p class="mb-0" th:inline="text">
+            [[${flight.launchPad.port.name}]] ([[${flight.launchPad.port.id}]]) to
+            [[${flight.arrivalPad.port.name}]] ([[${flight.arrivalPad.port.id}]])
+        </p>
+        <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
+            <img    id="flight-spaceliner-logo"
+                    th:src="@{/assets/logo/SpaceX_logo.png}"
+                    alt="SpaceX logo"
+                    style="height: 10px"/>SpaceX Liners
+        </span>
+        <span th:if="${#strings.startsWith(flight.flightCode, 'BLO')}">
+            <img
+                    th:src="@{/assets/logo/Blue_Origin_logo.png}"
+                    alt="BlueOrigin logo"
+                    style="height: 10px"/>
+            Blue Origin
+        </span>
+        <span th:if="${#strings.startsWith(flight.flightCode, 'VGN')}">
+            <img
+                    th:src="@{/assets/logo/Virgin_Galactic_logo.jpg}"
+                    alt="Virgin Galactic logo"
+                    style="height: 40px"/>
+            Virgin Galactic
+        </span>
+    </div>
+    <small class="col-6 col-sm-5 text-center ">
+        <th:block th:inline="text">
+        [[${flight.departing}]]<br />
+        [[${flight.launchPad.port.location}]] -
+        [[${flight.launchPad.port.region.name}]]<br>
+        TO<br>[[${flight.arrivalPad.port.location}]] -
+        [[${flight.arrivalPad.port.region.name}]]<br>
+        [[${flight.arriving}]]
+        </th:block>
+    </small>
+    <div class="col">
+        <small style="color: red" class="mb-0" th:inline="text">[[${flight.seatsAvailable}]] left</small>
+        <h5 class="mb-0">$40000</h5>
+        <span class="d-flex">
+            <img id="bitcoin-symbol" class="mt-1" th:src="@{/assets/Btc-sans.png}" />
+            <h5>2300</h5>
+        </span>
+    </div>
+</div>
+
+
+<div th:fragment="deprecated flight list">
+    <div class="row p-2 my-1 flight"
+         th:each="flight : ${returnFlights}"
+         th:id="${flight.id}" >
+        <div class="col-12 col-sm-5" id="return-arrival-time">
+            <th:block th:inline="text">
+                [[${#calendars.format({flight.departing},'hh:mm a')}]] -
+                [[${#calendars.format({flight.arriving},'hh:mm a')}]]
+            </th:block>
+            <h5 class="mb-0" th:text="${flight.flightCode}"></h5>
+            <p class="mb-0" th:inline="text">
+                [[${flight.launchPad.port.name}]] ([[${flight.launchPad.port.id}]]) to
+                [[${flight.arrivalPad.port.name}]] ([[${flight.arrivalPad.port.id}]])
+            </p>
+            <span th:if="${#strings.startsWith(flight.flightCode, 'SPX')}">
+                    <img    id="flight-spaceliner-logo"
+                            th:src="@{/assets/logo/SpaceX_logo.png}"
+                            alt="SpaceX logo"
+                            style="height: 10px"/>SpaceX Liners
+                    </span>
+            <span th:if="${#strings.startsWith(flight.flightCode, 'BLO')}">
+                        <img
+                                th:src="@{/assets/logo/Blue_Origin_logo.png}"
+                                alt="BlueOrigin logo"
+                                style="height: 10px"/>
+                        Blue Origin
+                    </span>
+            <span th:if="${#strings.startsWith(flight.flightCode, 'VGN')}">
+                        <img
+                                th:src="@{/assets/logo/Virgin_Galactic_logo.jpg}"
+                                alt="Virgin Galactic logo"
+                                style="height: 40px"/>
+                        Virgin Galactic
+                    </span>
+        </div>
+        <!--                TODO: UPDATE RENDER DETAILS  -->
+        <small class="col-6 col-sm-5 text-center ">
+            [[${flight.departing}]]<br /><th:block th:inline="text" />
+            [[${flight.launchPad.port.location}]] -
+            [[${flight.launchPad.port.region.name}]]<br>
+            TO<br>[[${flight.arrivalPad.port.location}]] -
+            [[${flight.arrivalPad.port.region.name}]]<br>
+            [[${flight.arriving}]]
+        </small>
+        <div class="col">
+            <small style="color: red" class="mb-0" th:inline="text">[[${flight.seatsAvailable}]] left</small>
+            <h5 th:inline="text" class="mb-0">$[[${flight.pricePerSeat}]]</h5>
+            <span class="d-flex">
+                <img id="bitcoin-symbol" class="mt-1" th:src="@{/assets/Btc-sans.png}" />
+                <h5 id="bitcoin-conversion">2300</h5>
+            </span>
+        </div>
+    </div>
+</div>
 </body>
 </html>
