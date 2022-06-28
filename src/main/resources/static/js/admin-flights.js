@@ -378,8 +378,8 @@ function updateFlightCode() {
 }
 
 /**
- * Returns day of the year Flight departure Date,
- * used in Flight Code assembly
+ * Returns numerical day of the year (1-365) based on
+ * Flight departure Date, used in Flight Code assembly
  * @param date
  * @returns {number}
  */
@@ -393,8 +393,8 @@ function getDepartureDayOfYear(date) {
 }
 
 /**
- * Assemble Update Form fields according to selected flight attributes
- * after fetching flight by ID, sets custom dropdown behaviors
+ * Assemble Update Form fields according to flight attributes
+ * after fetching flight by ID and sets custom dropdown behaviors
  * @param flightId
  */
 function setFormFields(flightId) {
@@ -433,8 +433,8 @@ function setFormFields(flightId) {
 }
 
 /**
- * Load click event for flight selection, required to reload after
- * each flight selection is re-populated
+ * Load click event for flight selection, requires reload after
+ * each flight selection is re-populated in table
  */
 const loadFlightSelectionFormTriggerEvent = function() {
     $(".admin-flight-tr").click(function(e) {
@@ -685,7 +685,7 @@ function validateUpdateForm() {
 }
 
 /**
- * Jquery Forms Control Flow
+ * Jquery Form Control Flow
  */
 $(function () {
     $(".error-msg").hide();

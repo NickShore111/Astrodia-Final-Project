@@ -161,7 +161,137 @@
             </button>
         </form>
     </div>
-
 </section>
+
+<div th:fragment="update-flight" id="update-flight-overlay" style="display:none;" class="container border border-2 rounded">
+    <h3 id="update-flight-title" class="border-bottom border-2 text-center my-2">Updating:</h3>
+    <form   th:object="${updateFlightDTO}"
+            th:action="@{/astrodia/admin/flights}"
+            class="needs-validation"
+            method="POST"
+            id="update-form" novalidate>
+        <div class="container px-2">
+            <input th:field="*{id}" type="hidden" id="formFlightId" value="default">
+            <div class="input-group">
+                <label class="input-group-text">ID</label>
+                <input th:field="*{flightCode}" name="flightCode" id="flightCode" class="form-control" type="text" readonly>
+                <label class="input-group-text">Seats Left</label>
+                <input th:field="*{seatsAvailable}" name="availableSeats" id="availableSeats" min="0" type="number" class="form-control" placeholder="#">
+                <label class="input-group-text">$/Seat</label>
+                <input th:field="*{pricePerSeat}" name="pricePerSeat" id="pricePerSeat" type="text" class="form-control" placeholder="1000.00">
+                <label class="input-group-text">.00</label>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <small class="col error-msg" id="seats-error-msg">
+                    Invalid placeholder.
+                </small>
+                <small class="col error-msg align-self-end" id="price-error-msg">
+                    Invalid amount.
+                </small>
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text" for="spaceliner">Spaceliner</label>
+                <select name="spaceliner" class="form-select update-dropdown" id="spaceliner">
+                            <span th:each="spaceliner : ${spaceliners}">
+                                <option th:value="${spaceliner.id}" th:text="${spaceliner.name}"></option>
+                            </span>
+                </select>
+                <label class="input-group-text" for="shuttle">Shuttle</label>
+                <select th:field="*{shuttleID}" name="shuttle" class="form-select update-dropdown" id="shuttle" required>
+                            <span th:each="shuttle : ${shuttles}">
+                                <option
+                                        th:data-shuttle-maxseating="${shuttle.passengerCapacity}"
+                                        th:data-spaceliner-id="${shuttle.spaceliner.id}"
+                                        th:value="${shuttle.id}" th:text="${shuttle.name}"></option>
+                            </span>
+                </select>
+            </div>
+            <div class="row">
+                <small class="col error-msg offset-7" id="shuttle-error-msg">
+                    Shuttle cannot be blank.
+                </small>
+            </div>
+            <h5>Departing</h5>
+            <div class="input-group">
+                <label class="input-group-text" for="departurePort">Port</label>
+                <select name="departurePort" class="form-select update-dropdown" id="departurePort">
+                            <span th:each="port : ${ports}">
+                                <option th:value="${port.id}" th:text="${port.name}"></option>
+                            </span>
+                </select>
+                <label class="input-group-text" for="departurePad">Pad</label>
+                <select th:field="*{departurePadID}" name="departurePad" class="form-select update-dropdown" id="departurePad" required>
+                            <span th:each="pad : ${pads}">
+                                <option th:data-dep-pad-port-id="${pad.port.id}"
+                                        th:value="${pad.id}" th:text="${pad.id}"></option>
+                            </span>
+                </select>
+            </div>
+            <div class="row">
+                <small class="col error-msg offset-7" id="dep-pad-error-msg">
+                    Departure Pad cannot be blank.
+                </small>
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text" for="departureDate">Date</label>
+                <input th:field="*{departureDate}" name="departureDate" type="text" class="form-control datepicker" id="departureDate" placeholder="MM/DD/YYYY">
+                <label class="input-group-text" for="departureTime">Time</label>
+                <input th:field="*{departureTime}" name="departureTime" type="text" class="form-control" id="departureTime" placeholder="HH:MM">
+            </div>
+            <div class="row">
+                <small class="col offset-1 error-msg" id="dep-date-error-msg">
+                    Invalid Date format.
+                </small>
+                <small class="col offset-2 error-msg" id="dep-time-error-msg">
+                    Invalid Time format.
+                </small>
+            </div>
+            <h5>Arriving</h5>
+            <div class="input-group">
+                <label class="input-group-text" for="arrivalPort">Port</label>
+                <select name="arrivalPort" class="form-select update-dropdown" id="arrivalPort" required>
+                            <span th:each="port : ${ports}">
+                                <option th:value="${port.id}" th:text="${port.name}"></option>
+                            </span>
+                </select>
+                <label class="input-group-text" for="arrivalPad">Pad</label>
+                <select th:field="*{arrivalPadID}" name="arrivalPad" class="form-select update-dropdown" id="arrivalPad">
+                            <span th:each="pad : ${pads}">
+                                <option th:data-arr-pad-port-id="${pad.port.id}"
+                                        th:value="${pad.id}" th:text="${pad.id}"></option>
+                            </span>
+                </select>
+            </div>
+            <div class="row">
+                <small class="col error-msg offset-7" id="arr-pad-error-msg">
+                    Arrival Pad cannot be blank.
+                </small>
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text">Date</label>
+                <input th:field="*{arrivalDate}" name="arrivalDate"  id="arrivalDate" type="text" class="form-control datepicker" placeholder="MM/DD/YYYY">
+                <label class="input-group-text">Time</label>
+                <input th:field="*{arrivalTime}" name="arrivalTime" id="arrivalTime" type="text" class="form-control" placeholder="HH:MM">
+            </div>
+            <div class="row">
+                <small class="col offset-1 error-msg" id="arr-date-error-msg">
+                    Invalid Date format.
+                </small>
+                <small class="col offset-2 error-msg" id="arr-time-error-msg">
+                    Invalid Time format.
+                </small>
+            </div>
+            <div class="row">
+                    <span class="d-flex justify-content-evenly my-2">
+                        <button type="button" id="resetBtn" class="btn btn-success btn-sm">Reset</button>
+                        <button type="button" id="updateBtn" class="btn btn-warning btn-sm">Update</button>
+                        <button type="button" id="cancelBtn" class="btn btn-primary btn-sm">Cancel</button>
+                        <a id="deleteBtn" class="btn btn-danger btn-sm">Delete</a>
+                    </span>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
