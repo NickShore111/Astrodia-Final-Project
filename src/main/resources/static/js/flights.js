@@ -29,13 +29,42 @@ $( function() {
     }
     return date;
   }
+  // Fetch bitcoin conversion and set value in DOM
+    $(".bitcoin-placeholder").html(function() {
+        const URL = "https://blockchain.info/tobtc?currency=USD&value=";
+        let new_url = URL.concat($(this).html());
+
+        fetch(new_url)
+            .then(x => x.text())
+            .then(y => {$(this).html(y)});
+    })
 });
-const flights = document.getElementsByClassName("flight");
 
 /**
- * Closes Flight Detail overlay
- * @event {Onclick<close-overlay>}
+ * Triggers overlay generation of selected flight details and outline selected in table flight
+ * @event {Onclick<GenerateOverlayDOM>}
  */
+const flights = document.getElementsByClassName("flight");
+
+for (const flight of flights) {
+    flight.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        for (let selectedFlight of flights) {
+            if (!flight.isSameNode(selectedFlight)) {
+                selectedFlight.classList.remove("selected");
+            } else {
+                selectedFlight.classList.add("selected");
+                generateOverlayForFlight(flight);
+            }
+        }
+    })
+}
+
+/**
+* Closes Flight Detail overlay
+* @event {Onclick<close-overlay>}
+*/
 document.querySelector(".overlay-close").addEventListener("click", hideOverlay);
 $(window).click((event)=> {
     var overlay = document.getElementById("flight-detail-overlay");
@@ -44,24 +73,6 @@ $(window).click((event)=> {
     }
     hideOverlay();
 })
-/**
- * Triggers overlay generation of selected flight details and outline selected in table flight
- * @event {Onclick<GenerateOverlayDOM>}
- */
-for (const flight of flights) {
-  flight.addEventListener("click", (event) => {
-    event.stopPropagation();
-
-    for (let selectedFlight of flights) {
-        if (!flight.isSameNode(selectedFlight)) {
-            selectedFlight.classList.remove("selected");
-        } else {
-            selectedFlight.classList.add("selected");
-            generateOverlayForFlight(flight);
-        }
-    }
-  })
-}
 
 /**
  * Dynamically renders flight overlay DOM with provided flight as parameter
@@ -114,6 +125,20 @@ const LOGOS = {
     }
     document.getElementById("aboard").innerHTML = `Shuttle: ${f.shuttle.name}`;
     document.getElementById("aboard").appendChild(logo);
+    document.getElementById("selected-header").innerHTML = `
+        Selected fare to ${f.arrivalPad.port.region.name}`;
+    document.getElementById("price-header").innerHTML = `
+        $${f.pricePerSeat} dollars<br>OR<br>`;
+    let roundtripFare = f.pricePerSeat *2;
+    document.getElementById("roundtrip-fare").innerHTML = `
+        $${roundtripFare} roundtrip estimate for 1 traveler`;
+
+    const URL = "https://blockchain.info/tobtc?currency=USD&value=";
+    let new_url = URL.concat(f.pricePerSeat);
+
+    fetch(new_url)
+        .then(x => x.text())
+        .then(y => {$("#overlay-bitcoin-amount").html(y.concat(" bitcoins"))});
 
     showOverlay();
 }
