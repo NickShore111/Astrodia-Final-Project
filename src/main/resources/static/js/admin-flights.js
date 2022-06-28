@@ -1,5 +1,5 @@
 const updateForm = document.getElementById("update-form");
-const REGEX_DATE = new RegExp('^(0?[1-9])|([1-3]\\d{1})[/](0?[1-9]|[1-3][0-9])[/](\\d{4})$');
+const REGEX_DATE = new RegExp('^((0?[1-9])|([1][1-2]){1,2})[/](0?[1-9]|[1-2][0-9]|[3][0-1])[/][2](\\d{3})$');
 const REGEX_TIME = new RegExp('((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]$))');
 //const REGEX_FLIGHTCODE = new RegExp('(([A-Z]{3,4})\\d{1,3}\\s([A-Z]{1}\\d{1})-([A-Z]{1}\\d{1}))');
 const REGEX_NUM = new RegExp('^\\d*$');
@@ -401,7 +401,7 @@ function setFormFields(flightId) {
 
         fetchFlight(flightId).then((f)=> {
         console.log(f);
-        document.getElementById("update-flight-title").innerHTML = `Updating: ${f.flightCode}`
+        document.getElementById("update-flight-title").innerHTML = `Details for ${f.flightCode}`
         document.getElementById("formFlightId").value = f.id;
         updateForm.flightCode.value = f.flightCode;
         updateForm.spaceliner.value = f.shuttle.spaceliner.id;
@@ -420,7 +420,8 @@ function setFormFields(flightId) {
         updateForm.arrivalDate.value = getDate(f.arriving);
         updateForm.arrivalTime.value = getTime(f.arriving);
 
-//      Custom dropdown event listeners
+        document.getElementById("deleteBtn").href = "/astrodia/admin/flights/".concat(f.id);
+//      Load custom dropdown event listeners
         shuttleDropdownResponseToSpaceliner();
         spacelinerDropdownResponseToShuttle();
         departurePadDropdownResponseToPort();
@@ -684,7 +685,7 @@ function validateUpdateForm() {
 }
 
 /**
- * Jquery Update Form Control Flow
+ * Jquery Forms Control Flow
  */
 $(function () {
     $(".error-msg").hide();

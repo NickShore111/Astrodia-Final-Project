@@ -192,6 +192,7 @@ public class FlightService {
 
     }
 
+    public void deleteById(Integer id) { flightRepository.deleteById(id); }
     public Flight findById(int id) { return flightRepository.findById(id); }
 
     public List<Flight> findByOrderByDeparting() { return flightRepository.findByOrderByDeparting(); }

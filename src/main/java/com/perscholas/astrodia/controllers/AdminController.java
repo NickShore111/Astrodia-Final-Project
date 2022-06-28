@@ -72,17 +72,26 @@ public class AdminController {
         return "admin-portal";
     }
 
-    @GetMapping("flights/{id}")
-    public String deleteFlightById(@PathVariable int id) {
-        log.info("Deleting Flight with ID: " + id);
-        return "admin-portal";
-    }
-    @GetMapping("flights")
+    @GetMapping("/flights")
     public String adminViewAllFlights(
             @ModelAttribute("updateFlightDTO") UpdateFlightDTO updateFlightDTO,
             Model model) {
         model.addAttribute("flights", flightService.findByOrderByDeparting());
         return "admin-flights";
+    }
+    @GetMapping("/flights/{id}")
+    public String deleteFlight(@PathVariable("id") String strId, RedirectAttributes redirectAttributes) {
+        Integer id = Integer.parseInt(strId);
+        log.info("Deleting flight with ID: "+id);
+        try {
+            flightService.deleteById(id);
+            String flashMsg = String.format("Flight with ID: %d deleted successfully!", id);
+            redirectAttributes.addFlashAttribute("success", flashMsg);
+        } catch (Exception e) {
+            String flashMsg = String.format("Failed to update Flight with ID: %d.", id);
+            redirectAttributes.addFlashAttribute("error", flashMsg);
+        }
+        return "redirect:/astrodia/admin/flights";
     }
 
     @PostMapping("/flights")
@@ -110,6 +119,7 @@ public class AdminController {
         flight.setId(updateFlight.getId());
         flight.setFlightCode(updateFlight.getFlightCode());
         flight.setSeatsAvailable(updateFlight.getSeatsAvailable());
+        flight.setPricePerSeat(updateFlight.getPricePerSeat());
         flight.setShuttle(shuttle);
         flight.setLaunchPad(departurePad);
         flight.setArrivalPad(arrivalPad);
@@ -122,7 +132,6 @@ public class AdminController {
             flightService.saveOrUpdate(flight);
             String flashMsg = String.format("Flight %s updated successfully!", flight.getFlightCode());
             redirectAttributes.addFlashAttribute("success", flashMsg);
-
         } catch (Exception e) {
             String flashMsg = String.format("Failed to update Flight %s.", flight.getFlightCode());
             redirectAttributes.addFlashAttribute("error", flashMsg);
@@ -130,6 +139,8 @@ public class AdminController {
 
         return "redirect:flights";
     }
+
+
 //    @PostMapping("/admin/flights")
 //    public String updateFlightInfo(
 //            Model model,

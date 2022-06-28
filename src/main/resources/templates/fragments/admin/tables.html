@@ -7,6 +7,10 @@
 <body>
 
 <div th:fragment="flights">
+    <div class="text-center">
+        <h5 th:if="${success}" class="alert alert-success" th:text="${success}"></h5>
+        <h5 th:if="${error}" class="alert alert-warning" th:text="${error}"></h5>
+    </div>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -16,7 +20,6 @@
             <th scope="col">To</th>
             <th scope="col">Arriving</th>
             <th scope="col">Shuttle</th>
-            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -31,7 +34,7 @@
                 <td th:text="${flight.arrivalPad.port.id}"></td>
                 <td th:text="${#calendars.format({flight.arriving},'MMM dd, YYYY hh:mm a')}"></td>
                 <td th:text="${flight.shuttle.name}"></td>
-                <td><a th:href="@{flights/delete/{id} (id = ${flight.id})}">Edit</a></td>
+
             </tr>
         </th:block>
         </tbody>
