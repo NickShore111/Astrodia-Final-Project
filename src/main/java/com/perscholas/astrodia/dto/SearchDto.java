@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchDTO {
+public class SearchDto {
     @NotEmpty(message = "{NotEmpty.Flight.Departure}")
     String leaving;
     @NotEmpty(message = "{NotEmpty.Flight.Arrival}")

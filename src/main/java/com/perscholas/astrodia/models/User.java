@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter @Setter
@@ -19,21 +20,21 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    @Setter(AccessLevel.NONE)
-    private String password;
+    Integer id;
+    String firstName;
+    String lastName;
+    String email;
+    @Column(length=60)
+    String password;
+    String role;
+    boolean enabled = false;
+
 
     public User(@NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-    }
-    public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     @Override
@@ -48,4 +49,5 @@ public class User {
     public int hashCode() {
         return Objects.hash(email, password);
     }
+
 }

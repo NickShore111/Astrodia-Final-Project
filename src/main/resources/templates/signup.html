@@ -8,10 +8,17 @@
 <div class="main container-fluid p-1">
 <div th:replace="fragments/nav :: go-back-header"></div>
     <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
+        <div class="row">
+            <div class="alert alert-warning" th:if="${fail}" th:text="${fail}"></div>
+        </div>
+        <div class="row">
+            <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+        </div>
         <h2 class="my-4">Create an account</h2>
-        <form id="signUpForm" th:action="@{/astrodia/signup}" autocomplete="off" method="POST">
+        <form id="signUpForm" th:object="${user}" th:action="@{/astrodia/signup}" autocomplete="off" method="POST">
             <div class="form-floating mb-3">
                 <input
+                        th:field="*{email}"
                         type="email"
                         class="form-control"
                         id="email"
@@ -19,9 +26,12 @@
                         required
                 />
                 <label for="email">Email address</label>
+                <p th:each="error : ${#fields.errors('email')}"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="form-floating mb-3">
                 <input
+                        th:field="*{firstName}"
                         type="text"
                         class="form-control"
                         id="firstName"
@@ -29,9 +39,12 @@
                         required
                 />
                 <label for="firstName">First name</label>
+                <p th:each="error: ${#fields.errors('firstName')}"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="form-floating mb-3">
                 <input
+                        th:field="*{lastName}"
                         type="text"
                         class="form-control"
                         id="lastName"
@@ -39,9 +52,12 @@
                         required
                 />
                 <label for="lastName">Last name</label>
+                <p th:each="error : ${#fields.errors('lastName')}"
+                   th:text="${error}">Validation error</p>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input
+                        th:field="*{password}"
                         type="password"
                         class="form-control"
                         id="password"
@@ -49,16 +65,29 @@
                         required
                 />
                 <label for="password">Password</label>
+                <p th:each="error : ${#fields.errors('password')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-floating">
+                <input
+                        th:field="*{matchingPassword}"
+                        type="password"
+                        class="form-control"
+                        id="matchingPassword"
+                        placeholder="Password"
+                        required
+                />
+                <label for="password">Confirm Password</label>
             </div>
             <div class="container d-flex justify-content-center pt-4">
-                <button class="btn btn-primary col-8" id="submitBtn" disabled>Continue</button>
+                <button type="submit" class="btn btn-primary col-8" id="submitBtn" disabled>Continue</button>
             </div>
         </form>
         <div class="container d-flex mt-3 justify-content-center">
             <p>Already have an account? <a th:href="@{signin}">Sign in</a></p>
         </div>
         <div th:replace="fragments/footer :: footer"></div>
-
+    </div>
 </div>
 
     <div th:replace="fragments/footer :: scripts" />

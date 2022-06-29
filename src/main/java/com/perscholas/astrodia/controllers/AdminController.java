@@ -1,7 +1,6 @@
 package com.perscholas.astrodia.controllers;
 
-import com.perscholas.astrodia.dto.SearchDTO;
-import com.perscholas.astrodia.dto.UpdateFlightDTO;
+import com.perscholas.astrodia.dto.UpdateFlightDto;
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import com.perscholas.astrodia.util.StringTimestampConverter;
@@ -11,15 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -74,7 +68,7 @@ public class AdminController {
 
     @GetMapping("/flights")
     public String adminViewAllFlights(
-            @ModelAttribute("updateFlightDTO") UpdateFlightDTO updateFlightDTO,
+            @ModelAttribute("updateFlightDTO") UpdateFlightDto updateFlightDTO,
             Model model) {
         model.addAttribute("flights", flightService.findByOrderByDeparting());
         return "admin-flights";
@@ -96,7 +90,7 @@ public class AdminController {
 
     @PostMapping("/flights")
     public String updateFlight(
-            @ModelAttribute UpdateFlightDTO updateFlight,
+            @ModelAttribute UpdateFlightDto updateFlight,
             RedirectAttributes redirectAttributes
     ) {
         log.info("***************POST REQUEST TRIGGERED*************");

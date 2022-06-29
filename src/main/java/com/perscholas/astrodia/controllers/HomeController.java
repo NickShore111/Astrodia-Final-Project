@@ -1,6 +1,7 @@
 package com.perscholas.astrodia.controllers;
 
-import com.perscholas.astrodia.dto.SearchDTO;
+import com.perscholas.astrodia.dto.SearchDto;
+import com.perscholas.astrodia.dto.UserDto;
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -59,28 +61,22 @@ public class HomeController {
 
     @GetMapping("test")
     public String index() {return "index"; }
-    @GetMapping("/signin")
-    public String signInUserForm() { return "signin"; }
-    @GetMapping("/signup")
-    public String createNewUserForm() { return "signup"; }
-    @PostMapping("/signup")
-    public String signInUser() { return "redirect:astrodia"; }
 
     @GetMapping("")
     public String mainPage(
-            @ModelAttribute("searchDTO") SearchDTO searchDTO){
+            @ModelAttribute("searchDTO") SearchDto searchDTO){
         return "main";
     }
-//    @GetMapping(value = {"/", "index"})
-//    public String homePage(Principal principal){
-//        if(principal != null) log.info(principal.getName());
-//        return "main";
-//    }
+    @GetMapping(value = {"/", "/astrodia"})
+    public String homePage(Principal principal){
+        if(principal != null) log.info(principal.getName());
+        return "main";
+    }
     @GetMapping("/region-search")
     public String findRoundtripSearchFlights(
             Model model,
             @ModelAttribute("searchDTO")
-            @Valid SearchDTO searchDTO,
+            @Valid SearchDto searchDTO,
             BindingResult result,
             Errors errors) {
         if (result.hasErrors()) {
@@ -122,7 +118,7 @@ public class HomeController {
     public String roundtripSearchByPort(
             Model model,
             @ModelAttribute("searchDTO")
-            @Valid SearchDTO searchDTO,
+            @Valid SearchDto searchDTO,
             BindingResult result,
             Errors errors) {
         if (result.hasErrors()) {

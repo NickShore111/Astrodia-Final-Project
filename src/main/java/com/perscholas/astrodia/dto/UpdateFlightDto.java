@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateFlightDTO {
+public class UpdateFlightDto {
     Integer id;
     String flightCode;
     String departureDate;
