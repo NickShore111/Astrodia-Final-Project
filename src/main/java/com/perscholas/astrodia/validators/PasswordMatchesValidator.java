@@ -1,4 +1,4 @@
-package com.perscholas.astrodia.validations;
+package com.perscholas.astrodia.validators;
 
 import com.perscholas.astrodia.dto.UserDto;
 

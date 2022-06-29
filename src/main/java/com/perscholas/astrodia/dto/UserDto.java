@@ -1,7 +1,6 @@
 package com.perscholas.astrodia.dto;
 
-import com.perscholas.astrodia.validations.PasswordMatches;
-import com.perscholas.astrodia.validations.ValidEmail;
+import com.perscholas.astrodia.validators.PasswordMatches;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
@@ -17,20 +17,20 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class UserDto {
     @NotNull
-    @NotEmpty
+    @NotEmpty(message="{NotEmpty.User.Missing}")
     private String firstName;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message="{NotEmpty.User.Missing}")
     private String lastName;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message="{NotEmpty.User.Missing}")
     private String password;
     private String matchingPassword;
 
-//    @ValidEmail
+    @Pattern(regexp = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$", message = "{Pattern.User.Email}")
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "{NotEmpty.User.Missing}")
     private String email;
 }

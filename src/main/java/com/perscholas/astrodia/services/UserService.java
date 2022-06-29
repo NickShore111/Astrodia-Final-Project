@@ -3,7 +3,7 @@ package com.perscholas.astrodia.services;
 import com.perscholas.astrodia.dto.UserDto;
 import com.perscholas.astrodia.models.User;
 import com.perscholas.astrodia.repositories.UserRepository;
-import com.perscholas.astrodia.validations.UserAlreadyExistException;
+import com.perscholas.astrodia.validators.UserAlreadyExistException;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;

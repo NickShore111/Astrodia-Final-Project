@@ -15,7 +15,7 @@
             <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
         </div>
         <h2 class="my-4">Create an account</h2>
-        <form id="signUpForm" th:object="${user}" th:action="@{/astrodia/signup}" autocomplete="off" method="POST">
+        <form id="signUpForm" th:object="${user}" th:action="@{/astrodia/signup}" autocomplete="off" method="POST" novalidate>
             <div class="form-floating mb-3">
                 <input
                         th:field="*{email}"
@@ -26,8 +26,7 @@
                         required
                 />
                 <label for="email">Email address</label>
-                <p th:each="error : ${#fields.errors('email')}"
-                   th:text="${error}">Validation error</p>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -39,8 +38,7 @@
                         required
                 />
                 <label for="firstName">First name</label>
-                <p th:each="error: ${#fields.errors('firstName')}"
-                   th:text="${error}">Validation error</p>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -52,8 +50,7 @@
                         required
                 />
                 <label for="lastName">Last name</label>
-                <p th:each="error : ${#fields.errors('lastName')}"
-                   th:text="${error}">Validation error</p>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -65,8 +62,7 @@
                         required
                 />
                 <label for="password">Password</label>
-                <p th:each="error : ${#fields.errors('password')}"
-                   th:text="${error}">Validation error</p>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             </div>
             <div class="form-floating">
                 <input
@@ -78,6 +74,7 @@
                         required
                 />
                 <label for="password">Confirm Password</label>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></div>
             </div>
             <div class="container d-flex justify-content-center pt-4">
                 <button type="submit" class="btn btn-primary col-8" id="submitBtn" disabled>Continue</button>
