@@ -32,11 +32,6 @@ public class RegistrationController {
     @GetMapping("/signin")
     public String displaySignInUserForm() { return "signin"; }
 
-    @PostMapping("/signin")
-    public String signInUser() {
-
-        return "redirect:/astrodia";
-    }
 
     @GetMapping("/signup")
     public String displayCreateNewUserForm(Model model) {

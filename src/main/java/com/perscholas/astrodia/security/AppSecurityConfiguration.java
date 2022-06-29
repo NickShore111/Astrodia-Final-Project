@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -48,14 +49,6 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
 
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("password")
-                .roles("ADMIN")
-                .and()
-                .withUser("user")
-                .password("password")
-                .roles("USER");
     }
 
 
@@ -78,11 +71,20 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/astrodia").permitAll()
-                .and().formLogin().loginPage("/astrodia/signin")
+                .and().formLogin().loginPage("/user/signin")
                     .usernameParameter("username")
                     .passwordParameter("password")
-                .loginProcessingUrl("/signin/authenticate").defaultSuccessUrl("/astrodia")
+                .loginProcessingUrl("/signin/authenticate").defaultSuccessUrl("/")
                 .failureUrl("/login?error=true").permitAll();
     }
 
+//    @Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .cors()
+//                .and()
+//                .csrf()
+//                .disable()
+//                .authorizeHttpRequests()
+//    }
 }

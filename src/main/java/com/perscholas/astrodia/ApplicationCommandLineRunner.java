@@ -1,5 +1,6 @@
 package com.perscholas.astrodia;
 
+import com.perscholas.astrodia.repositories.AuthGroupRepository;
 import com.perscholas.astrodia.util.AstrodiaData;
 import com.perscholas.astrodia.util.FlightCreator;
 import com.perscholas.astrodia.models.*;
@@ -25,6 +26,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     ShuttleService shuttleService;
     SpacelinerService spacelinerService;
     UserService userService;
+    AuthGroupRepository repo;
     @Autowired
     ApplicationCommandLineRunner(
             FlightService flightService,
@@ -33,7 +35,8 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             RegionService regionService,
             ShuttleService shuttleService,
             SpacelinerService spacelinerService,
-            UserService userService)
+            UserService userService,
+        AuthGroupRepository repo)
     {
         this.flightService = flightService;
         this.padService = padService;
@@ -42,6 +45,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         this.shuttleService = shuttleService;
         this.spacelinerService = spacelinerService;
         this.userService = userService;
+        this.repo = repo;
     }
 
     @PostConstruct
@@ -74,6 +78,9 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         }
         for (User u : AstrodiaData.USERS) {
             userService.saveOrUpdate(u);
+        }
+        for (AuthGroup g : AstrodiaData.AUTH_GROUPS) {
+            repo.save(g);
         }
     }
 }

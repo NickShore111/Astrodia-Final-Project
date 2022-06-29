@@ -27,6 +27,11 @@ public class AstrodiaData {
             new User("Admin", "Test", "admin@mail.com", PASSWORD, "ADMIN"),
             new User("Nick", "Shore", "Nick@mail.com", PASSWORD, "ADMIN")
     ));
+    public static List<AuthGroup> AUTH_GROUPS = new ArrayList<>(Arrays.asList(
+            new AuthGroup("admin@mail.com", "ROLE_ADMIN"),
+            new AuthGroup("admin@mail.com", "ROLE_USER"),
+            new AuthGroup("Nick@mail.com", "ROLE_USER")
+    ));
     public static List<Spaceliner> SPACELINERS = new ArrayList<>(Arrays.asList(
         new Spaceliner("SPX", "SpaceX"),
         new Spaceliner("VGN", "Virgin Galactic"),

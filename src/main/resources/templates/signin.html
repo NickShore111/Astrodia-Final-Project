@@ -15,9 +15,10 @@
       You have been logged out.
     </div>
     <h2 class="my-4">Sign in</h2>
-    <form id="loginForm" th:action="@{/user/signin}" autocomplete="off" method="POST">
+    <form id="loginForm" th:action="@{/signin/authenticate}" autocomplete="off" method="POST">
       <div class="form-floating mb-3">
         <input
+                name="username"
                 type="email"
                 class="form-control"
                 id="email"
@@ -27,6 +28,7 @@
       </div>
       <div class="form-floating">
         <input
+                name="password"
                 type="password"
                 class="form-control"
                 id="password"
