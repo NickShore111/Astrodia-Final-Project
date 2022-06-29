@@ -62,16 +62,24 @@ public class HomeController {
     @GetMapping("test")
     public String index() {return "index"; }
 
-    @GetMapping("")
+    @GetMapping("/403")
+    public String accessDenied(){
+        return "403";
+    }
+
+    @GetMapping("/")
     public String mainPage(
+            Principal principal,
             @ModelAttribute("searchDTO") SearchDto searchDTO){
-        return "main";
-    }
-    @GetMapping(value = {"/", "/astrodia"})
-    public String homePage(Principal principal){
         if(principal != null) log.info(principal.getName());
+
         return "main";
     }
+//    @GetMapping(value = {"/", "/astrodia"})
+//    public String homePage(Principal principal){
+//        if(principal != null) log.info(principal.getName());
+//        return "main";
+//    }
     @GetMapping("/region-search")
     public String findRoundtripSearchFlights(
             Model model,

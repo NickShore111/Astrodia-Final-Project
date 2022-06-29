@@ -8,8 +8,14 @@
 <div class="main container-fluid p-1">
   <div th:replace="fragments/nav :: go-back-header"></div>
   <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+      Invalid username and password.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-info" role="alert">
+      You have been logged out.
+    </div>
     <h2 class="my-4">Sign in</h2>
-    <form id="signUpForm" th:action="@{/astrodia/signin}" autocomplete="off" method="POST">
+    <form id="signUpForm" th:action="@{/signin/authenticate}" autocomplete="off" method="POST">
       <div class="form-floating mb-3">
         <input
                 type="email"
@@ -29,7 +35,7 @@
         <label for="password">Password</label>
       </div>
       <div class="container d-flex justify-content-center pt-4">
-        <button class="btn btn-primary col-8" id="submitBtn" disabled>Sign in</button>
+        <button type="submit" class="btn btn-primary col-8" id="submitBtn" disabled>Sign in</button>
       </div>
     </form>
     <div class="container mt-3 d-inline-flex flex-column align-items-center">

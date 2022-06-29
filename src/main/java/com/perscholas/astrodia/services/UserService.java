@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,10 +22,13 @@ import java.util.NoSuchElementException;
 @Transactional(rollbackOn = {DataAccessException.class})
 public class UserService {
     UserRepository userRepository;
+//    BCryptPasswordEncoder encoder;
+
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+//        this.encoder = encoder;
     }
 
     public List<User> findAll() {
@@ -53,11 +57,12 @@ public class UserService {
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail().toLowerCase());
         user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
 //        user.setRoles(Arrays.asList("ROLE_USER"));
         user.setRole("USER");
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user;
     }
 
     private boolean emailExists(String email) {

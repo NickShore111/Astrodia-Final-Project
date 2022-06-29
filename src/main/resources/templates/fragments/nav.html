@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -61,6 +61,9 @@
                     </ul>
                 </li>
             </ul>
+            <div sec:authorize="isAuthenticated()">
+                <a class="nav-link active" aria-current="page" th:href="@{/}">User: <span sec:authentication="name"></span> Privileges: <span sec:authentication="principal.authorities"></span></a>
+            </div>
         <a class="nav-link active" aria-current="page" href="#" id="signInNavLink">
             <i class="fa-solid fa-user-astronaut me-1"></i>Sign In</a>
         <div class="p-3 border rounded-2 text-center" id="signInPopup">

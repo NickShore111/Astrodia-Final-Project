@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="fragments/header :: header"></link>
+    <title>Astrodia SignIn</title>
+</head>
+<body>
+<div class="main container-fluid p-1">
+    <div th:replace="fragments/nav :: go-back-header"></div>
+    <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
+    <img th:src="@{assets/image/access-denied.png}" alt="access denied" />
+
+    </div>
+    <div th:replace="fragments/footer :: scripts" />
+</div>
+</body>
+</html>
