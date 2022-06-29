@@ -61,6 +61,8 @@ public class HomeController {
     public String index() {return "index"; }
     @GetMapping("/signin")
     public String signInUserForm() { return "signin"; }
+    @GetMapping("/signup")
+    public String createNewUserForm() { return "signup"; }
     @PostMapping("/signup")
     public String signInUser() { return "redirect:astrodia"; }
 

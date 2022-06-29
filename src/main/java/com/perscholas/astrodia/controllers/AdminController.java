@@ -24,7 +24,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("astrodia/admin")
+@RequestMapping("/admin")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AdminController {
     FlightService flightService;
@@ -91,7 +91,7 @@ public class AdminController {
             String flashMsg = String.format("Failed to update Flight with ID: %d.", id);
             redirectAttributes.addFlashAttribute("error", flashMsg);
         }
-        return "redirect:/astrodia/admin/flights";
+        return "redirect:/admin/flights";
     }
 
     @PostMapping("/flights")
@@ -142,14 +142,4 @@ public class AdminController {
     }
 
 
-//    @PostMapping("/admin/flights")
-//    public String updateFlightInfo(
-//            Model model,
-//            @ModelAttribute("updateFlightDTO")
-//            @Valid UpdateFlightDTO updateFlightDTO,
-//            BindingResult result,
-//            Error errors) {
-//
-//        return "redirect:flights";
-//    }
 }

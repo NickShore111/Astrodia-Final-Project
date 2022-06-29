@@ -48,29 +48,41 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
 
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password("password")
+                .roles("ADMIN")
+                .and()
+                .withUser("user")
+                .password("password")
+                .roles("USER");
     }
 
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/assets/**", "/static/**", "/css/**", "/js/**", "/image/**", "/logo/**");
-
+        web.ignoring().antMatchers(
+                "/webjars/**",
+                "/resources/**",
+                "/static/**",
+                "/assets/**",
+                "/css/**",
+                "/js/**",
+                "/image/**",
+                "/logo/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
-                                .antMatchers("/astrodia/**").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/astrodia/signin")
-                                .permitAll()
-                )
-                .rememberMe(withDefaults());
+        http.authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/astrodia").permitAll()
+                .and().formLogin().loginPage("/astrodia/signin")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                .loginProcessingUrl("/signin/authenticate").defaultSuccessUrl("/astrodia")
+                .failureUrl("/login?error=true").permitAll();
     }
 
 }

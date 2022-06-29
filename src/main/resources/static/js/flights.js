@@ -127,8 +127,8 @@ const LOGOS = {
     document.getElementById("aboard").appendChild(logo);
     document.getElementById("selected-header").innerHTML = `
         Selected fare to ${f.arrivalPad.port.region.name}`;
-    document.getElementById("price-header").innerHTML = `
-        $${f.pricePerSeat} dollars<br>OR<br>`;
+    document.getElementById("overlay-dollar-amount").innerHTML = `
+        $${f.pricePerSeat} dollars`;
     let roundtripFare = f.pricePerSeat *2;
     document.getElementById("roundtrip-fare").innerHTML = `
         $${roundtripFare} roundtrip estimate for 1 traveler`;
