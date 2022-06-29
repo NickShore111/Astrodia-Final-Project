@@ -1,7 +1,6 @@
 package com.perscholas.astrodia.controllers;
 
 import com.perscholas.astrodia.dto.SearchDto;
-import com.perscholas.astrodia.dto.UserDto;
 import com.perscholas.astrodia.models.*;
 import com.perscholas.astrodia.services.*;
 import lombok.AccessLevel;
@@ -14,13 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 @Controller @Slf4j
-@RequestMapping("astrodia")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class HomeController {
     FlightService flightService;
@@ -67,7 +64,7 @@ public class HomeController {
         return "403";
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public String mainPage(
             Principal principal,
             @ModelAttribute("searchDTO") SearchDto searchDTO){
@@ -75,11 +72,7 @@ public class HomeController {
 
         return "main";
     }
-//    @GetMapping(value = {"/", "/astrodia"})
-//    public String homePage(Principal principal){
-//        if(principal != null) log.info(principal.getName());
-//        return "main";
-//    }
+
     @GetMapping("/region-search")
     public String findRoundtripSearchFlights(
             Model model,

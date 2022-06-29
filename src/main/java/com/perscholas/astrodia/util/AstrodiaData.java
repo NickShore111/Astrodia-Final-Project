@@ -2,8 +2,12 @@ package com.perscholas.astrodia.util;
 
 import com.perscholas.astrodia.models.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,6 +19,14 @@ import java.util.List;
 @FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 public class AstrodiaData {
 
+    static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
+    static String PASSWORD = encoder.encode("password");
+
+    public static List<User> USERS = new ArrayList<>(Arrays.asList(
+            new User("Firstly", "Lastly", "FirstUser@mail.com", PASSWORD, "USER"),
+            new User("Admin", "Test", "admin@mail.com", PASSWORD, "ADMIN"),
+            new User("Nick", "Shore", "Nick@mail.com", PASSWORD, "ADMIN")
+    ));
     public static List<Spaceliner> SPACELINERS = new ArrayList<>(Arrays.asList(
         new Spaceliner("SPX", "SpaceX"),
         new Spaceliner("VGN", "Virgin Galactic"),
@@ -83,4 +95,5 @@ public class AstrodiaData {
             new Pad("V1", MVS),
             new Pad("V2", MVS)
     ));
+
 }

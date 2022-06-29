@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="main container-fluid p-1">
-  <div th:replace="fragments/nav :: go-back-header"></div>
+  <div th:replace="fragments/nav :: minimal-header"></div>
   <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
       Invalid username and password.
@@ -15,7 +15,7 @@
       You have been logged out.
     </div>
     <h2 class="my-4">Sign in</h2>
-    <form id="signUpForm" th:action="@{/signin/authenticate}" autocomplete="off" method="POST">
+    <form id="loginForm" th:action="@{/user/signin}" autocomplete="off" method="POST">
       <div class="form-floating mb-3">
         <input
                 type="email"

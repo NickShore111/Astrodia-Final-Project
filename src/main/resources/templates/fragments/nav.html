@@ -7,7 +7,7 @@
 <body>
 <nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light border-bottom p-3">
     <div class="container-lg">
-        <a class="navbar-brand" th:href="@{/astrodia}">
+        <a class="navbar-brand" th:href="@{/}">
             <img
                     th:src="@{/assets/logo/spaceship.png}"
                     alt="Astrodia shuttle orbiting planet logo"
@@ -35,11 +35,11 @@
                         More travel
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item my-2" th:href="@{/astrodia}">
+                        <li><a class="dropdown-item my-2" th:href="@{/}">
                                 <i style="transform: rotate(-45deg);" class="fa-solid fa-shuttle-space me-2"></i>Flights</a></li>
-                        <li><a class="dropdown-item my-2" th:href="@{/astrodia#moon-content}">
+                        <li><a class="dropdown-item my-2" th:href="@{/#moon-content}">
                                 <i class="fa-solid fa-hotel me-2"></i>Stays</a></li>
-                        <li><a class="dropdown-item my-2" th:href="@{/astrodia#station-content}">
+                        <li><a class="dropdown-item my-2" th:href="@{/#station-content}">
                             <img th:src="@{/assets/logo/space-station-icon.png}"
                                     alt="station icon"
                                     class="me-2"
@@ -67,15 +67,15 @@
         <a class="nav-link active" aria-current="page" href="#" id="signInNavLink">
             <i class="fa-solid fa-user-astronaut me-1"></i>Sign In</a>
         <div class="p-3 border rounded-2 text-center" id="signInPopup">
-            <a class="col-12 mb-2 btn btn-primary fw-bold" th:href="@{/astrodia/signin}" >Sign In</a>
-            <a th:href="@{/astrodia/signup}">
+            <a class="col-12 mb-2 btn btn-primary fw-bold" th:href="@{/user/signin}" >Sign In</a>
+            <a th:href="@{/user/signup}">
                 <div class="fw-bold p-2 rounded-2" id="signUpBtn">Sign up, it's free</div>
             </a>
         </div>
     </div>
 </nav>
 
-<div th:fragment="go-back-header">
+<div th:fragment="minimal-header">
     <div style="padding: 10px; border:none; border-radius: 50%; position: absolute; top:10px; left: 20px;"
          id="loginFormHeader-arrow_back"
          type="button"
@@ -97,16 +97,18 @@
         </svg>
     </div>
     <div class="border-bottom d-flex p-2 justify-content-center">
-        <div class="d-flex">
-            <img
-                    th:src="@{/assets/logo/spaceship.png}"
-                    alt="Astrodia shuttle orbiting planet logo"
-                    width="35"
-                    height="30"
-                    class="mt-1"
-            />
-            <h3>Astrodia</h3>
-        </div>
+        <a th:href="@{/}">
+            <div class="d-flex">
+                <img
+                        th:src="@{/assets/logo/spaceship.png}"
+                        alt="Shuttle orbiting planet logo"
+                        width="35"
+                        height="30"
+                        class="mt-1"
+                />
+                <h3>Astrodia</h3>
+            </div>
+        </a>
     </div>
 </div>
 </body>

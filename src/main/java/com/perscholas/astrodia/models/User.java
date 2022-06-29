@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -21,11 +23,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    @NonNull
     String firstName;
+    @NonNull
     String lastName;
+    @NonNull
     String email;
+    @NonNull
     @Column(length=60)
     String password;
+    @NonNull
     String role;
     boolean enabled = false;
 

@@ -20,10 +20,10 @@
     </div>
     <div class="my-5">
         <div class="region-content">
-            <div th:replace="fragments/forms :: roundtrip(Region, ${regions}, '/astrodia/region-search')"></div>
+            <div th:replace="fragments/forms :: roundtrip(Region, ${regions}, '/region-search')"></div>
         </div>
         <div class="port-content" style="display:none;">
-            <div th:replace="fragments/forms :: roundtrip(Port, ${ports}, '/astrodia/port-search')"></div>
+            <div th:replace="fragments/forms :: roundtrip(Port, ${ports}, '/port-search')"></div>
         </div>
     </div>
 </section>
@@ -101,7 +101,7 @@
     <div class="row row-cols-md-auto justify-content-center p-3 border-bottom" id="form-container">
         <form
                 th:object="${newSearch}"
-                th:action="@{/astrodia/region-search}"
+                th:action="@{/region-search}"
                 method="GET" class="d-flex"
         >
             <div class="col-12 col-sm-3 mx-1">
@@ -164,7 +164,7 @@
 <div th:fragment="update-flight" id="update-flight-overlay" style="display:none;" class="container border border-2 rounded">
     <h3 id="update-flight-title" class="border-bottom border-2 text-center my-2">Updating:</h3>
     <form   th:object="${updateFlightDTO}"
-            th:action="@{/astrodia/admin/flights}"
+            th:action="@{/admin/flights}"
             class="needs-validation"
             method="POST"
             id="update-form" novalidate>

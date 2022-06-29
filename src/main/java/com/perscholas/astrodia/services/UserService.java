@@ -22,13 +22,11 @@ import java.util.NoSuchElementException;
 @Transactional(rollbackOn = {DataAccessException.class})
 public class UserService {
     UserRepository userRepository;
-//    BCryptPasswordEncoder encoder;
 
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-//        this.encoder = encoder;
     }
 
     public List<User> findAll() {
@@ -58,7 +56,7 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail().toLowerCase());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
 //        user.setRoles(Arrays.asList("ROLE_USER"));
         user.setRole("USER");
         userRepository.save(user);

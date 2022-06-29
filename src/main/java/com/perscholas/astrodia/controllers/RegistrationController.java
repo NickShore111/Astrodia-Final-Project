@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller @Slf4j
-@RequestMapping("astrodia")
+@RequestMapping("user")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RegistrationController {
     UserService userService;
@@ -30,10 +30,16 @@ public class RegistrationController {
     }
 
     @GetMapping("/signin")
-    public String signInUserForm() { return "signin"; }
+    public String displaySignInUserForm() { return "signin"; }
+
+    @PostMapping("/signin")
+    public String signInUser() {
+
+        return "redirect:/astrodia";
+    }
 
     @GetMapping("/signup")
-    public String createNewUserForm(Model model) {
+    public String displayCreateNewUserForm(Model model) {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
         return "signup";

@@ -6,14 +6,14 @@
 </head>
 <body>
 <div class="main container-fluid p-1">
-<div th:replace="fragments/nav :: go-back-header"></div>
+<div th:replace="fragments/nav :: minimal-header"></div>
     <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
         <div class="row">
             <div class="alert alert-warning" th:if="${fail}" th:text="${fail}" role="alert"></div>
             <div class="alert alert-success" th:if="${success}" th:text="${success}" role="alert"></div>
         </div>
         <h2 class="my-4">Create an account</h2>
-        <form id="signUpForm" th:object="${user}" th:action="@{/astrodia/signup}" autocomplete="off" method="POST" novalidate>
+        <form id="signUpForm" th:object="${user}" th:action="@{/user/signup}" autocomplete="off" method="POST" novalidate>
             <div class="form-floating mb-3">
                 <input
                         th:field="*{email}"
@@ -79,7 +79,7 @@
             </div>
         </form>
         <div class="container d-flex mt-3 justify-content-center">
-            <p>Already have an account? <a th:href="@{signin}">Sign in</a></p>
+            <p>Already have an account? <a th:href="@{/user/signin}">Sign in</a></p>
         </div>
         <div th:replace="fragments/footer :: footer"></div>
     </div>

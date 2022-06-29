@@ -24,6 +24,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     RegionService regionService;
     ShuttleService shuttleService;
     SpacelinerService spacelinerService;
+    UserService userService;
     @Autowired
     ApplicationCommandLineRunner(
             FlightService flightService,
@@ -31,7 +32,8 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             PortService portService,
             RegionService regionService,
             ShuttleService shuttleService,
-            SpacelinerService spacelinerService)
+            SpacelinerService spacelinerService,
+            UserService userService)
     {
         this.flightService = flightService;
         this.padService = padService;
@@ -39,6 +41,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         this.regionService = regionService;
         this.shuttleService = shuttleService;
         this.spacelinerService = spacelinerService;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -68,6 +71,9 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         }
         for (Flight f : flights) {
             flightService.saveOrUpdate(f);
+        }
+        for (User u : AstrodiaData.USERS) {
+            userService.saveOrUpdate(u);
         }
     }
 }

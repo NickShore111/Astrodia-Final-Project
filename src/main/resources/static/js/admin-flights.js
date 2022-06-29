@@ -420,7 +420,7 @@ function setFormFields(flightId) {
         updateForm.arrivalDate.value = getDate(f.arriving);
         updateForm.arrivalTime.value = getTime(f.arriving);
 
-        document.getElementById("deleteBtn").href = "/astrodia/admin/flights/".concat(f.id);
+        document.getElementById("deleteBtn").href = "/admin/flights/".concat(f.id);
 //      Load custom dropdown event listeners
         shuttleDropdownResponseToSpaceliner();
         spacelinerDropdownResponseToShuttle();
@@ -654,8 +654,7 @@ async function buildDOMWithResults(flights) {
             <th class="fs-6 fw-normal">${flight.departing}</th>
             <th class="fs-6 fw-normal">${flight.arrivalPad.port.id}</th>
             <th class="fs-6 fw-normal">${flight.arriving}</th>
-            <th class="fs-6 fw-normal">${flight.shuttle.name}</th>
-            <td class="fs-6 fw-normal"><a href="/flights/delete/${flight.id}">Delete</a></td>`;
+            <th class="fs-6 fw-normal">${flight.shuttle.name}</th>`;
         tableBody.appendChild(tr);
     });
      loadFlightSelectionFormTriggerEvent();
