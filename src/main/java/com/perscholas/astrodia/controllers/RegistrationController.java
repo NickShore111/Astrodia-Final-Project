@@ -40,6 +40,12 @@ public class RegistrationController {
         return "signup";
     }
 
+    @PostMapping("/fail_login")
+    public String handleFailedLogin(RedirectAttributes rda) {
+        rda.addAttribute("loginError", true);
+        return "redirect:/signin?error";
+    }
+
     @PostMapping("/signup")
     public String registerNewUser(
             @ModelAttribute("user") @Valid @RequestBody UserDto userDto,
@@ -61,4 +67,5 @@ public class RegistrationController {
         rda.addFlashAttribute("success", "New account created successfully!");
         return "redirect:signup";
     }
+
 }

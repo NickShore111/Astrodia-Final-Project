@@ -46,6 +46,7 @@
                             />Stations</a></li>
                     </ul>
                 </li>
+                <div sec:authorize="hasRole('ADMIN')">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="adminPortalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin Portal
@@ -60,12 +61,14 @@
                         <li><a class="dropdown-item" href="#">Users</a></li>
                     </ul>
                 </li>
+                </div>
             </ul>
             <div sec:authorize="isAuthenticated()">
                 <a class="nav-link active" aria-current="page" th:href="@{/}">User: <span sec:authentication="name"></span> Privileges: <span sec:authentication="principal.authorities"></span></a>
             </div>
-        <a class="nav-link active" aria-current="page" href="#" id="signInNavLink">
-            <i class="fa-solid fa-user-astronaut me-1"></i>Sign In</a>
+            <a class="nav-link active" aria-current="page" href="#" id="signInNavLink">
+                <span sec:authorize="isAuthenticated()" ><a class="nav-link" th:href="@{/logout}">Logout</a></span>
+                <i class="fa-solid fa-user-astronaut me-1"></i>Sign In</a>
         <div class="p-3 border rounded-2 text-center" id="signInPopup">
             <a class="col-12 mb-2 btn btn-primary fw-bold" th:href="@{/user/signin}" >Sign In</a>
             <a th:href="@{/user/signup}">

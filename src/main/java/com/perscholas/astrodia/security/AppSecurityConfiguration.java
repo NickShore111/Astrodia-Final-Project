@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -67,24 +68,26 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/astrodia").permitAll()
-                .and().formLogin().loginPage("/user/signin")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                .loginProcessingUrl("/signin/authenticate").defaultSuccessUrl("/")
-                .failureUrl("/login?error=true").permitAll();
+                .and()
+                .formLogin().loginPage("/user/signin")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .loginProcessingUrl("/user/signin").defaultSuccessUrl("/")
+                .failureForwardUrl("/fail_login").permitAll()
+                .and()
+                .logout()
+                .invalidateHttpSession(true).clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
     }
 
-//    @Bean
-//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .cors()
-//                .and()
-//                .csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//    }
+
 }

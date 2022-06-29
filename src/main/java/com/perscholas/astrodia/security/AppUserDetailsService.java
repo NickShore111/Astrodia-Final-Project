@@ -34,13 +34,9 @@ public class AppUserDetailsService implements UserDetailsService {
         User user = null;
         try {
             user = userService.findByEmail(username);
-
-        } catch (NoSuchElementException ex){
+        } catch (Exception ex){
             log.warn("Couldn't find email: " + username);
             ex.printStackTrace();
-        } catch(UsernameNotFoundException e){
-            log.warn("Couldn't find email: " + username);
-            e.printStackTrace();
         }
         List<AuthGroup> authGroups = authGroupRepository.findByaEmail(username);
         return new AppUserPrincipal(user, authGroups);

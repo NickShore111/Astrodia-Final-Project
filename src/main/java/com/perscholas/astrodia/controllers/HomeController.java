@@ -69,7 +69,6 @@ public class HomeController {
             Principal principal,
             @ModelAttribute("searchDTO") SearchDto searchDTO){
         if(principal != null) log.info(principal.getName());
-
         return "main";
     }
 
