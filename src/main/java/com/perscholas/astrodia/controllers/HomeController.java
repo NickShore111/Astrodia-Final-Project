@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller @Slf4j
@@ -58,8 +59,6 @@ public class HomeController {
 
     @GetMapping("test")
     public String index() {return "index"; }
-    @GetMapping("/signup")
-    public String createUserForm() {return "signup"; }
     @GetMapping("/signin")
     public String signInUserForm() { return "signin"; }
     @PostMapping("/signup")
@@ -70,7 +69,11 @@ public class HomeController {
             @ModelAttribute("searchDTO") SearchDTO searchDTO){
         return "main";
     }
-
+//    @GetMapping(value = {"/", "index"})
+//    public String homePage(Principal principal){
+//        if(principal != null) log.info(principal.getName());
+//        return "main";
+//    }
     @GetMapping("/region-search")
     public String findRoundtripSearchFlights(
             Model model,
