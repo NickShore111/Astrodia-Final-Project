@@ -13,7 +13,6 @@ import java.util.Objects;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Slf4j
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -32,9 +31,6 @@ public class User {
     @NonNull
     @Column(length=60)
     String password;
-    @NonNull
-    String role;
-    boolean enabled = false;
 
 
     public User(@NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {

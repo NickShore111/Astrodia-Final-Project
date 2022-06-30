@@ -77,12 +77,13 @@ public class AdminController {
     public String deleteFlight(@PathVariable("id") String strId, RedirectAttributes redirectAttributes) {
         Integer id = Integer.parseInt(strId);
         log.info("Deleting flight with ID: "+id);
+        Flight f = flightService.findById(id);
         try {
             flightService.deleteById(id);
-            String flashMsg = String.format("Flight with ID: %d deleted successfully!", id);
+            String flashMsg = String.format("Successfully Deleted Flight %s with ID: %d.", f.getFlightCode(), id);
             redirectAttributes.addFlashAttribute("success", flashMsg);
         } catch (Exception e) {
-            String flashMsg = String.format("Failed to update Flight with ID: %d.", id);
+            String flashMsg = String.format("Failed to Delete Flight %s with ID: %d.", f.getFlightCode(), id);
             redirectAttributes.addFlashAttribute("error", flashMsg);
         }
         return "redirect:/admin/flights";
@@ -93,7 +94,7 @@ public class AdminController {
             @ModelAttribute UpdateFlightDto updateFlight,
             RedirectAttributes redirectAttributes
     ) {
-        log.info("***************POST REQUEST TRIGGERED*************");
+        log.info("***************UPDATE REQUEST TRIGGERED*************");
         Pad departurePad = padService.findById(updateFlight.getDeparturePadID()).get();
         Pad arrivalPad = padService.findById(updateFlight.getArrivalPadID()).get();
         Shuttle shuttle = shuttleService.findById(updateFlight.getShuttleID()).get();
@@ -125,10 +126,10 @@ public class AdminController {
         log.info(flight.toString());
         try {
             flightService.saveOrUpdate(flight);
-            String flashMsg = String.format("Flight %s updated successfully!", flight.getFlightCode());
+            String flashMsg = String.format("Flight %s Updated Successfully!", flight.getFlightCode());
             redirectAttributes.addFlashAttribute("success", flashMsg);
         } catch (Exception e) {
-            String flashMsg = String.format("Failed to update Flight %s.", flight.getFlightCode());
+            String flashMsg = String.format("Failed to Update Flight %s.", flight.getFlightCode());
             redirectAttributes.addFlashAttribute("error", flashMsg);
         }
 

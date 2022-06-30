@@ -222,4 +222,9 @@ public class FlightService {
     public List<Flight> findFlightsByRegionsAndArrivalDate(String departing, String arriving, String arrivalDate) {
         return flightRepository.findFlightsByRegionsAndArrivalDate(departing, arriving, arrivalDate);
     }
+
+    public List<Flight> searchByRegionDepartureAndDateRange(String departureRegion, String arrivalRegion, String departureDate, String arrivalDate){
+        return flightRepository.findFlightsByRegionsAndDepartureDateAndArrivalDateRangeSortByDateAsc(departureRegion, arrivalRegion, departureDate, arrivalDate); }
+    public List<Flight> searchByRegionArrivalAndDateRange(String departureRegion, String arrivalRegion, String departureDate, String arrivalDate){
+        return flightRepository.findFlightsByRegionsAndDepartureDateAndArrivalDateRangeSortByDateDesc(departureRegion, arrivalRegion, departureDate, arrivalDate); }
 }

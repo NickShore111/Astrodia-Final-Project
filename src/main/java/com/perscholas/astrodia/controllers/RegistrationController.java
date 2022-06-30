@@ -54,9 +54,9 @@ public class RegistrationController {
             return "signup";
         }
         try {
-            User registered = userService.registerNewUserAccount(userDto);
-        } catch (UserAlreadyExistException uaeEx) {
-            log.warn("exception in registerNewUser: "+uaeEx);
+            userService.registerNewUserAccount(userDto);
+        } catch (UserAlreadyExistException ex) {
+            log.warn("exception in registerNewUser: "+ex);
             rda.addFlashAttribute("fail", "An account with that email already exists.");
             return "redirect:signup";
         }

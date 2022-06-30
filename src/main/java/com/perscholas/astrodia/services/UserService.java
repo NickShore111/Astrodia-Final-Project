@@ -57,8 +57,6 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail().toLowerCase());
         user.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
-//        user.setRoles(Arrays.asList("ROLE_USER"));
-        user.setRole("USER");
         userRepository.save(user);
         return user;
     }

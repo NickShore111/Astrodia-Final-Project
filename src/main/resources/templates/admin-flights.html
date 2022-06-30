@@ -6,10 +6,9 @@
 </head>
 <body>
 <div class="main container-fluid p-1">
-    <!-- Start: Navbar element -->
+    <!-- Navbar element -->
     <div th:replace="fragments/nav :: nav"></div>
-    <!-- Start: Main image and additional content -->
-
+<!-- Sidebar selection criteria -->
     <div class="container-fluid" style="position:relative;">
         <div class="row ">
             <div class="col-2 p-2">
@@ -100,11 +99,14 @@
                 </div>
                 </form>
             </div>
+            <!--    Flights table     -->
             <div class="col border-start" id="flights-table">
                 <div th:replace="fragments/admin/tables :: flights"></div>
             </div>
         </div>
     </div>
+    <!--  Update Flight form  -->
+    <div th:replace="fragments/forms :: update-flight"></div>
 </div>
     <div th:replace="fragments/footer :: scripts"></div>
     <script type="text/javascript" th:src="@{/js/nav.js}"></script>

@@ -1,6 +1,6 @@
 const updateForm = document.getElementById("update-form");
 const REGEX_DATE = new RegExp('^((0?[1-9])|([1][1-2]){1,2})[/](0?[1-9]|[1-2][0-9]|[3][0-1])[/][2](\\d{3})$');
-const REGEX_TIME = new RegExp('((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]$))');
+const REGEX_TIME = new RegExp('^((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]$))');
 //const REGEX_FLIGHTCODE = new RegExp('(([A-Z]{3,4})\\d{1,3}\\s([A-Z]{1}\\d{1})-([A-Z]{1}\\d{1}))');
 const REGEX_NUM = new RegExp('^\\d*$');
 const API_URL = "http://localhost:8080/astrodia/api/flights";

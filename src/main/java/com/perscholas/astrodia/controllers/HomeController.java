@@ -89,8 +89,8 @@ public class HomeController {
         String departureDateStr = searchDTO.getDepartureDate();
         String arrivalDateStr = searchDTO.getArrivalDate();
 
-        List<Flight> departureFlights = flightService.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDateStr);
-        List<Flight> returnFlights = flightService.findFlightsByRegionsAndArrivalDate(arriving, departing, arrivalDateStr);
+        List<Flight> departureFlights = flightService.searchByRegionDepartureAndDateRange(departing, arriving, departureDateStr, arrivalDateStr);
+        List<Flight> returnFlights = flightService.searchByRegionArrivalAndDateRange(arriving, departing, departureDateStr, arrivalDateStr);
 
         Region departureRegion = regionService.findById(departing).get();
         Region arrivalRegion = regionService.findById(arriving).get();

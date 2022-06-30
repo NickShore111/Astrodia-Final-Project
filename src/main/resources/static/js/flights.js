@@ -39,7 +39,10 @@ $( function() {
             .then(y => {$(this).html(y)});
     })
 });
-
+document.getElementById("flight-detail-overlay")
+    .addEventListener("click", (e) =>{
+    e.stopPropagation();
+})
 /**
  * Triggers overlay generation of selected flight details and outline selected in table flight
  * @event {Onclick<GenerateOverlayDOM>}
@@ -81,20 +84,20 @@ $(window).click((event)=> {
  */
 async function generateOverlayForFlight(flight) {
 const url = "http://localhost:8080/astrodia/api/flights/".concat(flight.id);
-//console.log(url);
-const response = await fetch(url);
-    if (!response.ok) {
-    console.log(response);
+    //console.log(url);
+    const response = await fetch(url);
+        if (!response.ok) {
+        console.log(response);
+        }
+        const f = await response.json();
+    //    console.log(f);
+
+
+    const LOGOS = {
+        "SPX": "SpaceX_logo.png",
+        "BLO": "Blue_Origin_logo.png",
+        "VGN": "Virgin_Galactic_logo.jpg"
     }
-    const f = await response.json();
-//    console.log(f);
-
-
-const LOGOS = {
-    "SPX": "SpaceX_logo.png",
-    "BLO": "Blue_Origin_logo.png",
-    "VGN": "Virgin_Galactic_logo.jpg"
-}
     let flightSpaceliner = f.shuttle.spaceliner.id;
     let logo_asset_url = "/assets/logo/".concat(LOGOS[flightSpaceliner]);
     document.getElementById("flight-code").innerHTML = f.flightCode;

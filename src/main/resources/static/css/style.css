@@ -187,12 +187,12 @@ color: red;
   cursor: pointer;
 }
 #update-flight-overlay {
-/*max-width:40rem;*/
+max-width:700px;
 box-shadow: 8px 8px 8px grey;
 background-color: white;
-position: absolute;
-top: 5rem;
-left: 100px;
+position: fixed;
+top: 4rem;
+left: 30%;
 }
 /* END: flights_admin.html styling */
 

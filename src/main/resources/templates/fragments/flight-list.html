@@ -7,13 +7,14 @@
 <body>
 
 <section th:fragment="roundtrip">
+    <!--  Toggle display buttons for departure and return flights  -->
     <div class="row">
         <div class="mx-auto d-flex my-3 justify-content-evenly">
             <button id="toggle-departures" class="btn btn-primary text-nowrap col-2 toggle-flight" disabled data-bs-toggle="button">Departing Flights</button>
             <button id="toggle-returns" class="btn btn-primary text-nowrap col-2 toggle-flight" data-bs-toggle="button">Returning Flights</button>
         </div>
     </div>
-    <!-- Start: Search results flight list  -->
+    <!-- Start: Search flight results -->
     <div class="container col border rounded">
 
         <section id="departure-flights">
@@ -30,8 +31,8 @@
             <div th:replace="fragments/flight-list :: results(${returnFlights})"></div>
         </section>
     </div>
-    <!-- End: Search results flight list -->
-    <!-- Start: Flight overlay -->
+
+    <!-- Start: Single flight popup overlay -->
     <div class="container" id="flight-detail-overlay">
         <div class="row p-3 border-bottom">
             <div class="overlay-close"></div>
@@ -84,6 +85,7 @@
     </div>
 </section>
 
+<!-- Results list showing flights returned from query -->
 <div th:fragment="results(content)"
      class="row p-2 my-1 flight"
      th:each="flight : ${content}"
@@ -122,15 +124,14 @@
     <small class="col-6 col-sm-5 text-center ">
         <th:block th:inline="text">
             [[${#calendars.format({flight.departing},'MMM dd, yyyy')}]] -
-            [[${#calendars.format({flight.arriving},'MMM dd, yyyy')}]]
-            <br>
-            [[${flight.launchPad.port.region.name}]],
-            [[${flight.launchPad.port.location}]]
+            [[${flight.launchPad.port.location}]],
+            [[${flight.launchPad.port.region.name}]]
             <br>
             TO
             <br>
-            [[${flight.arrivalPad.port.region.name}]],
-            [[${flight.arrivalPad.port.location}]]
+            [[${#calendars.format({flight.arriving},'MMM dd, yyyy')}]] -
+            [[${flight.arrivalPad.port.location}]],
+            [[${flight.arrivalPad.port.region.name}]]
         </th:block>
     </small>
     <div class="col">
