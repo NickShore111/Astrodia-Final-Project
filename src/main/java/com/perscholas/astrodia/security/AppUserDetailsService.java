@@ -30,15 +30,22 @@ public class AppUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = null;
         try {
-            user = userService.findByEmail(username);
-        } catch (Exception ex){
-            log.warn("Couldn't find email: " + username);
+            user = userService.findByEmail(email);
+        } catch (NoSuchElementException ex){
+            log.warn("Couldn't find email: " + email);
             ex.printStackTrace();
+        } catch(UsernameNotFoundException e){
+            log.warn("Couldn't find email: " + email);
+            e.printStackTrace();
         }
-        List<AuthGroup> authGroups = authGroupRepository.findByaEmail(username);
+        if (user == null) {
+             throw new UsernameNotFoundException("No user with email: " + email);
+        }
+        user = userService.findByEmail(email);
+        List<AuthGroup> authGroups = authGroupRepository.findByaEmail(email);
         return new AppUserPrincipal(user, authGroups);
     }
 }

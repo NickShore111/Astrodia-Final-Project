@@ -33,7 +33,7 @@ public class AppUserPrincipal implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
+    public String getPassword() throws NullPointerException {
         return user.getPassword();
     }
 

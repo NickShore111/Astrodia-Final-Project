@@ -26,7 +26,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     ShuttleService shuttleService;
     SpacelinerService spacelinerService;
     UserService userService;
-    AuthGroupRepository repo;
+    AuthGroupRepository authRepo;
     @Autowired
     ApplicationCommandLineRunner(
             FlightService flightService,
@@ -36,7 +36,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             ShuttleService shuttleService,
             SpacelinerService spacelinerService,
             UserService userService,
-        AuthGroupRepository repo)
+        AuthGroupRepository authRepo)
     {
         this.flightService = flightService;
         this.padService = padService;
@@ -45,7 +45,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         this.shuttleService = shuttleService;
         this.spacelinerService = spacelinerService;
         this.userService = userService;
-        this.repo = repo;
+        this.authRepo = authRepo;
     }
 
     @PostConstruct
@@ -80,7 +80,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             userService.saveOrUpdate(u);
         }
         for (AuthGroup g : AstrodiaData.AUTH_GROUPS) {
-            repo.save(g);
+            authRepo.save(g);
         }
     }
 }

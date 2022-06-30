@@ -8,7 +8,7 @@
 <div class="main container-fluid p-1">
   <div th:replace="fragments/nav :: minimal-header"></div>
   <div class="container col-12 col-md-8 col-lg-4 justify-content-start p-2">
-    <div th:if="${loginError}" class="alert alert-danger" role="alert">
+    <div th:if="${loginFailed}" class="alert alert-danger" role="alert">
       Invalid username and password.
     </div>
     <h2 class="my-4">Sign in</h2>

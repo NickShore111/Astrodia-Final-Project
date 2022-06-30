@@ -26,10 +26,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     AppUserDetailsService appUserDetailsService;
+    LoginFailureHandler failureHandler;
 
     @Autowired
-    public AppSecurityConfiguration(AppUserDetailsService appUserDetailsService) {
+    public AppSecurityConfiguration(AppUserDetailsService appUserDetailsService, LoginFailureHandler failureHandler) {
         this.appUserDetailsService = appUserDetailsService;
+        this.failureHandler = failureHandler;
     }
 
     @Bean
@@ -38,7 +40,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider() throws NullPointerException {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(appUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
@@ -69,7 +71,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
@@ -78,8 +80,9 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/user/signin")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .loginProcessingUrl("/user/signin").defaultSuccessUrl("/")
-                .failureForwardUrl("/fail_login").permitAll()
+                .loginProcessingUrl("/user/signin")
+                .defaultSuccessUrl("/")
+                .failureHandler(failureHandler)
                 .and()
                 .logout()
                 .invalidateHttpSession(true).clearAuthentication(true)
@@ -88,6 +91,5 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
     }
-
 
 }

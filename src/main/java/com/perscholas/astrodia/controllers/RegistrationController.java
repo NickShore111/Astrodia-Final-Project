@@ -30,20 +30,16 @@ public class RegistrationController {
     }
 
     @GetMapping("/signin")
-    public String displaySignInUserForm() { return "signin"; }
-
+    public String displaySignInUserForm(@RequestParam(value = "error", required = false) Boolean error, Model model) {
+        model.addAttribute("loginFailed", error);
+        return "signin";
+    }
 
     @GetMapping("/signup")
     public String displayCreateNewUserForm(Model model) {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
         return "signup";
-    }
-
-    @PostMapping("/fail_login")
-    public String handleFailedLogin(RedirectAttributes rda) {
-        rda.addAttribute("loginError", true);
-        return "redirect:/signin?error";
     }
 
     @PostMapping("/signup")
