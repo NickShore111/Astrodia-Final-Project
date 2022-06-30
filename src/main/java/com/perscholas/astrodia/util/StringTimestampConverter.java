@@ -6,6 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+/**
+ * Utilty help class used to convert String date objects
+ * to Timestamp objects used to modify flights
+ */
 @Slf4j
 public class StringTimestampConverter {
     String date; // "MM/dd/yyyy"

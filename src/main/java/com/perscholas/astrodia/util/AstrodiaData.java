@@ -2,11 +2,8 @@ package com.perscholas.astrodia.util;
 
 import com.perscholas.astrodia.models.*;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +21,7 @@ public class AstrodiaData {
 
     public static List<User> USERS = new ArrayList<>(Arrays.asList(
             new User("New", "User", "NewUser@mail.com", PASSWORD),
-            new User("Admin", "User", "admin@mail.com", PASSWORD),
+            new User("Admin", "User", "Admin@mail.com", PASSWORD),
             new User("Nick", "Shore", "Nick@mail.com", PASSWORD)
     ));
     public static List<AuthGroup> AUTH_GROUPS = new ArrayList<>(Arrays.asList(

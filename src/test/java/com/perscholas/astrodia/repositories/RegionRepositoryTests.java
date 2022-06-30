@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.Standard.class)
 @Rollback(value = false)
 class RegionRepositoryTests {
-    final String ID = "TT";
+    final String ID = "TR";
     final String NAME = "Test Region";
 
     @Autowired
