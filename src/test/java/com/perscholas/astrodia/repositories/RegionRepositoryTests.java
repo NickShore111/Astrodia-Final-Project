@@ -2,9 +2,13 @@ package com.perscholas.astrodia.repositories;
 
 import com.perscholas.astrodia.models.Region;
 import com.perscholas.astrodia.models.Spaceliner;
+import com.perscholas.astrodia.util.AstrodiaData;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.suite.api.Suite;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +40,9 @@ class RegionRepositoryTests {
     void tearDown() {}
 
     @BeforeAll
-    static void beforeAll() {}
+    static void beforeAll() {
+
+    }
 
     @AfterAll
     static void afterAll() {}
@@ -86,5 +92,15 @@ class RegionRepositoryTests {
             region1 = optionalRegion.get();
         }
         assertThat(region1).isNull();
+    }
+
+    @ParameterizedTest
+    @Order(6)
+    @CsvSource({ "MO, Moon", "MA, Mars", "EO, Earth Orbit", "ES, Earth Surface"})
+    void parameterizedTest(String id, String name) {
+
+        Region r = regionRepository.save(new Region(id, name));
+
+        assertThat(regionRepository.findById(id)).isNotNull();
     }
 }

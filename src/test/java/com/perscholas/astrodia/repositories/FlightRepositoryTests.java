@@ -2,11 +2,15 @@ package com.perscholas.astrodia.repositories;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.perscholas.astrodia.models.*;
+import com.perscholas.astrodia.services.FlightService;
 import com.perscholas.astrodia.util.AstrodiaData;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
@@ -24,11 +28,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Rollback(value = false)
 class FlightRepositoryTests {
     FlightRepository flightRepo;
+    FlightService flightService;
     SpacelinerRepository spacelinerRepo;
     ShuttleRepository shuttleRepo;
     RegionRepository regionRepo;
     PortRepository portRepo;
     PadRepository padRepo;
+
 
     final Spaceliner SPACELINER = AstrodiaData.SPACELINERS.get(0);
     final Shuttle SHUTTLE = AstrodiaData.SHUTTLES.get(0);
@@ -44,12 +50,14 @@ class FlightRepositoryTests {
     Timestamp TOMORROW = new Timestamp(NOW+ONE_DAY);
     @Autowired
     public FlightRepositoryTests(FlightRepository flightRepo,
+                                 FlightService flightService,
                                  SpacelinerRepository spacelinerRepo,
                                  ShuttleRepository shuttleRepo,
                                  RegionRepository regionRepo,
                                  PortRepository portRepo,
                                  PadRepository padRepo) {
         this.flightRepo = flightRepo;
+        this.flightService = flightService;
         this.spacelinerRepo = spacelinerRepo;
         this.shuttleRepo = shuttleRepo;
         this.regionRepo = regionRepo;
@@ -128,7 +136,6 @@ class FlightRepositoryTests {
         log.warn(flights.toString());
         assertThat(flights).isNotEmpty();
     }
-
 
 
 }

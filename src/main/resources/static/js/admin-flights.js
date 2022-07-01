@@ -128,8 +128,6 @@ function validateDateRange() {
         $("#arrivalDate").addClass("is-invalid").removeClass("is-valid");
         $("#dep-date-error-msg").html("Departure cannot be before Arrival.").show();
         $("#arr-date-error-msg").html("Departure cannot be before Arrival.").show();
-        // $("#dep-date-error-msg").show();
-        // $("#arr-date-error-msg").show();
         return false;
     } else {
         $("#departureDate").removeClass("is-invalid").addClass("is-valid");
@@ -661,7 +659,7 @@ async function buildDOMWithResults(flights) {
 }
 
 /**
- * Runs all form validation checks
+ * Runs all form validation checks on form submission
  * @returns {boolean}
  */
 function validateUpdateForm() {
