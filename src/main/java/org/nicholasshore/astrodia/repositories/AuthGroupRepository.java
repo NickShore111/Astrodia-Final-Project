@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface AuthGroupRepository extends JpaRepository<AuthGroup, Integer> {
     List<AuthGroup> findByaEmail(String email);
-
 }

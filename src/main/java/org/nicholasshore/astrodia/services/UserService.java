@@ -1,7 +1,9 @@
 package org.nicholasshore.astrodia.services;
 
 import org.nicholasshore.astrodia.dto.UserDto;
+import org.nicholasshore.astrodia.models.AuthGroup;
 import org.nicholasshore.astrodia.models.User;
+import org.nicholasshore.astrodia.repositories.AuthGroupRepository;
 import org.nicholasshore.astrodia.repositories.UserRepository;
 import org.nicholasshore.astrodia.validators.UserAlreadyExistException;
 import lombok.AccessLevel;
@@ -22,11 +24,12 @@ import java.util.NoSuchElementException;
 @Transactional(rollbackOn = {DataAccessException.class})
 public class UserService {
     UserRepository userRepository;
-
+    AuthGroupRepository authRepo;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AuthGroupRepository authRepo) {
         this.userRepository = userRepository;
+        this.authRepo = authRepo;
     }
 
     public List<User> findAll() {
@@ -58,6 +61,7 @@ public class UserService {
         user.setEmail(userDto.getEmail().toLowerCase());
         user.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
         userRepository.save(user);
+        authRepo.save(new AuthGroup(userDto.getEmail(), "ROLE_USER"));
         return user;
     }
 

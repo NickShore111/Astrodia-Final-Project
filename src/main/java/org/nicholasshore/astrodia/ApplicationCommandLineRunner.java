@@ -55,7 +55,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        FlightCreator flightCreator = new FlightCreator(AstrodiaData.SHUTTLES, AstrodiaData.PADS, 30);
+        FlightCreator flightCreator = new FlightCreator(AstrodiaData.SHUTTLES, AstrodiaData.PADS, 10);
         List<Flight> flights = flightCreator.getListOfFlights(100);
 
         for (Spaceliner s : AstrodiaData.SPACELINERS) {
