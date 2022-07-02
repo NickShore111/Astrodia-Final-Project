@@ -14,8 +14,12 @@ import java.util.*;
 
 @Service @Slf4j
 public class FlightService {
-    @Autowired
     private final FlightRepository flightRepository;
+    @Autowired
+    public FlightService(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
+    }
+
     @PersistenceContext
     private EntityManager em;
 
@@ -188,12 +192,8 @@ public class FlightService {
     public void deleteById(Integer id) { flightRepository.deleteById(id); }
     public Flight findById(int id) { return flightRepository.findById(id); }
 
+    public List<Flight> findByOrderByFlightCode() { return flightRepository.findByOrderByFlightCode(); }
     public List<Flight> findByOrderByDeparting() { return flightRepository.findByOrderByDeparting(); }
-
-    @Autowired
-    public FlightService(FlightRepository flightRepository) {
-        this.flightRepository = flightRepository;
-    }
 
     public List<Flight> findAll() {
         return flightRepository.findAll();
@@ -208,6 +208,12 @@ public class FlightService {
     }
     public List<Flight> findFlightsByPortsAndArrivalDate(String departurePort, String arrivalPort, String arrivalDate) {
         return flightRepository.findFlightsByPortsAndArrivalDate(departurePort, arrivalPort, arrivalDate);
+    }
+    public List<Flight> searchByPortDepartureAndDateRange(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
+        return flightRepository.findFlightsByPortsAndDepartureDateAndArrivalDateRangeSortByAsc(departurePort, arrivalPort, departureDate, arrivalDate);
+    }
+    public List<Flight> searchByPortArrivalAndDateRange(String departurePort, String arrivalPort, String departureDate, String arrivalDate) {
+        return flightRepository.findFlightsByPortsAndDepartureDateAndArrivalDateRangeSortByDesc(departurePort, arrivalPort, departureDate, arrivalDate);
     }
     public List<Flight> findFlightsByRegionsAndDepartureDate(String departing, String arriving, String departureDate) {
         return flightRepository.findFlightsByRegionsAndDepartureDate(departing, arriving, departureDate);

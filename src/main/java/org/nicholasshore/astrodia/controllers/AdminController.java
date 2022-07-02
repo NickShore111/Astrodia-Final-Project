@@ -70,7 +70,7 @@ public class AdminController {
     public String adminViewAllFlights(
             @ModelAttribute("updateFlightDTO") UpdateFlightDto updateFlightDTO,
             Model model) {
-        model.addAttribute("flights", flightService.findByOrderByDeparting());
+        model.addAttribute("flights", flightService.findByOrderByFlightCode());
         return "admin-flights";
     }
     @GetMapping("/flights/{id}")

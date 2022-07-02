@@ -47,17 +47,6 @@ public class HomeController {
     public List<Port> ports() {
         return portService.findAll();
     }
-    @ModelAttribute("spaceliners")
-    public List<Spaceliner> spaceliners() {
-        return spacelinerService.findAll();
-    }
-    @ModelAttribute("shuttles")
-    public List<Shuttle> shuttles() {
-        return shuttleService.findAll();
-    }
-
-    @GetMapping("test")
-    public String index() {return "index"; }
 
     @GetMapping("/403")
     public String accessDenied(){
@@ -131,8 +120,8 @@ public class HomeController {
         String departureDateStr = searchDTO.getDepartureDate();
         String arrivalDateStr = searchDTO.getArrivalDate();
 
-        List<Flight> departureFlights = flightService.findFlightsByPortsAndDepartureDate(departing, arriving, departureDateStr);
-        List<Flight> returnFlights = flightService.findFlightsByPortsAndArrivalDate(arriving, departing, arrivalDateStr);
+        List<Flight> departureFlights = flightService.searchByPortDepartureAndDateRange(departing, arriving, departureDateStr, arrivalDateStr);
+        List<Flight> returnFlights = flightService.searchByPortArrivalAndDateRange(arriving, departing, departureDateStr, arrivalDateStr);
 
         Port departurePort = portService.findById(departing).get();
         Port arrivalPort = portService.findById(arriving).get();

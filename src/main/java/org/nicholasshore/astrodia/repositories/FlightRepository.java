@@ -12,7 +12,9 @@ import java.util.List;
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     List<Flight> findAll();
+    List<Flight> findByOrderByFlightCode();
     List<Flight> findByOrderByDeparting();
+    List<Flight> findByOrderByArriving();
     Flight findById(int id);
 
     @Query(value = """
@@ -119,4 +121,37 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("departureDate") String departureDate,
             @Param("arrivalDate") String arrivalDate);
 
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            WHERE departurePort.id = :departurePort
+                AND arrivalPort.id = :arrivalPort
+                AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') BETWEEN :departureDate AND :arrivalDate
+                ORDER BY flights.departing asc
+                """, nativeQuery = true)
+    List<Flight> findFlightsByPortsAndDepartureDateAndArrivalDateRangeSortByAsc(
+            @Param("departurePort") String departing,
+            @Param("arrivalPort") String arriving,
+            @Param("departureDate") String departureDate,
+            @Param("arrivalDate") String arrivalDate);
+
+    @Query(value = """
+            SELECT * FROM flights
+            JOIN pads AS departurePad ON flights.launch_pad_id = departurePad.id
+            JOIN ports AS departurePort ON departurePad.port_id = departurePort.id
+            JOIN pads AS arrivalPad ON flights.arrival_pad_id = arrivalPad.id
+            JOIN ports AS arrivalPort ON arrivalPad.port_id = arrivalPort.id
+            WHERE departurePort.id = :departurePort
+                AND arrivalPort.id = :arrivalPort
+                AND DATE_FORMAT(DATE(flights.departing), '%m/%d/%Y') BETWEEN :departureDate AND :arrivalDate
+                ORDER BY flights.departing desc
+                """, nativeQuery = true)
+    List<Flight> findFlightsByPortsAndDepartureDateAndArrivalDateRangeSortByDesc(
+            @Param("departurePort") String departing,
+            @Param("arrivalPort") String arriving,
+            @Param("departureDate") String departureDate,
+            @Param("arrivalDate") String arrivalDate);
 }

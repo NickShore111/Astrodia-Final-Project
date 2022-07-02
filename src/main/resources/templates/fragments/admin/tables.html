@@ -29,9 +29,9 @@
                     th:id="${flight.id}"
             >
                 <th scope="row" th:text="${flight.flightCode}"></th>
-                <td th:text="${flight.launchPad.port.id}"></td>
+                <td data-bs-toggle="tooltip" th:title="${flight.launchPad.port.name}" th:text="${flight.launchPad.port.id}"></td>
                 <td th:text="${#calendars.format({flight.departing},'MMM dd, YYYY hh:mm a')}"></td>
-                <td th:text="${flight.arrivalPad.port.id}"></td>
+                <td data-bs-toggle="tooltip" th:title="${flight.arrivalPad.port.name}" th:text="${flight.arrivalPad.port.id}"></td>
                 <td th:text="${#calendars.format({flight.arriving},'MMM dd, YYYY hh:mm a')}"></td>
                 <td th:text="${flight.shuttle.name}"></td>
 

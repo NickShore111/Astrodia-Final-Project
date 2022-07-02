@@ -14,6 +14,12 @@ var arrivalPortParams = [];
 var URLParams;
 
 /**
+ * Initialize tooltips
+ * @type {NodeListOf<Element>}
+ */
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+/**
  * Selection Criteria URL Builder, triggers new Flight Selection
  * population after every change
  */
@@ -648,11 +654,11 @@ async function buildDOMWithResults(flights) {
         tr.id = flight.id;
         tr.innerHTML = `
             <th scope="row">${flight.flightCode}</th>
-            <th class="fs-6 fw-normal">${flight.launchPad.port.id}</th>
-            <th class="fs-6 fw-normal">${flight.departing}</th>
-            <th class="fs-6 fw-normal">${flight.arrivalPad.port.id}</th>
-            <th class="fs-6 fw-normal">${flight.arriving}</th>
-            <th class="fs-6 fw-normal">${flight.shuttle.name}</th>`;
+            <td data-bs-toggle="tooltip" title="${flight.launchPad.port.name}" >${flight.launchPad.port.id}</td>
+            <td>${flight.departing}</td>
+            <td data-bs-toggle="tooltip" title="${flight.arrivalPad.port.name}" >${flight.arrivalPad.port.id}</td>
+            <td>${flight.arriving}</td>
+            <td>${flight.shuttle.name}</td>`;
         tableBody.appendChild(tr);
     });
      loadFlightSelectionFormTriggerEvent();
