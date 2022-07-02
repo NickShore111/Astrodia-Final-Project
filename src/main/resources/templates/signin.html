@@ -12,7 +12,7 @@
       Invalid username and password.
     </div>
     <h2 class="my-4">Sign in</h2>
-    <form id="loginForm" th:action="@{/user/signin}" autocomplete="off" method="POST">
+    <form id="loginForm" th:action="@{/user/signin}" autocomplete="off" method="POST" novalidate>
       <div class="form-floating mb-3">
         <input
                 name="username"
@@ -22,6 +22,7 @@
                 placeholder="name@example.com"
         />
         <label for="email">Email address</label>
+        <div class="alert alert-warning" id="emailInvalid" style="display: none;">Please enter valid Email format</div>
       </div>
       <div class="form-floating">
         <input

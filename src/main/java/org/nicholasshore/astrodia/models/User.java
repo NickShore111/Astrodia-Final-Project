@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Getter @Setter
 @AllArgsConstructor

@@ -20,7 +20,6 @@ public class AstrodiaData {
     static String PASSWORD = encoder.encode("password");
 
     public static List<User> USERS = new ArrayList<>(Arrays.asList(
-            new User("New", "User", "NewUser@mail.com", PASSWORD),
             new User("Admin", "User", "Admin@mail.com", PASSWORD),
             new User("Nick", "Shore", "Nick@mail.com", PASSWORD)
     ));
