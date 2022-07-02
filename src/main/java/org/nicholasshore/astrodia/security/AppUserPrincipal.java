@@ -8,10 +8,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AppUserPrincipal implements UserDetails {
+public class AppUserPrincipal implements Serializable, UserDetails {
 
     User user;
     List<AuthGroup> authGroup;

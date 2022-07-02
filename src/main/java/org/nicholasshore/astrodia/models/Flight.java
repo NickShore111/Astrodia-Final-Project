@@ -8,6 +8,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -80,5 +81,16 @@ public class Flight {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return pricePerSeat == flight.pricePerSeat && Objects.equals(id, flight.id) && Objects.equals(flightCode, flight.flightCode) && departing.equals(flight.departing) && arriving.equals(flight.arriving) && Objects.equals(seatsAvailable, flight.seatsAvailable) && Objects.equals(createdAt, flight.createdAt) && Objects.equals(updatedAt, flight.updatedAt) && launchPad.equals(flight.launchPad) && arrivalPad.equals(flight.arrivalPad) && shuttle.equals(flight.shuttle);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, flightCode, departing, arriving, seatsAvailable, pricePerSeat, createdAt, updatedAt, launchPad, arrivalPad, shuttle);
+    }
 }

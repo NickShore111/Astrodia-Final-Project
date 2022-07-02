@@ -9,6 +9,6 @@ import org.junit.platform.suite.api.Suite;
         SpacelinerRepositoryTests.class,
         RegionRepositoryTests.class,
         PortRepositoryTests.class,
-        PadRepository.class})
+        PadRepositoryTests.class})
 public class RepositoriesSuiteTests {
 }

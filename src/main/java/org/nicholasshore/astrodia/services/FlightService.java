@@ -33,7 +33,6 @@ public class FlightService {
         CriteriaQuery<Flight> c = cb.createQuery(Flight.class);
         Root<Flight> flight = c.from(Flight.class);
         c.select(flight);
-        c.distinct(true);
 
         Join<Flight, Shuttle> shuttle =
                 flight.join("shuttle", JoinType.LEFT);
