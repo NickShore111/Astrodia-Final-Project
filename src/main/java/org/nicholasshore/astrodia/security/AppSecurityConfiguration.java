@@ -52,25 +52,20 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(
-                "/webjars/**",
-                "/resources/**",
-                "/static/**",
-                "/assets/**",
-                "/css/**",
-                "/js/**",
-                "/image/**",
-                "/logo/**");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/").permitAll()
+                .antMatchers("/",
+                        "/webjars/**",
+                        "/resources/**",
+                        "/static/**",
+                        "/assets/**",
+                        "/css/**",
+                        "/js/**",
+                        "/image/**",
+                        "/logo/**").permitAll()
                 .and()
                 .formLogin().loginPage("/user/signin")
                 .usernameParameter("username")
