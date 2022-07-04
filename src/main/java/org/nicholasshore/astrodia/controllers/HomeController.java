@@ -62,7 +62,7 @@ public class HomeController {
     }
 
     @GetMapping("/region-search")
-    public String findRoundtripSearchFlights(
+    public String roundtripSearchByRegion(
             Model model,
             @ModelAttribute("searchDTO")
             @Valid SearchDto searchDTO,

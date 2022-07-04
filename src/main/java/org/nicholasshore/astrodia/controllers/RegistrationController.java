@@ -28,7 +28,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/signin")
-    public String displaySignInUserForm(@RequestParam(value = "error", required = false) Boolean error, Model model) {
+    public String displaySigninUserForm(@RequestParam(value = "error", required = false) Boolean error, Model model) {
         model.addAttribute("loginFailed", error);
         return "signin";
     }

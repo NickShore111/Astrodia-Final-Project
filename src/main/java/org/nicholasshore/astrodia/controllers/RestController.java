@@ -24,12 +24,17 @@ public class RestController {
         this.flightService = flightService;
     }
 
+    @GetMapping("/test")
+    public String testController() {
+        return "Hello, World!";
+    }
+
     @GetMapping("/flights/{id}")
     public Flight getFlight(@PathVariable("id") int id) {
         return flightService.findById(id);
     }
     @GetMapping("/flights")
-    public List<Flight> getFlightSearchResults
+    public List<Flight> getFlightsBySearchCriteria
             (
             @RequestParam(value = "spaceliner", required = false) String[] spaceliner,
             @RequestParam(value = "shuttle", required = false) String[] shuttle,
