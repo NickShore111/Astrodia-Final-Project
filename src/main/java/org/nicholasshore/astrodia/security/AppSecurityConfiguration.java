@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,14 +13,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class AppSecurityConfiguration {
 
     AppUserDetailsService appUserDetailsService;
     LoginFailureHandler failureHandler;
@@ -44,28 +47,14 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
 
-    }
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/",
-                        "/webjars/**",
-                        "/resources/**",
-                        "/static/**",
-                        "/assets/**",
-                        "/css/**",
-                        "/js/**",
-                        "/image/**",
-                        "/logo/**").permitAll()
+                .antMatchers("/").permitAll()
                 .and()
                 .formLogin().loginPage("/user/signin")
                 .usernameParameter("username")
@@ -80,6 +69,20 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
+        return http.build();
+    }
+
+    @Bean
+    @Order(0)
+    SecurityFilterChain resources(HttpSecurity http) throws Exception {
+        http
+                .requestMatchers((matchers) -> matchers.antMatchers("/static/**"))
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+                .requestCache().disable()
+                .securityContext().disable()
+                .sessionManagement().disable();
+
+        return http.build();
     }
 
 }

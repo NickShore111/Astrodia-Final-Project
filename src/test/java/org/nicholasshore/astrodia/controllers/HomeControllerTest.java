@@ -1,11 +1,7 @@
 package org.nicholasshore.astrodia.controllers;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nicholasshore.astrodia.models.Region;
-import org.nicholasshore.astrodia.security.AppSecurityConfiguration;
 import org.nicholasshore.astrodia.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,8 +26,7 @@ public class HomeControllerTest {
     private SpacelinerService spacelinerService;
     @MockBean
     private ShuttleService shuttleService;
-    @MockBean
-    private AppSecurityConfiguration appSecurityConfiguration;
+
 
     @Autowired
     private MockMvc mockMvc;
