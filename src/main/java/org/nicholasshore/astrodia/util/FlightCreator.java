@@ -31,7 +31,7 @@ public class FlightCreator {
     }
 
     /**
-     * A FlightCreator with parameter for custom departureWindow setting
+     * A FlightCreator with parameter for custom departureWindow (number of days out from today) setting
      * @param shuttles - List of Shuttle objects
      * @param pads - List of Pad objects
      * @param departureWindow - Integer representing number of days to create Flights for
@@ -55,25 +55,9 @@ public class FlightCreator {
         return flightsList;
     }
 
-    /**
-     * FlightCode = (SpacelinerID)(Day of the year) (LaunchPadID)-(ArrivalPadID)
-     * @param departure - Calendar object representing Flight departure date
-     * @param shuttleSpacelinerId - Spaceliner id operating created flight
-     * @param launchPadId - Pad id where Flight will take off from
-     * @param arrivalPadId - Pad id where Flight will land
-     * @return String with unique FlightCode based on Flight information
-     */
-    private String createFlightCode(
-            Calendar departure,
-            String shuttleSpacelinerId,
-            String launchPadId,
-            String arrivalPadId) {
-        int day = departure.get(Calendar.DAY_OF_YEAR);
-        return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
-    }
 
     /**
-     * Creates a new Flight object with randomized data
+     * Assembles and creates a new Flight object using randomized data and parameters
      * @return new Flight object
      */
     private Flight createNewFlight() {
@@ -106,6 +90,22 @@ public class FlightCreator {
         return newFlight;
     }
 
+    /**
+     * FlightCode = (SpacelinerID)(Day of the year) (LaunchPadID)-(ArrivalPadID)
+     * @param departure - Calendar object representing Flight departure date
+     * @param shuttleSpacelinerId - Spaceliner id operating created flight
+     * @param launchPadId - Pad id where Flight will take off from
+     * @param arrivalPadId - Pad id where Flight will land
+     * @return String with unique FlightCode based on Flight information
+     */
+    private String createFlightCode(
+            Calendar departure,
+            String shuttleSpacelinerId,
+            String launchPadId,
+            String arrivalPadId) {
+        int day = departure.get(Calendar.DAY_OF_YEAR);
+        return String.format("%s%d %s-%s", shuttleSpacelinerId, day, launchPadId, arrivalPadId);
+    }
     /**
      * Creates a random int for seating capacity between 1 and shuttle seating capacity
      * @param maxSeating

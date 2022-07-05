@@ -1,7 +1,6 @@
 package org.nicholasshore.astrodia.repositories;
 
 import org.nicholasshore.astrodia.models.*;
-import org.nicholasshore.astrodia.services.FlightService;
 import org.nicholasshore.astrodia.util.AstrodiaData;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -9,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.sql.Timestamp;
 import java.util.List;

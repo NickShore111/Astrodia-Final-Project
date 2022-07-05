@@ -22,14 +22,17 @@ public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    @NonNull
     String flightCode;
     @NonNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm a")
-    Timestamp departing;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm a")
-    @NonNull
     Timestamp arriving;
+    @NonNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm a")
+    Timestamp departing;
+    @NonNull
     Integer seatsAvailable;
+    @NonNull
     @NumberFormat(style= NumberFormat.Style.CURRENCY)
     int pricePerSeat;
     @Column(updatable = false)

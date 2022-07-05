@@ -73,6 +73,7 @@ public class AdminController {
         model.addAttribute("flights", flightService.findByOrderByFlightCode());
         return "admin-flights";
     }
+
     @GetMapping("/flights/{id}")
     public String deleteFlight(@PathVariable("id") String strId, RedirectAttributes redirectAttributes) {
         Integer id = Integer.parseInt(strId);
