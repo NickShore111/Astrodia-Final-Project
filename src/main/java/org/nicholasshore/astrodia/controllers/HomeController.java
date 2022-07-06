@@ -146,14 +146,5 @@ public class HomeController {
         model.addAttribute("newSearch", searchDTO);
         return "results";
     }
-//    findFlightsBySelectionCriteria(
-//            String[] spacelinerList,
-//            String[] shuttleList,
-//            String departing,
-//            String[] departureRegionList,
-//            String[] departurePortList,
-//            String arriving,
-//            String[] arrivalRegionList,
-//            String[] arrivalPortList
-//    )
+
 }
