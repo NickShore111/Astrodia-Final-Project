@@ -3,12 +3,8 @@ package org.nicholasshore.astrodia.services;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.nicholasshore.astrodia.models.Flight;
-import org.nicholasshore.astrodia.models.Spaceliner;
-import org.nicholasshore.astrodia.util.AstrodiaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
@@ -23,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-@Transactional //handle Hibernate.LazyInitializeException
+@Transactional
 @PropertySource("classpath:application-mariadb.properties")
 public class FlightServiceTests {
     String[] spacelinerList = null;
@@ -33,7 +29,7 @@ public class FlightServiceTests {
     String[] departurePortList = null;
     String arriving = null;
     String[] arrivalRegionList = null;
-    String[] arrivalPortLis = null;
+    String[] arrivalPortList = null;
     @Autowired
     FlightService flightService;
 
@@ -58,7 +54,23 @@ public class FlightServiceTests {
             assertThat(flight.getArrivalPad().getPort().getRegion().getId()).isEqualTo(arrivalRegionId);
         });
     }
-
+    @ParameterizedTest
+    @MethodSource("criteriaSelectionParamProvider")
+    public void criteriaSelectionParameterTest(String[] spacelinerList,
+                                               String[] shuttleList,
+                                               String[] departureRegionList,
+                                               String[] departurePortList,
+                                               String[] arrivalRegionList,
+                                               String[] arrivalPortList) {
+        List<Flight> flights = flightService.findFlightsBySelectionCriteria( spacelinerList,
+                shuttleList, null, departureRegionList, departurePortList, null, arrivalRegionList, arrivalPortList );
+        assertThat(flights).isNotEmpty();
+    }
+    static Stream<Arguments> criteriaSelectionParamProvider() {
+        return Stream.of(
+                arguments("SPX, BLO", null, null, null, null, null)
+        );
+    }
     static Stream<Arguments> regionRoundtripParameterProvider() {
         return Stream.of(
                 arguments("MO", "ES", "07/08/2022", "07/14/2022"),
@@ -74,11 +86,11 @@ public class FlightServiceTests {
                 spacelinerList,
                 shuttleList,
                 departing,
-                departurePortList,
                 departureRegionList,
+                departurePortList,
                 arriving,
                 arrivalRegionList,
-                arrivalPortLis );
+                arrivalPortList );
 
         assertThat(expectedFlights).isNotNull();
         assertThat(actualFlights.size()).isEqualTo(expectedFlights.size());
