@@ -2,6 +2,7 @@ package org.nicholasshore.astrodia.repositories;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
+import org.springframework.context.annotation.PropertySource;
 
 @Suite
 @SelectClasses({
