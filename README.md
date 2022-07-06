@@ -29,4 +29,6 @@
         - JQuery v3.6.0
         - JQuery-UI v1.13.0
 ---
-[![Demo landing page]({src/main/resources/static/assets/readme/astrodia_landing_page.png})]({src/main/resources/static/assets/readme/Homepage scroll.mp4} "Astrodia.com")
+
+https://user-images.githubusercontent.com/64939708/177612022-5360ce09-54ad-4f1c-bcd5-bf4b5d552f60.mp4
+
