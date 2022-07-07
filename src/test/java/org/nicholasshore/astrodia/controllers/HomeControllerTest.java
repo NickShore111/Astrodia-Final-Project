@@ -23,7 +23,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(HomeController.class)
-@RunWith(SpringRunner.class)
 public class HomeControllerTest {
 
     @MockBean
@@ -67,4 +66,6 @@ public class HomeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("main"));
     }
+
+
 }

@@ -19,16 +19,16 @@ public class AstrodiaData {
     static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
     static String PASSWORD = encoder.encode("password");
 
-    public static List<User> USERS = new ArrayList<>(Arrays.asList(
+    public static final List<User> USERS = new ArrayList<>(Arrays.asList(
             new User("Admin", "User", "Admin@mail.com", PASSWORD),
             new User("Nick", "Shore", "Nick@mail.com", PASSWORD)
     ));
-    public static List<AuthGroup> AUTH_GROUPS = new ArrayList<>(Arrays.asList(
+    public static final List<AuthGroup> AUTH_GROUPS = new ArrayList<>(Arrays.asList(
             new AuthGroup("admin@mail.com", "ROLE_ADMIN"),
             new AuthGroup("admin@mail.com", "ROLE_USER"),
             new AuthGroup("nick@mail.com", "ROLE_USER")
     ));
-    public static List<Spaceliner> SPACELINERS = new ArrayList<>(Arrays.asList(
+    public static final List<Spaceliner> SPACELINERS = new ArrayList<>(Arrays.asList(
         new Spaceliner("SPX", "SpaceX"),
         new Spaceliner("VGN", "Virgin Galactic"),
         new Spaceliner("BLO", "Blue Origin")
@@ -37,7 +37,7 @@ public class AstrodiaData {
     static Spaceliner VGN = SPACELINERS.get(1);
     static Spaceliner BLO = SPACELINERS.get(2);
 
-    public static List<Shuttle> SHUTTLES = new ArrayList<>(Arrays.asList(
+    public static final List<Shuttle> SHUTTLES = new ArrayList<>(Arrays.asList(
         new Shuttle( "DR", "Dragon", 8, SPX),
         new Shuttle("RD", "Red Dragon", 12, SPX),
         new Shuttle("DX","Dragon XL", 16, SPX),
@@ -50,7 +50,7 @@ public class AstrodiaData {
         new Shuttle("BM", "Blue Moon", 12, BLO)
     ));
 
-    public static List<Region> REGIONS = new ArrayList<>(Arrays.asList(
+    public static final List<Region> REGIONS = new ArrayList<>(Arrays.asList(
         new Region("ES", "Earth Surface"),
         new Region("EO", "Earth Orbit"),
         new Region("MO", "Moon"),
@@ -62,7 +62,7 @@ public class AstrodiaData {
     static Region MOON = REGIONS.get(2);
     static Region MARS = REGIONS.get(3);
 
-    public static List<Port> PORTS = new ArrayList<>(Arrays.asList(
+    public static final List<Port> PORTS = new ArrayList<>(Arrays.asList(
             new Port("STB", "Starbase", "Boca Chica,TX", EARTH_SURFACE),
             new Port("TSP","Tanegashima Space Center", "Tanegashima Island, JP",  EARTH_SURFACE),
             new Port("AEO", "Axiom Station", "Lower Orbit", EARTH_ORBIT),
@@ -80,7 +80,7 @@ public class AstrodiaData {
     static Port MPB = PORTS.get(5);
     static Port MVS = PORTS.get(6);
 
-    public static List<Pad> PADS = new ArrayList<Pad>(Arrays.asList(
+    public static final List<Pad> PADS = new ArrayList<Pad>(Arrays.asList(
             new Pad("X1", STB),
             new Pad("X2", STB),
             new Pad("T1", TSP),
