@@ -34,17 +34,18 @@ https://user-images.githubusercontent.com/64939708/177612022-5360ce09-54ad-4f1c-
   - DOM manipulation
   - Fetch() method for asynchronous requests
     - Dynamically render Flight details returned from Rest Controller endpoint
-    - Used to convert current dollars to bitcoin amount
+    - Used to convert current dollars to bitcoin amount via https://blockchain.info/tobtc?currency=USD&value=<dollar amount>
 ### Admin Portal
 ![Admin Portal](src/main/resources/static/assets/readme/AdminPortal.png)
-- Make use of Java Criteria Builder for dynamic query creation
+- Make use of Java Criteria Builder API for dynamic query creation
   - Dynamically construct a URL with selection criteria parameters using Javascript URLSearchParams() method
   - fetch() results and render page with flights matching selection criteria asynchronously
 ### Javascript Client Side Form Validation
 ![Update Form](src/main/resources/static/assets/readme/updateForm.png)
-- Use Bootstrap to apply styling with custom validations
-- Use Javascript and Jquery for reactive form inputs
+- Bootstrap styling with custom validations
+- Javascript and Jquery for reactive form inputs
 ### Server Side Validation Using Spring Validation
 ![Form Validation](src/main/resources/static/assets/readme/ServerSideValidation.png)
-- Utilize Spring Validation with Thymeleaf for form validation
-
+- Spring Validation with Thymeleaf for form validation
+---
+![Capstone Presentation](https://docs.google.com/presentation/d/e/2PACX-1vRY-m8yJoBxwga4B1ugAd87nmuWIrywI7zNsZ6KapcghfTFmy8XiJja4ixHAbXQuH-2ZcqTrnOwLhTL/pub?start=true&loop=false&delayms=3000)
