@@ -132,8 +132,8 @@ function validateDateRange() {
     if (new Date(updateDepartureDate) > new Date(updateArrivalDate)){
         $("#departureDate").addClass("is-invalid").removeClass("is-valid");
         $("#arrivalDate").addClass("is-invalid").removeClass("is-valid");
-        $("#dep-date-error-msg").html("Departure cannot be before Arrival.").show();
-        $("#arr-date-error-msg").html("Departure cannot be before Arrival.").show();
+        $("#dep-date-error-msg").html("Departure cannot be after Arrival.").show();
+        $("#arr-date-error-msg").html("Arrival cannot be before Departure.").show();
         return false;
     } else {
         $("#departureDate").removeClass("is-invalid").addClass("is-valid");
