@@ -5,6 +5,7 @@ import org.junit.platform.suite.api.Suite;
 import org.springframework.context.annotation.PropertySource;
 
 @Suite
+@PropertySource("classpath:application.properties")
 @SelectClasses({
         ShuttleRepositoryTests.class,
         SpacelinerRepositoryTests.class,

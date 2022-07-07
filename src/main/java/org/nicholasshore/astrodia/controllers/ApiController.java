@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
 @Slf4j
 @RequestMapping("astrodia/api")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class RestController {
+public class ApiController {
 
     FlightService flightService;
 
     @Autowired
-    public RestController(FlightService flightService) {
+    public ApiController(FlightService flightService) {
         this.flightService = flightService;
     }
 

@@ -14,7 +14,7 @@ var arrivalPortParams = [];
 var URLParams;
 
 /**
- * Initialize tooltips
+ * Initialize Bootstrap tooltips
  * @type {NodeListOf<Element>}
  */
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -121,7 +121,7 @@ function resetForm() {
 }
 
 /**
- * Perform Departure and Arrival Range Date validations
+ * Perform Departure and Arrival Date Range validations
  * Ensures that departure date entered is before arrival date
  * @returns {boolean}
  */

@@ -32,7 +32,7 @@ public class FlightServiceTests {
     @Autowired
     FlightService flightService;
 
-
+//    TODO: Fix H2 dialect exception
     @ParameterizedTest
     @MethodSource("regionRoundtripParameterProvider")
     public void regionRoundtripSearchTest(String departureRegionId, String arrivalRegionId, String departureDate, String arrivalDate) {

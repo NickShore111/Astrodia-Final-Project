@@ -16,8 +16,8 @@ import java.util.List;
 @FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 public class AstrodiaData {
 
-    static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
-    static String PASSWORD = encoder.encode("password");
+    static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
+    static final String PASSWORD = encoder.encode("password");
 
     public static final List<User> USERS = new ArrayList<>(Arrays.asList(
             new User("Admin", "User", "Admin@mail.com", PASSWORD),

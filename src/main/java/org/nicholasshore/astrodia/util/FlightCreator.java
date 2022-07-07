@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 /**
- * A utility class used to create Flights for database population
+ * A Utility class used to populate Flights for our database
  */
 @Slf4j
 public class FlightCreator {
@@ -140,7 +140,7 @@ public class FlightCreator {
 
     /**
      * Create future Timestamp instance with departureDate as base
-     * and dependent on Take and Landing location
+     * and dependent on Take-off and Landing location
      * @param departureTimestamp - Timestamp with future arrival time needs to be based on
      * @param launchPad - Pad representing the launch site
      * @param arrivalPad - Pad representing the landing site
